@@ -42,7 +42,7 @@ const Home = () => {
                     <div className='col-lg-4 col-md-6 col-sm-12' >
                         <div className='card '>
                             <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
-                                <img src={image2} alt='' className='card-img-left  p-2 img_size'  />
+                                <img src={image2} className='card-img-left  p-2 img_size'  />
                                 Advertisments
                             </Link>
                             <hr />
@@ -55,7 +55,7 @@ const Home = () => {
                     <div className='col-lg-4 col-md-6 col-sm-12'>
                          <div className='card '>
                             <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
-                                <img src={image2} alt='' className='card-img-left  p-2 img_size'  />
+                                <img src={image2}  className='card-img-left  p-2 img_size'  />
                                 Bid Information
                             </Link>
                             <hr />
@@ -67,7 +67,7 @@ const Home = () => {
                     <div className='col-lg-4 col-md-6 col-sm-12'>
                          <div className='card '>
                             <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
-                                <img src={image2} alt='' className='card-img-left  p-2 img_size'  />
+                                <img src={image2}  className='card-img-left  p-2 img_size'  />
                                 Registration
                             </Link>
                             <hr />
