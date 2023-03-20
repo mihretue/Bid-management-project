@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8057a349.css",
+    "main.js": "/static/js/main.74dd4312.js",
+    "static/media/homie2.png": "/static/media/homie2.6915b0666a8fa7aeca66.png",
+    "static/media/advertIcon.jpg": "/static/media/advertIcon.589a4e5af595c07525c8.jpg",
+    "static/media/logo1.png": "/static/media/logo1.0e258aaba8cc05d44c30.png",
+    "index.html": "/index.html",
+    "main.8057a349.css.map": "/static/css/main.8057a349.css.map",
+    "main.74dd4312.js.map": "/static/js/main.74dd4312.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8057a349.css",
+    "static/js/main.74dd4312.js"
+  ]
+}
