@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.footer_bg{
+  background-color: #3AB359;
+  margin-top: 25px;
+  border-radius: 5px;
+  border-color: blueviolet;
+  opacity: 0.9;
+}
