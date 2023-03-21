@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 // import {AiFillBell} from "react-icons/ai";
 import {TfiEmail} from "react-icons/tfi";
 // import {RiAccountCircleFill} from "react-icons/ri";
-import imag1 from "../resources/logo1.png";
+import imag1 from "../resources/new.png";
 
 
 export default class Navbarcomp extends Component {

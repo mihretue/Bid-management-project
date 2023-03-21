@@ -7,6 +7,7 @@ import image3 from "../resources/informaiton.png";
 import image4 from "../resources/resource.png";
 import image5 from "../resources/supplier.jpg";
 import image6 from "../resources/registration.png";
+import Button from '@mui/material/Button';
 // import Container from 'react-bootstrap/Container';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
@@ -16,11 +17,15 @@ const Home = () => {
     return (
         <section>
             
-            <div>
-                <div >
-                    <img src={homie2} className="img-fluid img-thumbnail mx-auto d-block" alt='home image ' />
+
+                <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',background:"#FFFFFF",width:'70%',margin:'auto',border:'0.1rem solid darkslategray',borderRadius:'1.5rem',height:'25rem'}} >
+                    <h1 className='head1 fade-in-fwd fw-bold '>Welcome To <p style={{display
+                    :'inline',color:'#074C39'}}>cheretanet</p></h1>
+                    <Button style={{width:'28%',marginTop
+                :'2rem',fontWeight:'bolder'}}variant="contained" >Get Started</Button>
                 </div>
-            </div>
+
+
             <br />
             <br />
             <br />
