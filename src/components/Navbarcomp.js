@@ -5,7 +5,17 @@ import {Link} from "react-router-dom";
 // import {AiFillBell} from "react-icons/ai";
 import {TfiEmail} from "react-icons/tfi";
 // import {RiAccountCircleFill} from "react-icons/ri";
-import imag1 from "../resources/new.png";
+// import imag1 from "../resources/new.png";
+// import logo2 from "../resources/logo2.png";
+
+// import logo3 from "../resources/logo3.png";
+// import logo4 from "../resources/logo4.png";
+// import logo5 from "../resources/logo5.png";
+import logo6 from "../resources/logo6.png";
+
+
+
+
 
 
 export default class Navbarcomp extends Component {
@@ -13,13 +23,13 @@ export default class Navbarcomp extends Component {
     return (
       <div >
         <Navbar  expand="lg"className="container fluid" >
-          <Navbar.Brand href="#home"><img src={imag1} alt="message"/></Navbar.Brand>
+          <Navbar.Brand href="#home"><img src={logo6} style={{width:'10rem',height:'2rem'}} alt="message"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="align-items-end">
           <Nav className="me-auto nav_item fw-bold" >
             <Nav.Link    as={Link} to={"/"} >Home</Nav.Link>
-            <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
             <Nav.Link as={Link} to={"/adverts"} >Advert</Nav.Link>
+            <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
             <Nav.Link as={Link} to={"/contacts"} >Contact us</Nav.Link>
           </Nav>
           <Nav style={{ fontWeight: 'bold' }}>
