@@ -8,7 +8,8 @@ import image4 from "../resources/resource.png";
 import image5 from "../resources/supplier.jpg";
 import image6 from "../resources/registration.png";
 import Button from '@mui/material/Button';
-import logo2 from "../resources/logo2.png";
+import signup from "../resources/howto.jpg";
+import {FcQuestions} from 'react-icons/fc'
 // import logo4 from "../resources/logo4.png";
 // import logo5 from "../resources/logo5.png";
 
@@ -40,7 +41,7 @@ const Home = () => {
                         <div className='card card_it'>
                             <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
                                 <img src={image2} className='card-img-left  p-2 img_size' alt='' />
-                                View Advertisments
+                                Advertisments
                             </Link>
                             <hr />
                             <div className='card-body'>
@@ -53,11 +54,11 @@ const Home = () => {
                         <div className='card card_it'>
                             <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
                                 <img src={image3}  className='card-img-left  p-2 img_size' alt='' />
-                                Get Bids Information
+                                Get Bid Information
                             </Link>
                             <hr />
                             <div className='card-body'>
-                                <p className='card-text'>Access tender notices of various government agencies for the procurement of goods, services and works. </p>    
+                                <p className='card-text'>Provide access to tender statistics, tender opening minutes, evaluation reports, contract awards, and other procurement information.</p>    
                             </div>
                         </div>
                     </div>
@@ -65,11 +66,11 @@ const Home = () => {
                         <div className='card card_it'>
                             <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
                                 <img src={image6}  className='card-img-left  p-2 img_size' alt='new' />
-                                Registration
+                                Registration Services
                             </Link>
                             <hr />
                             <div className='card-body'>
-                                <p className='card-text'>Access tender notices of various government agencies for the procurement of goods, services and works. </p>    
+                                <p className='card-text'>Register your company in the national suppliers list to be able to identify government procurement opportunities and participate in tenders. </p>    
                             </div>
                         </div>
                     </div>
@@ -77,11 +78,11 @@ const Home = () => {
                         <div className='card card_it'>
                             <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
                                 <img src={image5}  className='card-img-left  p-2 img_size' alt='new' />
-                                View Suppliers List
+                                Suppliers List
                             </Link>
                             <hr />
                             <div className='card-body'>
-                                <p className='card-text'>Access tender notices of various government agencies for the procurement of goods, services and works. </p>    
+                                <p className='card-text'>Access registered companies from the national suppliers list. Identify suppliers that are debarred from participating in government procurement.</p>    
                             </div>  
 
                         </div>
@@ -90,18 +91,33 @@ const Home = () => {
                         <div className='card card_it'>
                             <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
                                 <img src={image4}  className='card-img-left  p-2 img_size' alt='new' />
-                                Find Resources
+                                Resources
                             </Link>
                             <hr />
                             <div className='card-body'>
-                                <p className='card-text'>Access tender notices of various government agencies for the procurement of goods, services and works. </p>    
+                                <p className='card-text'>Access various electronic resources related public procurement legislation and standard bidding documents</p>    
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-lg-4 col-md-6 col-sm-12'>
+                        <div className='card card_it'>
+                            <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
+                                <FcQuestions style={{width:'70px',height:'70px'}} />
+                                Complaints
+                            </Link>
+                            <hr />
+                            <div className='card-body'>
+                                <p className='card-text'>Send your complaints in bidding processes </p>    
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             </div>
-            
+            <div className="container" style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'white',height:'20rem'}}>
+                <h5 style={{fontFamily:"Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"}}>Steps To Be A Supplier</h5>
+                <img src={signup} style={{width:'60%',objectFit:'cover'}} alt="" />
+            </div>
         </section>
     )
 }

@@ -33,9 +33,9 @@ export default class Navbarcomp extends Component {
             <Nav.Link as={Link} to={"/contacts"} >Contact us</Nav.Link>
           </Nav>
           <Nav style={{ fontWeight: 'bold' }}>
-            <Nav.Link as={Link} to={"/login"} ><button className="btn btn-outline-primary">login</button></Nav.Link>
-            <Nav.Link as={Link} to={"/register"} ><button className="btn btn-outline-primary">Register</button></Nav.Link>
-            <Nav.Link as={Link} to={"/message "} ><TfiEmail size={30} /></Nav.Link>
+            <Nav.Link as={Link} to={"/login"} ><button className="btn btn-primary">Login</button></Nav.Link>
+            <Nav.Link as={Link} to={"/register"} ><button className="btn btn-outline-secondary">Sign Up</button></Nav.Link>
+            <Nav.Link as={Link} to={"/message "} ><TfiEmail size={30} data-toggle="tooltip" data-placement="bottom" title="Mail us" /></Nav.Link>
             {/* <Nav.Link as={Link} to={"/profile"} ><RiAccountCircleFill size={30}/></Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
