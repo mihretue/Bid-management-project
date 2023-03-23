@@ -1,4 +1,3 @@
-// import homie2 from '../resources/homie2.png';
 import React from "react";
 import {Link} from "react-router-dom";
 import '../css/Home.css';
@@ -10,29 +9,32 @@ import image6 from "../resources/registration.png";
 import Button from '@mui/material/Button';
 import signup from "../resources/howto.jpg";
 import {FcQuestions} from 'react-icons/fc'
-// import logo4 from "../resources/logo4.png";
-// import logo5 from "../resources/logo5.png";
-
-// import Container from 'react-bootstrap/Container';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
-
-
+import serv from '../resources/serv.svg'
 const Home = () => {
     return (
         <section>
-            
-
-                <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',background:"#FFFFFF",width:'70%',margin:'auto',border:'0.1rem solid darkslategray',borderRadius:'1.5rem',height:'25rem'}} >
-                    <h1 className='text-center head1 fade-in-fwd fw-bold '>Welcome To <p style={{display
+                <div className="welcome" style={{maxWidth:'100%',height:'33rem'}} >
+                    <span style={{gridColumn:'1/2',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',paddingLeft:'1rem'}}>
+                        <h1 className='text-center head1 fade-in-fwd fw-bold '>Welcome To <p style={{display
                     :'inline',color:'#074C39'}}>cheretanet</p></h1>
-                    <p style={{textAlign:'center',fontWeight:'bold',fontFamily:'sans-serif'}}>Revolutionize Your Bidding Game - Win More, Stress Less with Our Bid Management Software!
-</p>
-                    <Button style={{textAlign:'center',width:'28%',marginTop
-                :'2rem',fontWeight:'bolder'}}variant="contained" >Get Started</Button>
+                    <p style={{textAlign:'center',fontWeight:'bold',fontFamily:'sans-serif'}}>Revolutionize Your Bidding Game - Win More, Stress Less with Our Bid Management Software!</p>
+                        <Link to="/login" class="animated-button">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Get Started
+                        </Link>
+                    </span>
+                    <span style={{gridColumn:'2/3',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+                        <span style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                            <img style={{height:'20rem',maxWidth:'100%'}} src={serv}  />
+                            <p style={{color:'white',margin:'0',textAlign:'center',fontSize:'1rem',fontWeight:'bold',fontFamily:'monospace'}}>Cheretanet, An All-In-One Bidding Platform In Ethiopia</p>
+                        </span>
+                    </span>
+                    
                 </div>
             <br /><br /><br />
- 
             <div className='fluid'>
             <h2 className='fw-bold text-center'>What Can We Do For You Today?</h2>
             <div className='container fluid px-4 '>

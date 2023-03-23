@@ -1,7 +1,7 @@
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
-
+@import url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
 @-webkit-keyframes fade-in-fwd {
   0% {
     -webkit-transform: translateZ(-80px);
@@ -198,4 +198,13 @@ code {
 .bounce-in-bottom {
   -webkit-animation: bounce-in-bottom 1.1s both;
   animation: bounce-in-bottom 1.1s both;
+}
+.welcome{
+  background-image: url('./resources/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: grid;
+  grid-template-columns: 50% 45%;
+  grid-gap: 5%;
 }

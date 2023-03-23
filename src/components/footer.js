@@ -1,6 +1,6 @@
 import React from "react"
 import {Link} from "react-router-dom";
-const Footer = () => <footer className="page-footer font-small blue pt-4 footer_bg ">
+const Footer = () => <footer className="page-footer font-small blue pt-4 footer_bg">
     <div className="container-fluid text-center text-md-left ">
         <div className="row">
             <div className="col-md-4 mt-md-0 mt-3">
@@ -19,7 +19,7 @@ const Footer = () => <footer className="page-footer font-small blue pt-4 footer_
                 </ul>
             </div>
             <div className="col-md-4 mb-md-0 mb-3">
-                <h4 className="text-uppercase">contact us</h4>
+                <h4 className="text-uppercase" id="contact">contact us</h4>
                 <h6>FDRE Public Procurement and Property Authority</h6>
                 <h6>6 killo In front of Yekatit 12 Referral Hospital</h6>
                 <h6>P.O.Box 32387</h6>
