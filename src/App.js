@@ -5,6 +5,8 @@ import Navbarcomp from "./components/Navbarcomp";
 import Footer from "./components/footer";
 import Layout from "./pages/layout";
 import Login from './pages/login'
+import Signup from './pages/signup'
+
 import Nopage from './pages/nopage'
 function App() {
   return (
@@ -18,7 +20,7 @@ function App() {
           <Route path="adverts" element={<Login />} />
           <Route path="about" element={<Login />} />
           <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Login />}/>
+          <Route path="signup" element={<Signup />}/>
           <Route path="mailus" element={<Login />} />
           <Route path="*" element={<Nopage />} />
         </Route>

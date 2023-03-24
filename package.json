@@ -16,6 +16,7 @@
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
+    "react-utils": "^1.0.0",
     "tw-elements": "^1.0.0-beta1",
     "web-vitals": "^2.1.4"
   },

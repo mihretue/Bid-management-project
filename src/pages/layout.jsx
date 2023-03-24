@@ -1,5 +1,5 @@
 import {Navbar,Nav} from "react-bootstrap";
-import React, { Component } from 'react';
+import React from 'react';
 import {TfiEmail} from "react-icons/tfi";
 import logo6 from "../resources/logo6.png";
 import {Link,Outlet } from "react-router-dom";
