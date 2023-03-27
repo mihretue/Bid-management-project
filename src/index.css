@@ -209,73 +209,45 @@ code {
   grid-gap: 5%;
 }
 
-.login {
-  width: 50vw;
-  min-height: 20rem;
-  height: 'auto';
-  margin: auto;
-  background-color: darkslategray;
+.Auth-form-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-}
-
-.login form input {
-  height: 2rem;
-}
-
-.signup {
+  align-items: center;
+  max-width: 70%;
   min-height: 20rem;
   height: auto;
+  margin: 1rem auto;
 }
 
-#regForm {
-  background-color: #ffffff;
-  margin: 100px auto;
-  padding: 40px;
-  width: 70%;
-  min-width: 300px;
-}
-/* Style the input fields */
-input {
-  padding: 10px;
+.Auth-form {
   width: 100%;
-  font-size: 17px;
-  font-family: Raleway;
-  border: 1px solid #aaaaaa;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  background-color: white;
+  border:0.1rem solid rgb(89, 235, 84);
 }
 
-/* Mark input boxes that gets an error on validation: */
-input.invalid {
-  background-color: #ffdddd;
+.Auth-form p{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-/* Hide all steps by default: */
-.tab {
-  display: none;
+.Auth-form-content {
+  padding-left: 12%;
+  padding-right: 12%;
 }
 
-/* Make circles that indicate the steps of the form: */
-.step {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbbbbb;
-  border: none;
-  border-radius: 50%;
-  display: inline-block;
-  opacity: 0.5;
+.Auth-form-title {
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
 }
 
-/* Mark the active step: */
-.step.active {
-  opacity: 1;
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
 }
-
-/* Mark the steps that are finished and valid: */
-.step.finish {
-  background-color: #04AA6D;
-}
-
-

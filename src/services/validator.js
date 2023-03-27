@@ -1,19 +1,47 @@
 export function validator(input){
 //Email Validation
-if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)==false){
-    return 'Email';
+if(input.userName.length<3){
+    return('ul')
 }else{
-    if(input.pass.length<8 || input.cPass.length<8)
-        return('passLength')
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)==false){
+    return 'Em';
+}else{
+    if(input.pass.length<8)
+        return 'pl'
     else{
-        if(input.pass!==input.cPass){
-            return('passUnmatching!');
+        if(input.cPass.length<8){
+        return 'cpl' 
         }
         else{
-            return('0');
+        if(input.pass!==input.cPass){
+            return 'un';
+        }
+        else{
+            return '0';
+        }
         }
       }
 }
+}
+
+
+
+
+
+// if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)==false){
+//     return 'Email';
+// }else{
+//     if(input.pass.length<8 || input.cPass.length<8)
+//         return('passLength')
+//     else{
+//         if(input.pass!==input.cPass){
+//             return('passUnmatching!');
+//         }
+//         else{
+//             return('0');
+//         }
+//       }
+// }
 
 
 
