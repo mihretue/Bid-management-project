@@ -6,6 +6,7 @@ import Layout from "./pages/layout";
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import About from "./pages/About";
+import Adverts from "./pages/adverts";
 import Nopage from './pages/nopage';
 import { useEffect } from "react";
 import {TbArrowBigUpLineFilled} from 'react-icons/tb'
@@ -20,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="adverts" element={<Login />} />
+          <Route path="adverts" element={<Adverts />} />
           <Route path="about" element={<About />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />}/>

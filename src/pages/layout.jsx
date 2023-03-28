@@ -12,14 +12,17 @@ return(
         <Navbar.Collapse id="basic-navbar-nav" className="align-items-end">
           <Nav className="me-auto nav_item fw-bold" >
             <Nav.Link as={Link} to={"/"} >Home</Nav.Link>
-            <Nav.Link as={Link} to={"/adverts"} >Advertisements</Nav.Link>
+            <Nav.Link as={Link} to={"/adverts"} >Bid Advertisements</Nav.Link>
             <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
            <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
 
           </Nav>
           <Nav style={{ fontWeight: 'bold' }}>
-            <Nav.Link as={Link} to={"/login"} ><button className="btn btn-primary">Login</button></Nav.Link>
-            <Nav.Link as={Link} to={"/signup"} ><button className="btn btn-outline-secondary">Sign Up</button></Nav.Link>
+            {!localStorage.getItem('user')&&
+            <Nav.Link as={Link} to={"/login"} ><button className="btn btn-primary">Login</button></Nav.Link>}
+            {
+            !localStorage.getItem('user')&&
+            <Nav.Link as={Link} to={"/signup"} ><button className="btn btn-outline-secondary">Sign Up</button></Nav.Link>}
             <Nav.Link as={Link} to={"/mailus"} ><TfiEmail size={30} data-toggle="tooltip" data-placement="bottom" title="Mail us" /></Nav.Link>
           </Nav>
         </Navbar.Collapse>
