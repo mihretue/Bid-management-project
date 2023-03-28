@@ -6,12 +6,16 @@ import Layout from "./pages/layout";
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import About from "./pages/About";
+import Nopage from './pages/nopage';
+import { useEffect } from "react";
+import {TbArrowBigUpLineFilled} from 'react-icons/tb'
 
-import Nopage from './pages/nopage'
 function App() {
+ 
   return (
     
     <div>
+      
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -25,6 +29,7 @@ function App() {
         </Route>
       </Routes>
       <Footer />
+      <div title="Go to the top of the page" style={{width:'4rem',height:'4rem',backgroundColor:'darkred',position:'fixed',bottom:'1.5rem',right:'1rem',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'0.5rem'}}><a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  /></a></div>
       </BrowserRouter>
     </div>
   

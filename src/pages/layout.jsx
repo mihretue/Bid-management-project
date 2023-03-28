@@ -3,10 +3,9 @@ import React from 'react';
 import {TfiEmail} from "react-icons/tfi";
 import logo6 from "../resources/logo6.png";
 import {Link,Outlet } from "react-router-dom";
-
 const Layout=()=>{
 return(
-    <div >
+    <div>
         <Navbar expand="lg"className="container fluid" >
           <Navbar.Brand href="#home"><img src={logo6} style={{width:'10rem',height:'2rem'}} alt="message"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

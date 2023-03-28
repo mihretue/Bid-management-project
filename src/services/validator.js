@@ -1,5 +1,6 @@
-export function validator(input){
+export function validator(input,type){
 //Email Validation
+if(type=="signup"){
 if(input.userName.length<3){
     return('ul')
 }else{
@@ -13,38 +14,51 @@ if(input.userName.length<3){
         return 'cpl' 
         }
         else{
-        if(input.pass!==input.cPass){
-            return 'un';
-        }
-        else{
-            return '0';
-        }
-        }
+            const uppercaseRegExp   = /(?=.*?[A-Z])/;
+    const lowercaseRegExp   = /(?=.*?[a-z])/;
+    const digitsRegExp      = /(?=.*?[0-9])/;
+    const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+    const uppercasePassword =   uppercaseRegExp.test(input.pass);
+    const lowercasePassword =   lowercaseRegExp.test(input.pass);
+    const digitsPassword =      digitsRegExp.test(input.pass);
+    const specialCharPassword = specialCharRegExp.test(input.pass);
+     if(!uppercasePassword){
+       return 'upc' 
+    }else if(!lowercasePassword){
+       return 'loc' 
+    }else if(!digitsPassword){
+        return 'dig' 
+    }else if(!specialCharPassword){
+        return 'spec' 
+    }else if(input.pass!==input.cPass){
+        return 'un';
+    }
+    else{
+        return '0';
+    }
+    }
       }
 }
 }
+}else{
+if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)==false){
+    return 'Em';
+}else{
+    if(input.pass.length<8)
+        return 'pl'
+}
 
 
 
 
 
-// if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)==false){
-//     return 'Email';
-// }else{
-//     if(input.pass.length<8 || input.cPass.length<8)
-//         return('passLength')
-//     else{
-//         if(input.pass!==input.cPass){
-//             return('passUnmatching!');
-//         }
-//         else{
-//             return('0');
-//         }
-//       }
-// }
 
 
 
 
 
+
+
+
+}
 }

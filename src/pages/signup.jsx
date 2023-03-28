@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useEffect,useState } from "react";
-import OutlinedInput from '@mui/material/OutlinedInput';
+// import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -13,12 +13,42 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { validator } from "../services/validator";
 import { agecalc } from "../services/agecalc";
 import { useNavigate } from "react-router-dom";
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import axios from "axios";
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {FcGoogle} from "react-icons/fc";
+
+
 export default function (props) {
     useEffect(()=>{document.title='Cheretanet | Sign Up'})
+    const [ user, setUser ] = useState([]);
+    const [ profile, setProfile ] = useState([]);
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => setUser(codeResponse),
+        onError: (error) => console.log('Login Failed:', error)
+    });
+    useEffect(
+        () => {
+            if (user) {
+                axios
+                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                        headers: {
+                            Authorization: `Bearer ${user.access_token}`,
+                            Accept: 'application/json'
+                        }
+                    })
+                    .then((res) => {
+      setInput({...input,fName:res.data.given_name,lName:res.data.family_name,email:res.data.email})
+                    })
+                    .catch((err) => console.log(err));
+            }
+        },[ user ]
+    );
 
   const navigate=useNavigate()
   const [input , setInput] = useState({fName:"" ,lName:"",email:"",pass:"",cPass:"",role:"",publicBody:"",bDay: '' ,userName:'',error:false,errorMessage:"",uError:false,emError:false,pError:false,cpError:false,bdError:false,uErrorM:'',emErrorM:'',pErrorM:'',cpErrorM:'',bdErrorM:''})
-    useEffect(()=>{document.title= 'Cheretanet || signUp' },[])
+    
   const [showPassword, setShowPassword] = React.useState(false);
   const [showCPassword, setShowCPassword] = React.useState(false);
 
@@ -27,51 +57,64 @@ export default function (props) {
     else setShowCPassword((show) => !show);
 
   } 
-const handleChange = (event) => {
+  const handleChange = (event) => {
     const {name,value}=event.target;
     setInput({...input,[name]:value})
   };
-
   const handleSubmit=(e)=>{
     e.preventDefault()
     if(agecalc(input)<18){
       setInput({...input,bdError:true,bdErrorM:"You are under 18 years old, you can't have cheretanet account"})
     }else{
       input.bdError=false;input.bd=''
-      if(validator(input)==="ul"){
+      if(validator(input,"signup")==="ul"){
       setInput({...input,uError:true,uErrorM:"Username must be at least 3 characters long"})
       }else{
       input.uError=false;input.uErrorM=''
-      if(validator(input)==="Em"){
+      if(validator(input,"signup")==="Em"){
       setInput({...input,emError:true,emErrorM:"Invalid Email Format"})
       }else{
       input.emError=false;input.emErrorM=''
-      if(validator(input)==="pl"){
+      if(validator(input,"signup")==="pl"){
       setInput({...input,pError:true,pErrorM:"Password must be at least 8 characters long"})
       }else{
       input.pError=false;input.pErrorM=''
-      if(validator(input)==="cpl"){
+      if(validator(input,"signup")==="cpl"){
       setInput({...input,cpError:true,cpErrorM:"Password must be at least 8 characters long"})
       }else{
       input.cpError=false;input.cpErrorM=''
-      if(validator(input)==="un"){
+      if(validator(input,"signup")==="upc"){
+      setInput({...input,pError:true,pErrorM:"Password must have uppercase letter"})
+      }else{
+      input.pError=false;input.pErrorM=''
+      if(validator(input,"signup")==="loc"){
+      setInput({...input,pError:true,pErrorM:"Password must have lowercase letter"})
+      }else{
+      input.pError=false;input.pErrorM=''
+      if(validator(input,"signup")==="dig"){
+      setInput({...input,pError:true,pErrorM:"Password must have at least one digit"})
+      }else{
+      input.pError=false;input.pErrorM=''
+      if(validator(input,"signup")==="spec"){
+      setInput({...input,pError:true,pErrorM:"Password must have at least one special character"})
+      }else{
+      input.pError=false;input.pErrorM=''
+      if(validator(input,"signup")==="un"){
       setInput({...input,cpError:true,cpErrorM:"Passwords don't match"})
       }else{
       input.cpError=false;input.cpErrorM=''
-      
-      }
-      }
-      }
-      }
-      }
+      setInput({...input,cpError:false,cpErrorM:""})
+
+      }}}}}}}}
     }
+  }
   }
 
   return (
     <div className="Auth-form-container" style={{width:'85%',margin:'1rem auto'}}>
       <form className="Auth-form" onSubmit={handleSubmit} >
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Create Your cheretanet Account</h3>
+          <h3 className="Auth-form-title">Create Your <p style={{display:'inline',color:'green'}}>cheretanet</p> Account</h3>
           <div className="text-center">
             <p style={{margin:'0',display:'inline'}}>Already registered?{" "}</p>
             <span className="link-primary" style={{cursor:'pointer'}} onClick={()=>{
@@ -121,7 +164,6 @@ const handleChange = (event) => {
           style={{width:'100%'}}
           value= {input.userName}
           onChange={handleChange}
-
         />
           </div>
           <div className="form-group mt-3">
@@ -209,6 +251,7 @@ const handleChange = (event) => {
             helperText={input.pErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif",fontWeight:'bold'}}>Your Password, example: John_Doe@4$^^</p> }
             value={input.pass}
            onChange={handleChange}
+           defaultValue='initial value'
            style={{width:'100%'}}
             type={showPassword ? 'text' : 'password'}
             InputProps={{
@@ -250,9 +293,22 @@ helperText={input.cpErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"
           />
           </div>  
             <div className="d-grid gap-2 mt-3">
-            <button type="submit" className="btn btn-primary">
+            <button style={{width:'35%',margin:'1rem auto'}} type="submit" className="btn btn-primary">
               Submit
             </button>
+          </div>
+          <div style={{width:'100%',display:'flex',alignItems:'center'}} className="mt-3">
+            <span style={{backgroundColor:'rgba(0, 0, 0, 0.521)',width:'49%',height:'0.5px'}}></span>
+            <p>or</p>
+            <span  style={{backgroundColor:'rgba(0, 0, 0, 0.521)',width:'49%',height:'0.5px'}}></span>
+
+          </div>
+          <div className="d-grid gap-2 mt-3">
+            <div  style={{margin:'auto',height:'3rem',maxWidth:'80%'}}>
+              <Button style={{height:'100%'}} onClick={() => login()} variant="outlined" color='primary' startIcon={<FcGoogle />}>
+                 Sign up with Google 
+              </Button>
+           </div>
           </div>
         </div>
       </form>

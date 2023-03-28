@@ -5,6 +5,8 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
+import { validator } from "../services/validator";
+
 const Login=()=>{
     useEffect(()=>{document.title='Cheretanet | Log in'})
     const navigate=useNavigate()
@@ -18,11 +20,28 @@ const handleChange = (event) => {
     const {name,value}=event.target;
     setInput({...input,[name]:value})
   };
+  const handleSubmit=(e)=>{
+    e.preventDefault()
+      if(validator(input,"login")==="Em"){
+      setInput({...input,emError:true,emErrorM:"Invalid Email Format"})
+      }else{
+      input.emError=false;input.emErrorM=''
+      if(validator(input,"login")==="pl"){
+      setInput({...input,pError:true,pErrorM:"Password must be at least 8 characters long"})
+      }else{
+      input.pError=false;input.pErrorM=''
+      setInput({...input,pError:false,pErrorM:""})
+
+      //BACKEND ACCOUNT DETAILS CHECKER
+      }
+    }
+    }
+
 return(
     <div className="Auth-form-container">
-        <form className="Auth-form">
+        <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Log In To Your cheretanet Account</h3>
+            <h3 className="Auth-form-title">Log In To Your <p style={{display:'inline',color:'green'}}>cheretanet</p> Account</h3>
             <div className="text-center">
               Not registered yet?{" "}
               <span className="link-primary" style={{cursor:'pointer'}} onClick={()=>{navigate('/signup')}}>
@@ -70,13 +89,14 @@ return(
           }}
           />
           </div> 
-            <div className="d-grid gap-2 mt-3">
+            <div className="d-grid gap-2 mt-3" style={{width:'35%',margin:'auto'}}>
               <button type="submit" className="btn btn-primary">
                 Submit
               </button>
             </div>
+            <div></div>
             <p className="text-center mt-2">
-              Forgot <a href="#">password?</a>
+              <a href="#" style={{color:'brown'}}>Forgot password?</a>
             </p>
           </div>
         </form>
