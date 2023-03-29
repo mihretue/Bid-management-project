@@ -3,7 +3,7 @@ const Adverts=()=>{
     useEffect(()=>{document.title='Cheretanet | Bid Advertisements'})
 
 return(<>
-    <div id="adverts">
+    <div id="adverts" className="container">
         
     </div>
     </>
