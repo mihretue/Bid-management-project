@@ -25,14 +25,14 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.8",
     "react-icons": "^4.8.0",
+    "react-paginate": "^8.1.5",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
     "react-utils": "^1.0.0",
     "styled-components": "^5.3.9",
     "tw-elements": "^1.0.0-beta1",
-    "web-vitals": "^2.1.4",
-    "proxy": "http://localhost:5000"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
