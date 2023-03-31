@@ -2,11 +2,12 @@ import { useEffect,useState } from "react"
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import {AiOutlineSearch} from 'react-icons/ai'
-
+import StickyHeadTable from "../components/Table";
+import countriesData from "../data/countries";
 const Adverts=()=>{
     useEffect(()=>{document.title='Cheretanet | Bid Advertisements'})
 
- 
+    const [countries] = useState([...countriesData]);
 
 
 return(<>
@@ -53,8 +54,8 @@ return(<>
         />
     </div>
 
-    <div className="mt-3" style={{width:'100%',height:'auto',minHeight:'20rem',backgroundColor:'white'}}>
-     
+    <div className= " bg-body-tertiary rounded shadow mt-3 border border-info rounded" style={{maxWidth:'100%',height:'auto',minHeight:'20rem',backgroundColor:'white'}}>
+      <StickyHeadTable />
    </div>
 
     </div> 
