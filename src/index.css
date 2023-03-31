@@ -256,11 +256,14 @@ label {
   color: rgb(34, 34, 34);
 }
 
-#adverts{
+#advertss{
   max-width: 80%;
   min-height: 20rem;
   margin: auto;
-  border: 1px solid rgba(0, 0, 0, 0.432);
-  border-radius: 0.5rem;
-  height: auto !important;
+  /* border: 1px solid rgba(0, 0, 0, 0.432); */
+  border-radius: 0.3rem;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 }
+

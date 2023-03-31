@@ -8,9 +8,13 @@ import image5 from "../resources/supplier.jpg";
 import image6 from "../resources/registration.png";
 import Button from '@mui/material/Button';
 import signup from "../resources/howto.jpg";
+import { useEffect } from "react";
 import {FcQuestions} from 'react-icons/fc'
 import serv from '../resources/serv.svg'
 const Home = () => {
+    useEffect(() => {
+        document.title="Cheretanet | Home"
+    }, []);
     return (
         <section>
                 <div className="welcome" style={{maxWidth:'100%',height:'33rem'}} >

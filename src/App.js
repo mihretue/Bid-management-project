@@ -8,7 +8,6 @@ import SignUp from './pages/signup';
 import About from "./pages/About";
 import Adverts from "./pages/adverts";
 import Nopage from './pages/nopage';
-import { useEffect } from "react";
 import {TbArrowBigUpLineFilled} from 'react-icons/tb'
 
 function App() {
