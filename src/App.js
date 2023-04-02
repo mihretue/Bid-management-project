@@ -8,6 +8,7 @@ import SignUp from './pages/signup';
 import About from "./pages/About";
 import Adverts from "./pages/adverts";
 import Nopage from './pages/nopage';
+import Specific_adverts from "./pages/specific_adverts";
 import {TbArrowBigUpLineFilled} from 'react-icons/tb'
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />}/>
           <Route path="mailus" element={<Login />} />
+          <Route path="specific_adverts" element={<Specific_adverts />} />
           <Route path="*" element={<Nopage />} />
         </Route>
       </Routes>

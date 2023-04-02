@@ -25,12 +25,14 @@ db.once("open", function () {
 });
 
 app.get('/gettenders', (request, response) => {
-  advertModel.find((err,res)=>{
-     res.json()
+     advertModel.find().
+     then((err,docs)=>{
+        response.json({res:docs})
+     })
     
 
 
-  })
+  
  });
 
 

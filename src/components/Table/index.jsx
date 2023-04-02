@@ -7,10 +7,19 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-  
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-
-
+const fetchTenders=()=>{
+  fetch('http://localhost:3001/gettenders')
+  .then(res=>res.json())
+  .then((res)=>{
+    console.log(res)
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+}
 
   const columns = [
     { 
@@ -52,7 +61,11 @@ import TablePagination from '@mui/material/TablePagination';
   export default function StickyHeadTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
+    
+    useEffect(()=>{
+      fetchTenders();
+    })
+
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
     };
@@ -63,10 +76,11 @@ import TablePagination from '@mui/material/TablePagination';
     };
 
     return (
+      <Link to='/specific_adverts' className="text-decoration-none">
       <Paper sx={{ maxWidth: '100%', overflow: 'hidden' }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead>
+         <TableHead>
               <TableRow>
                 {columns.map((column) => (
                   <TableCell
@@ -80,7 +94,7 @@ import TablePagination from '@mui/material/TablePagination';
                 ))}
               </TableRow>
             </TableHead>
-            <TableBody>
+             <TableBody>
               {rows.map((row) => {
                   return (
                     <TableRow style={{fontSize:'0.8rem',minHeight:'1rem'}} key={row.id}  hover role="checkbox" tabIndex={-1}>
@@ -106,6 +120,7 @@ import TablePagination from '@mui/material/TablePagination';
                   );
                 })}
             </TableBody>
+            
           </Table>
         </TableContainer>
         <TablePagination
@@ -118,6 +133,7 @@ import TablePagination from '@mui/material/TablePagination';
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      </Link>
     );
  
 };

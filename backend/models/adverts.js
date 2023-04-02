@@ -25,5 +25,5 @@ const advertSchema = new mongoose.Schema({
   });
   
 
-const Advert = mongoose.model("Advert", advertSchema);
-module.exports = Advert;
+const advertModel = mongoose.model("Advert", advertSchema);
+module.exports = advertModel;
