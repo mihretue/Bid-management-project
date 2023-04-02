@@ -22,8 +22,8 @@ const advertSchema = new mongoose.Schema({
       type: Date,
       required: true,
     }
-  });
+  },{collection:'Tenders'});
   
 
-const advertModel = mongoose.model("Advert", advertSchema);
+const advertModel = mongoose.model("advertModel", advertSchema);
 module.exports = advertModel;

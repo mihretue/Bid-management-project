@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 const port = 3001;
-const mongoUrl="mongodb+srv://mihretu:mihretuendeshawrkr@methane.0fjzoxr.mongodb.net/Tenders?retryWrites=true&w=majority";
+const mongoUrl="mongodb+srv://mihretu:mihretuendeshawrkr@methane.0fjzoxr.mongodb.net/Bid?retryWrites=true&w=majority";
 mongoose.connect(mongoUrl,
   {
     useNewUrlParser: true,
@@ -27,13 +27,20 @@ db.once("open", function () {
 app.get('/gettenders', (request, response) => {
      advertModel.find().
      then((err,docs)=>{
-        response.json({res:docs})
+      if(err) response.send(err)
+      else response.json({docs})
      })
-    
-
-
-  
  });
+
+ app.get('/gettender', (request, response) => {
+  const par=request.query.id
+  advertModel.findOne({_id:par})
+  .then((err,docs)=>{
+   if(err) response.send(err)
+   else
+    response.json({docs})
+  })
+});
 
 
 

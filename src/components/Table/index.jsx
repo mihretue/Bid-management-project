@@ -8,18 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 
-const fetchTenders=()=>{
-  fetch('http://localhost:3001/gettenders')
-  .then(res=>res.json())
-  .then((res)=>{
-    console.log(res)
-  })
-  .catch((err)=>{
-    console.log(err)
-  })
-}
 
   const columns = [
     { 
@@ -53,19 +43,27 @@ const fetchTenders=()=>{
     },
   ];
   
-  const rows = [
-  {id:'OPE-NCB-G-0029-2015-BID',title:'lot one computer equipment',ent:'ORG PE',cat:'Goods',app:'National',dead:'	Apr 28, 2023, 12:00:00 AM'},
-  {id:'1',title:'a',ent:'moe',cat:'goods',app:'s',dead:'2'}
-  ];
-  
   export default function StickyHeadTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    
+    const [rows,setRows]=useState([]);
+    const navigate=useNavigate();
     useEffect(()=>{
       fetchTenders();
-    })
+    },[])
 
+    const fetchTenders=()=>{
+      fetch('http://localhost:3001/gettenders')
+      .then(res=>res.json())
+      .then((res)=>{
+        setRows(res)
+      })
+      .catch((err)=>{
+        setRows([])
+        console.log(err)
+      })
+    }
+    
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
     };
@@ -76,9 +74,9 @@ const fetchTenders=()=>{
     };
 
     return (
-      <Link to='/specific_adverts' className="text-decoration-none">
+      
       <Paper sx={{ maxWidth: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
+        <TableContainer sx={{height:'auto'}}>
           <Table stickyHeader aria-label="sticky table">
          <TableHead>
               <TableRow>
@@ -97,7 +95,7 @@ const fetchTenders=()=>{
              <TableBody>
               {rows.map((row) => {
                   return (
-                    <TableRow style={{fontSize:'0.8rem',minHeight:'1rem'}} key={row.id}  hover role="checkbox" tabIndex={-1}>
+                    <TableRow onClick={()=>{navigate(`/tenders/${row._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={row.id}  hover role="checkbox" tabIndex={-1}>
                           <TableCell style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
               {row.id}
                           </TableCell>
@@ -117,6 +115,7 @@ const fetchTenders=()=>{
               {row.dead}
                           </TableCell>
                     </TableRow>
+              
                   );
                 })}
             </TableBody>
@@ -133,7 +132,6 @@ const fetchTenders=()=>{
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      </Link>
     );
  
 };

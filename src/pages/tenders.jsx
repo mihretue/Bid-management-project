@@ -4,7 +4,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import {AiOutlineSearch} from 'react-icons/ai'
 import StickyHeadTable from "../components/Table";
 import countriesData from "../data/countries";
-const Adverts=()=>{
+const Tenders=()=>{
     useEffect(()=>{document.title='Cheretanet | Bid Advertisements'})
 
     const [countries] = useState([...countriesData]);
@@ -64,4 +64,4 @@ return(<>
 }
 
 
-export default Adverts;
+export default Tenders;
