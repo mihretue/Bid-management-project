@@ -24,12 +24,28 @@ db.once("open", function () {
   console.log("Database Connected successfully!");
 });
 
-app.get('/gettenders', (request, response) => {
-     advertModel.find().
-     then((err,docs)=>{
-      if(err) response.send(err)
-      else response.json({docs})
-     })
+app.post('/gettenders', (request, response) => {
+     const {sortBy}=request.body;
+     if(sortBy=="Invitation Date"){
+      advertModel.find().sort({inv:1}).
+      then((err,docs)=>{
+       if(err) response.send(err)
+       else response.json(docs)
+      })
+     }else if(sortBy=="Alphabet"){
+      advertModel.find().sort({title:1}).
+      then((err,docs)=>{
+       if(err) response.send(err)
+       else response.json(docs)
+      })
+     }else if(sortBy=="Deadline"){
+      advertModel.find().sort({dead:1}).
+      then((err,docs)=>{
+       if(err) response.send(err)
+       else response.json(docs)
+      })
+     }else{;}
+     
  });
 
  app.get('/gettender', (request, response) => {

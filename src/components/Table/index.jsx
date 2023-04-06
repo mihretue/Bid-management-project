@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
@@ -13,7 +15,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
 import Button from '@mui/material/Button';
 import {BsArrowCounterclockwise} from 'react-icons/bs'
-
+import {GrRefresh} from 'react-icons/gr'
   const columns = [
     { 
       id: 'id', 
@@ -52,14 +54,20 @@ import {BsArrowCounterclockwise} from 'react-icons/bs'
     const [rows,setRows]=useState([]);
     const [isFetching,setIsFetching]=useState(true)
     const [errorFetching,setErrorFetching]=useState(false)
-
+    const [sortBy,setSortBy]=useState("Alphabet")
     const navigate=useNavigate();
     useEffect(()=>{
       fetchTenders();
     },[])
 
     const fetchTenders=()=>{
-      fetch('http://localhost:3001/gettenders')
+      fetch('http://localhost:3001/gettenders',{
+        method:'post',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({sortBy:sortBy})
+      })
       .then(res=>res.json())
       .then((res)=>{
         setRows(res)
@@ -69,6 +77,13 @@ import {BsArrowCounterclockwise} from 'react-icons/bs'
         setRows([])
         setErrorFetching(true)
       })
+    }
+
+    const sortTenders=(e)=>{
+      setSortBy(e.target.value)
+      if(e.target.value=="Alphabet"){
+        //
+      }
     }
     
     const handleChangePage = (event, newPage) => {
@@ -95,9 +110,29 @@ import {BsArrowCounterclockwise} from 'react-icons/bs'
               <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center'}}>Fetching Tenders List...</p>
            </div>
     }</div>
-        :
-      <Paper sx={{ maxWidth: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{height:'auto'}}>
+        :<>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'0.1rem solid green',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
+         <span>
+         <p style={{margin:'0',display:'inline',marginRight:'0.5rem'}}>Sort By</p>
+         <Select
+          id="demo-simple-select-autowidth"
+          autoWidth
+          name="role"
+          size="small"
+          required
+          value={sortBy}
+          onChange={sortTenders}
+          style={{marginLeft:'0',height:'1.5rem'}}
+        >
+          <MenuItem value="Alphabet">Alphabet</MenuItem>
+          <MenuItem value='Deadline'>Deadline</MenuItem>
+          <MenuItem value='Invitation Date'>Invitation Date</MenuItem>
+        </Select>
+        </span>
+         <Button variant="outlined" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchTenders();setIsFetching(true)}}>Refresh</Button>
+         </div>  
+      <Paper sx={{maxWidth: '100%', overflow: 'hidden' }}>
+      <TableContainer sx={{height:'auto'}}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -152,6 +187,7 @@ import {BsArrowCounterclockwise} from 'react-icons/bs'
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      </>
     );
  
 };

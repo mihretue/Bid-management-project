@@ -9,18 +9,36 @@ const advertSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    entity: {
+    ent: {
       type: String,
       required: true,
-    },category: {
+    },cat: {
       type: String,
       required: true,
-    },market: {
+    },app: {
       type: String,
       required: true,
-    },deadline: {
+    },dead: {
       type: Date,
       required: true,
+    },bidSec: {
+      type: String,
+      required: true,
+    },open: {
+      type: Date,
+      required: true,
+    },inv: {
+      type: Date,
+      required: true,
+    },partFee:{
+      type:String,
+      required:true
+    },visit:{
+      type:String,
+      required:true
+    },status:{
+      type:String,
+      required:true
     }
   },{collection:'Tenders'});
   
