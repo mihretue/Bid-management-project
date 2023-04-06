@@ -87,7 +87,7 @@ import {BsArrowCounterclockwise} from 'react-icons/bs'
            <div style={{display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
              <BiError size="1.5rem" />
              <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center',color:'red'}}>An Error Occurred!</p>
-            <Button onClick={()=>{fetchTenders();setIsFetching(true);setErrorFetching(false)}} style={{textTransform:'none'}} color="secondary" className="mt-3" variant="outlined" size="small" endIcon={<BsArrowCounterclockwise />}>Try Again</Button>
+            <Button onClick={()=>{fetchTenders();setIsFetching(true);setErrorFetching(false)}} style={{textTransform:'none'}} color="secondary" className="mt-3" variant="outlined" size="small" endIcon={<BsArrowCounterclockwise />}>Refresh</Button>
            </div>
            :
            <div style={{display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>

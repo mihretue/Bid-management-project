@@ -25,7 +25,7 @@ const columns = [
   ]
 
 const Tender = () => {
-useEffect(()=>{document.title='Cheretanet | Tender Details'},[])
+useEffect(()=>{document.title='Cheretanet | Tender Information'},[])
 useEffect(()=>{fetchTenderDetails()},[])
 const [tender,setTender]=useState({})
 const [rows,setRows]=useState([])
