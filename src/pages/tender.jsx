@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import {IoIosArrowBack} from 'react-icons/io'
 import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
+import {BiLinkExternal} from 'react-icons/bi'
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 const columns = [
     { 
@@ -70,8 +71,13 @@ const a=window.location.href.split('/')[4]
 }
 
 
-return (isFetching?
-        <div className="container" style={{margin:'auto',border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
+return (<>
+  <Link to={'/tenders'} style={{textDecoration:'none'}}>
+     <button style={{margin:'0 0 1rem 10%'}} type="button" className="btn btn-primary">
+     Back To Tenders List</button>
+  </Link>
+    {isFetching?
+        <div className="container" style={{border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
            {errorFetching?
            <div style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
              <BiError size="1.5rem" />
@@ -216,14 +222,10 @@ return (isFetching?
         </TableContainer>
         
       </Paper>
-      <Button variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem'}}>
+      <Button endIcon={<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
       Apply For This Bid
     </Button>
-    <Link to={'/tenders'} style={{textDecoration:'none'}}>
-    <Button startIcon={<IoIosArrowBack />} className="mt-0" variant="contained" color="secondary" style={{margin:'2rem auto',maxWidth:'20rem'}}>
-     Back to Tenders List
-    </Button></Link>
-      </div>
-    )
+      </div>}
+      </>)
 }                           
 export default Tender;
