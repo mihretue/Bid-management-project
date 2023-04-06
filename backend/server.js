@@ -32,7 +32,7 @@ app.post('/gettenders', (request, response) => {
        if(err) response.send(err)
        else response.json(docs)
       })
-     }else if(sortBy=="Alphabet"){
+     }else if(sortBy=="Title"){
       advertModel.find().sort({title:1}).
       then((err,docs)=>{
        if(err) response.send(err)

@@ -54,7 +54,7 @@ import {GrRefresh} from 'react-icons/gr'
     const [rows,setRows]=useState([]);
     const [isFetching,setIsFetching]=useState(true)
     const [errorFetching,setErrorFetching]=useState(false)
-    const [sortBy,setSortBy]=useState("Alphabet")
+    const [sortBy,setSortBy]=useState("Title")
     const navigate=useNavigate();
     useEffect(()=>{
       fetchTenders();
@@ -124,7 +124,7 @@ import {GrRefresh} from 'react-icons/gr'
           onChange={sortTenders}
           style={{marginLeft:'0',height:'1.5rem'}}
         >
-          <MenuItem value="Alphabet">Alphabet</MenuItem>
+          <MenuItem value="Title">Title</MenuItem>
           <MenuItem value='Deadline'>Deadline</MenuItem>
           <MenuItem value='Invitation Date'>Invitation Date</MenuItem>
         </Select>

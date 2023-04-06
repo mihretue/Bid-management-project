@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -18,7 +19,8 @@ import axios from "axios";
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {FcGoogle} from "react-icons/fc";
-
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function (props) {
     useEffect(()=>{document.title='Cheretanet | Sign Up'})
@@ -47,7 +49,7 @@ export default function (props) {
     );
 
   const navigate=useNavigate()
-  const [input , setInput] = useState({fName:"" ,lName:"",email:"",pass:"",cPass:"",role:"",publicBody:"",bDay: '' ,userName:'',error:false,errorMessage:"",uError:false,emError:false,pError:false,cpError:false,bdError:false,uErrorM:'',emErrorM:'',pErrorM:'',cpErrorM:'',bdErrorM:''})
+  const [input , setInput] = useState({fName:"" ,lName:"",email:"",pass:"",cPass:"",role:"",publicBody:"",bDay: '' ,userName:'',error:false,errorMessage:"",uError:false,emError:false,pError:false,cpError:false,bdError:false,uErrorM:'',emErrorM:'',pErrorM:'',cpErrorM:'',bdErrorM:'',agreed:false})
     
   const [showPassword, setShowPassword] = React.useState(false);
   const [showCPassword, setShowCPassword] = React.useState(false);
@@ -60,6 +62,10 @@ export default function (props) {
   const handleChange = (event) => {
     const {name,value}=event.target;
     setInput({...input,[name]:value})
+    if(document.getElementById('agreed').checked==true)
+       document.getElementById("subBtn").disabled=false;
+    else
+       document.getElementById("subBtn").disabled=true;
   };
   const handleSubmit=(e)=>{
     e.preventDefault()
@@ -291,9 +297,12 @@ helperText={input.cpErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"
             </InputAdornment>,
           }}
           />
+          </div> 
+          <div className="form-group mt-3">
+             <FormControlLabel control={<Checkbox id="agreed" name="agreed" value={input.agreed} onChange={handleChange} />} label={<p style={{margin:'0',display:'inline',fontSize:'0.9rem'}}>Agree to the <Link to="#">Terms And Conditions</Link> Of <p style={{margin:'0',display:'inline',color:'green'}}>cheretanet</p></p>} />
           </div>  
             <div className="d-grid gap-2 mt-3">
-            <button style={{width:'35%',margin:'1rem auto'}} type="submit" className="btn btn-primary">
+            <button id="subBtn" disabled style={{width:'35%',margin:'1rem auto'}} type="submit" className="btn btn-primary">
               Submit
             </button>
           </div>
@@ -305,7 +314,7 @@ helperText={input.cpErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"
           </div>
           <div className="d-grid gap-2 mt-3">
             <div  style={{margin:'auto',height:'3rem',maxWidth:'80%'}}>
-              <Button style={{height:'100%'}} onClick={() => login()} variant="outlined" color='primary' startIcon={<FcGoogle />}>
+              <Button style={{height:'100%',margin:'auto',width:'100%'}} onClick={() => login()} variant="outlined" color='primary' startIcon={<FcGoogle />}>
                  Sign up with Google 
               </Button>
            </div>
