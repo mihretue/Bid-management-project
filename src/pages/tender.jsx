@@ -11,6 +11,9 @@ import { useEffect } from "react";
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import {IoIosArrowBack} from 'react-icons/io'
+import CircularProgress from '@mui/material/CircularProgress';
+import {BiError} from 'react-icons/bi'
+import {BsArrowCounterclockwise} from 'react-icons/bs'
 const columns = [
     { 
         id: 'id', 
@@ -19,8 +22,6 @@ const columns = [
        
       }
   ]
-
-
 
 const Tender = () => {
 useEffect(()=>{document.title='Cheretanet | Tender Details'},[])
@@ -38,9 +39,8 @@ const [rows3,setRows3]=useState([
   {title:'VAT registration certificate', Information:'Having been submitted VAT registration certificate issued by the tax authority (in case of contract value of Birr 200,000.00 and above) in accordance with ITB Clause 4.6. '},
   {title:'Government Owned Entity', Information:'Compliance with conditions of ITB Clause 4.4. '}
 ])
-
-
-
+const [isFetching,setIsFetching]=useState(true)
+const [errorFetching,setErrorFetching]=useState(false)
 
 const fetchTenderDetails=()=>{
 const a=window.location.href.split('/')[4]
@@ -62,15 +62,30 @@ const a=window.location.href.split('/')[4]
   {title:'Participation Fee', Information:res.partFee},
   {title:'Bid Security Amount', Information:res.bidSec}
 ])
+  setIsFetching(false)
   })
   .catch((err)=>{
-    console.log(err)
+    setErrorFetching(true)
   })
 }
 
 
-return (
-        <div className="container" style={{padding:'0rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+return (isFetching?
+        <div className="container" style={{margin:'auto',border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
+           {errorFetching?
+           <div style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
+             <BiError size="1.5rem" />
+             <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center',color:'red'}}>An Error Occurred!</p>
+            <Button onClick={()=>{fetchTenderDetails();setIsFetching(true);setErrorFetching(false)}} style={{textTransform:'none'}} color="secondary" className="mt-3" variant="outlined" size="small" endIcon={<BsArrowCounterclockwise />}>Try Again</Button>
+           </div>
+           :
+           <div style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
+              <CircularProgress size="1.5rem" color="secondary"/>
+              <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center'}}>Fetching Tender Information...</p>
+           </div>
+    }</div>
+       :
+      <div className="container" style={{padding:'0rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
         <Paper sx={{ width: '90%',margin:'auto', overflow: 'hidden',border:'0.1rem solid gray' }}>
         <TableContainer sx={{ height:'auto'  }}>
           <Table stickyHeader aria-label="sticky table">
@@ -168,10 +183,8 @@ return (
                   );
                 })}
             </TableBody>
-            
           </Table>
         </TableContainer>
-        
       </Paper>
       <Paper className="mt-3" sx={{ width: '90%',margin:'auto', overflow: 'hidden',border:'0.1rem solid gray' }}>
         <TableContainer sx={{ height:'auto' }}>

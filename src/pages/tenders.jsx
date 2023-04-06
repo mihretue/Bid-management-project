@@ -54,7 +54,7 @@ return(<>
         />
     </div>
 
-    <div className= " bg-body-tertiary rounded shadow mt-3 border border-info rounded" style={{maxWidth:'100%',height:'auto',minHeight:'20rem',backgroundColor:'white'}}>
+    <div className= " bg-body-tertiary rounded shadow mt-3 border border-info rounded" style={{maxWidth:'100%',height:'auto',minHeight:'3rem',backgroundColor:'white'}}>
       <StickyHeadTable />
    </div>
 
