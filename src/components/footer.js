@@ -5,7 +5,7 @@ const Footer = () => <footer className="page-footer font-small blue pt-4 footer_
         <div className="row">
             <div className="col-md-4 mt-md-0 mt-3">
                 <h5 className="text-uppercase">About Us</h5>
-                <p >Electronic Government Procurement (eGP) refers to the use of digital technologies to enable a more efficient and transparent exchange of information, and interactions and transactions between government and the business community in the procurement of goods, services and works.</p>
+                <p >Cheretanet refers to the use of digital technologies to enable a more efficient and transparent exchange of information, and interactions and transactions between government and the business community in the procurement of goods, services and works.</p>
             </div>
 
             <hr className="clearfix w-100 d-md-none pb-0"/>

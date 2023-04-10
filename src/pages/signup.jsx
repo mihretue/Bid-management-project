@@ -25,7 +25,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 export default function (props) {
     useEffect(()=>{document.title='Cheretanet | Sign Up'})
     const [ user, setUser ] = useState([]);
-    const [ profile, setProfile ] = useState([]);
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
@@ -67,6 +66,21 @@ export default function (props) {
     else
        document.getElementById("subBtn").disabled=true;
   };
+  
+  const checkData=()=>{
+    fetch('http://localhost:3001/signup',{
+      method:'post',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(input)
+    })
+    .then(res=>res.json())
+    .then((res)=>{
+      console.log(res)
+    })
+    .catch((err)=>{console.log(err)})
+  }
+
+
   const handleSubmit=(e)=>{
     e.preventDefault()
     if(agecalc(input)<18){
@@ -110,7 +124,8 @@ export default function (props) {
       }else{
       input.cpError=false;input.cpErrorM=''
       setInput({...input,cpError:false,cpErrorM:""})
-
+      //js validation over, now backend.
+      checkData()
       }}}}}}}}
     }
   }
@@ -140,6 +155,7 @@ export default function (props) {
           style={{width:'100%'}}
           value= {input.fName}
           onChange={handleChange}
+          type="text"
 
         />
           </div>
@@ -154,6 +170,7 @@ export default function (props) {
           style={{width:'100%'}}
           value= {input.lName}
           onChange={handleChange}
+          type="text"
 
         />
           </div>
@@ -170,6 +187,8 @@ export default function (props) {
           style={{width:'100%'}}
           value= {input.userName}
           onChange={handleChange}
+          type="text"
+
         />
           </div>
           <div className="form-group mt-3">
@@ -224,6 +243,7 @@ export default function (props) {
           size="small"
           style={{width:'100%'}}
           onChange={handleChange}
+          type="text"
 
               />
           </div>
@@ -237,6 +257,7 @@ export default function (props) {
           id="outlined-error-helper-text"
           label="Email"
           name="email"
+          type="email"
         //   defaultValue="Hello World"
           helperText={input.emErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif",fontWeight:'bold'}}>Your Email, example: John_Doe6@gmail.com</p> }
           required
@@ -302,7 +323,7 @@ helperText={input.cpErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"
              <FormControlLabel control={<Checkbox id="agreed" name="agreed" value={input.agreed} onChange={handleChange} />} label={<p style={{margin:'0',display:'inline',fontSize:'0.9rem'}}>Agree to the <Link to="#">Terms And Conditions</Link> Of <p style={{margin:'0',display:'inline',color:'green'}}>cheretanet</p></p>} />
           </div>  
             <div className="d-grid gap-2 mt-3">
-            <button id="subBtn" disabled style={{width:'35%',margin:'1rem auto'}} type="submit" className="btn btn-primary">
+            <button onClick={()=>{navigate('/waitforapproval')}} id="subBtn" disabled style={{width:'35%',margin:'1rem auto',justifyContent:'center',alignItems:'center'}} type="submit" className="btn btn-primary">
               Submit
             </button>
           </div>

@@ -58,6 +58,33 @@ app.post('/gettenders', (request, response) => {
   })
 });
 
+app.post('/signup', (request, response) => {
+  const input=request.body;
+  userModel.findOne({uName:input.userName})
+  .then((err,docs)=>{
+   if(err) 
+     response.send(err)
+   else{
+    if(docs)
+       response.json({"res":"uName"})
+    else{
+     userModel.findOne({email:input.email})
+     .then((err,docs)=>{
+      if(err) 
+        response.send(err)
+      else{
+        if(docs) 
+          response.json({"res":"email"})
+        else{
+          response.json({"res":"ok"})
+        }
+      }
+     })
+
+   }
+   }
+  })
+});
 
 
 

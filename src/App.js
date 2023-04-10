@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Tenders from "./pages/tenders";
 import Nopage from './pages/nopage';
 import Tender from "./pages/tender";
+import WaitForApproval from "./pages/waitforapproval";
 import {TbArrowBigUpLineFilled} from 'react-icons/tb'
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />}/>
           <Route path="mailus" element={<Login />} />
+          <Route path="waitforapproval" element={<WaitForApproval />} />
           <Route path="tenders/:id" element={<Tender />} />
           <Route path="*" element={<Nopage />} />
         </Route>
