@@ -6,12 +6,17 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import { validator } from "../services/validator";
-
+import LoadingButton from '@mui/lab/LoadingButton';
+import {BiError} from 'react-icons/bi'
 const Login=()=>{
     useEffect(()=>{document.title='Cheretanet | Log in'})
     const navigate=useNavigate()
     const [showPassword, setShowPassword] = useState(false);
     const [input , setInput] = useState({email:"",pass:"",error:false,errorMessage:"",emError:false,pError:false,emErrorM:'',pErrorM:''})
+
+    const [isLoggingIn,setIsLoggingIn]=useState(false)
+    const [errorLoggingIn,setErrorLoggingIn]=useState()
+
     const handleClickShowPassword = (a) =>{
     setShowPassword((show) => !show);
 
@@ -20,6 +25,55 @@ const handleChange = (event) => {
     const {name,value}=event.target;
     setInput({...input,[name]:value})
   };
+
+  const fetchUserData=()=>{
+    fetch('http://localhost:3001/user',{
+      method:'post',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(input)
+    })
+    .then((res)=>res.json())
+    .then((res)=>{
+       if(res.approved==false){
+        navigate('/waitforapproval')
+       }else{
+        //navigate to home
+       }
+    })
+  }
+
+  const checkData=()=>{
+    setIsLoggingIn(true)
+    fetch('http://localhost:3001/login',{
+      method:'post',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(input)
+    })
+    .then(res=>res.json())
+    .then((res)=>{
+      setIsLoggingIn(false)
+      if(res.res=="ok"){
+        input.emError=false;input.emErrorM=''
+        input.pError=false;input.pErrorM=''
+        setInput({...input,pError:false,pErrorM:""})
+        fetchUserData(input.email)
+      }else{
+        if(res.res=="email")
+            setInput({...input,emError:true,emErrorM:"This email doesn't exist!"})
+        else if(res.res=="pass"){
+           input.emError=false;input.emErrorM=''
+           setInput({...input,pError:true,pErrorM:"Incorrect Password"})
+      }else{
+         setIsLoggingIn(false)
+         setErrorLoggingIn(true)
+      }
+    }
+    })
+    .catch((err)=>{
+         setIsLoggingIn(false)
+         setErrorLoggingIn(true)
+    })
+  }
   const handleSubmit=(e)=>{
     e.preventDefault()
       if(validator(input,"login")==="Em"){
@@ -31,8 +85,7 @@ const handleChange = (event) => {
       }else{
       input.pError=false;input.pErrorM=''
       setInput({...input,pError:false,pErrorM:""})
-
-      //BACKEND ACCOUNT DETAILS CHECKER
+      checkData()
       }
     }
     }
@@ -89,11 +142,25 @@ return(
           }}
           />
           </div> 
-            <div className="d-grid gap-2 mt-3" style={{width:'35%',margin:'auto'}}>
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
-            </div>
+          <div className="d-grid gap-2 mt-3">
+            <LoadingButton
+            loading={isLoggingIn?true:false}
+            loadingPosition="end"
+            variant="contained"
+            id="subBtn"
+            style={{fontFamily:'serif',textTransform:'none',width:'35%',margin:'1rem auto',justifyContent:'center',alignItems:'center'}} 
+            type="submit"
+            size="small"
+          >
+            Log in
+          </LoadingButton>
+          {errorLoggingIn&&
+          <span style={{justifyContent:'center',alignItems:'center',display:'flex',flexDirection:'column',maxWidth:"30rem",minHeight:'1.5rem',height:'auto',margin:'auto'}}>
+            <BiError size="1.5rem" color="red" />
+            <p style={{margin:'0',color:'red',fontSize:'0.8rem',fontFamily:'monospace'}}>Some Error occurred, please try again</p>
+         </span>}
+          
+          </div>
             <div></div>
             <p className="text-center mt-2">
               <a href="#" style={{color:'brown'}}>Forgot password?</a>

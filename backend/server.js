@@ -94,6 +94,31 @@ app.post('/signup', (request, response) => {
       .catch(err=>response.json(err))
 })
 
+app.post('/login', (request, response) => {
+  const input=request.body;
+  userModel.findOne({email:input.email})
+  .then((docs)=>{
+    if(!docs)
+       response.json({res:"email"})
+    else{
+      if(docs.pass==input.pass){
+       response.json({res:"ok"})
+      }else{
+        response.json({res:"pass"})
+       }
+      }})
+      .catch(err=>response.json(err))
+})
+
+app.post('/user', (request, response) => {
+  const input=request.body;
+  userModel.findOne({email:input.email})
+  .then((docs)=>{
+    response.json(docs)
+  })
+  .catch(err=>response.json(err))
+})
+
 
 
 
