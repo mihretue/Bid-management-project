@@ -56,9 +56,9 @@ checkTimeline
 
 
     return (
-      <div className='d-flex justify-content-center' style={{marginBottom:'20rem'}}>
-            <Card className='container'style={{height:'20rem',marginTop:'2rem'}}>
-      <CardMedia>
+      <div className='d-flex justify-content-center' style={{marginBottom:'20rem',maxWidth:'80%',margin:'0 auto 10rem auto'}}>
+            <Card className='container'style={{minHeight:'20rem',marginTop:'2rem'}}>
+            <CardMedia>
             <svg className="checkmark"
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -82,15 +82,20 @@ checkTimeline
         <Typography className="d-flex justify-content-center check text-info" gutterBottom variant="h4" component="div">
           Approval Delay
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography style={{textAlign:'center'}} variant="body2" color="text.secondary">
             We understand that you need to access the system right away. Unfortunately, the system should take time to process your credentiallity 
             so we follow certain approval processes. In the meantime, you could use the system to get tenders and know the system better.
         </Typography>
+        <Typography style={{textAlign:'center',marginTop:'1rem'}} variant="body2" color="text.secondary">
+            You will receive an email immediately after approval.
+        </Typography>
       </CardContent>
       <CardActions>
-        <Link to='/'>
-        <Button size='small'>Back</Button>
+        <Button size='small' variant='outlined' style={{display:'block !important',maxWidth:'20rem',margin:'2rem auto'}}>
+        <Link to='/' style={{textDecoration:'none'}}>
+          Go Back to Home 
         </Link>
+        </Button>
       </CardActions>
     </Card>
     </div>

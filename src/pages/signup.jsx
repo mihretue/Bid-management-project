@@ -21,6 +21,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {FcGoogle} from "react-icons/fc";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import LoadingButton from '@mui/lab/LoadingButton';
+import {BiError} from 'react-icons/bi'
 
 export default function (props) {
     useEffect(()=>{document.title='Cheretanet | Sign Up'})
@@ -53,6 +55,11 @@ export default function (props) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showCPassword, setShowCPassword] = React.useState(false);
 
+  const [isLoggingIn,setIsLoggingIn]=useState(false)
+  const [errorLoggingIn,setErrorLoggingIn]=useState()
+
+  const [agreed,setAgreed]=useState(false)
+
   const handleClickShowPassword = (a) =>{
     if(a=='p') setShowPassword((show) => !show);
     else setShowCPassword((show) => !show);
@@ -62,12 +69,13 @@ export default function (props) {
     const {name,value}=event.target;
     setInput({...input,[name]:value})
     if(document.getElementById('agreed').checked==true)
-       document.getElementById("subBtn").disabled=false;
+       setAgreed(true)
     else
-       document.getElementById("subBtn").disabled=true;
+       setAgreed(false)
   };
   
   const checkData=()=>{
+    setIsLoggingIn(true)
     fetch('http://localhost:3001/signup',{
       method:'post',
       headers:{'Content-Type':'application/json'},
@@ -75,14 +83,33 @@ export default function (props) {
     })
     .then(res=>res.json())
     .then((res)=>{
-      console.log(res)
+      setIsLoggingIn(false)
+      if(res.res=="ok"){
+        input.emError=false;input.emErrorM=''
+        input.uError=false;input.uErrorM=''
+        setInput({...input,emError:false,emErrorM:""})
+        navigate('/waitforapproval')
+      }else{
+        if(res.res=="uName")
+            setInput({...input,uError:true,uErrorM:`${input.userName} is unavailable.`})
+        else if(res.res=="email"){
+           input.uError=false;input.uErrorM=''
+           setInput({...input,emError:true,emErrorM:"Email already exists."})
+      }else{
+         setIsLoggingIn(false)
+         setErrorLoggingIn(true)
+      }
+    }
     })
-    .catch((err)=>{console.log(err)})
+    .catch((err)=>{
+         setErrorLoggingIn(true)
+    })
   }
 
 
   const handleSubmit=(e)=>{
     e.preventDefault()
+    console.log(input)
     if(agecalc(input)<18){
       setInput({...input,bdError:true,bdErrorM:"You are under 18 years old, you can't have cheretanet account"})
     }else{
@@ -124,7 +151,6 @@ export default function (props) {
       }else{
       input.cpError=false;input.cpErrorM=''
       setInput({...input,cpError:false,cpErrorM:""})
-      //js validation over, now backend.
       checkData()
       }}}}}}}}
     }
@@ -323,9 +349,24 @@ helperText={input.cpErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"
              <FormControlLabel control={<Checkbox id="agreed" name="agreed" value={input.agreed} onChange={handleChange} />} label={<p style={{margin:'0',display:'inline',fontSize:'0.9rem'}}>Agree to the <Link to="#">Terms And Conditions</Link> Of <p style={{margin:'0',display:'inline',color:'green'}}>cheretanet</p></p>} />
           </div>  
             <div className="d-grid gap-2 mt-3">
-            <button onClick={()=>{navigate('/waitforapproval')}} id="subBtn" disabled style={{width:'35%',margin:'1rem auto',justifyContent:'center',alignItems:'center'}} type="submit" className="btn btn-primary">
-              Submit
-            </button>
+            <LoadingButton
+            loading={isLoggingIn?true:false}
+            loadingPosition="end"
+            variant="contained"
+            id="subBtn"
+            style={{fontFamily:'serif',textTransform:'none',width:'35%',margin:'1rem auto',justifyContent:'center',alignItems:'center'}} 
+            type="submit"
+            size="small"
+            disabled={agreed?false:true}
+          >
+            Submit
+          </LoadingButton>
+          {errorLoggingIn&&
+          <span style={{justifyContent:'center',alignItems:'center',display:'flex',flexDirection:'column',maxWidth:"30rem",minHeight:'1.5rem',height:'auto',margin:'auto'}}>
+            <BiError size="1.5rem" color="red" />
+            <p style={{margin:'0',color:'red',fontSize:'0.8rem',fontFamily:'monospace'}}>Some Error occurred, please try again</p>
+         </span>}
+          
           </div>
           <div style={{width:'100%',display:'flex',alignItems:'center'}} className="mt-3">
             <span style={{backgroundColor:'rgba(0, 0, 0, 0.521)',width:'49%',height:'0.5px'}}></span>

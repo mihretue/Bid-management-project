@@ -6,6 +6,7 @@ const userModel = require("./models/user")
 const advertModel = require("./models/adverts")
 
 const cors=require("cors");
+const { RestorePageRounded } = require('@mui/icons-material');
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
@@ -61,30 +62,37 @@ app.post('/gettenders', (request, response) => {
 app.post('/signup', (request, response) => {
   const input=request.body;
   userModel.findOne({uName:input.userName})
-  .then((err,docs)=>{
-   if(err) 
-     response.send(err)
-   else{
+  .then((docs)=>{
     if(docs)
-       response.json({"res":"uName"})
+       response.json({res:"uName"})
     else{
      userModel.findOne({email:input.email})
-     .then((err,docs)=>{
-      if(err) 
-        response.send(err)
-      else{
+     .then((docs)=>{
         if(docs) 
-          response.json({"res":"email"})
+          response.json({res:"email"})
         else{
-          response.json({"res":"ok"})
+          const newUser=new userModel({
+            fName:input.fName,
+            lName:input.lName,
+            uName:input.userName,
+            role:input.role,
+            bDay:input.bDay,
+            email:input.email,
+            pass:input.pass,
+            approved:false,
+            status:'not-approved'
+          });
+          newUser.save()
+          .then((res)=>{
+            response.json({res:"ok"})
+          })
+          .catch((err)=>{response.json(err)})
         }
-      }
      })
-
-   }
-   }
-  })
-});
+     .catch(err=>response.json(err))
+      }})
+      .catch(err=>response.json(err))
+})
 
 
 
