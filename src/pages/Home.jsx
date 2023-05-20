@@ -11,11 +11,37 @@ import signup from "../resources/howto.jpg";
 import { useEffect } from "react";
 import {FcQuestions} from 'react-icons/fc'
 import serv from '../resources/serv.svg'
+import { useNavigate } from "react-router-dom"
 const Home = () => {
+    const navigate=useNavigate()
     useEffect(() => {
         document.title="Cheretanet | Home"
     }, []);
+    useEffect(() => {
+        if(localStorage.getItem('user')){
+            const role=localStorage.getItem('role')
+            const id=localStorage.getItem('id')
+            switch(role) {
+                case 'admin':
+                  navigate(`./userpage/admin/${id}`)
+                  break;
+                case 'bidder':
+                  navigate(`./userpage/supplier/${id}`)
+                  break;
+                case 'procurement department head':
+                  navigate(`./userpage/phead/${id}`)
+                  break;
+                case 'procurement endorsing committee head':
+                  navigate(`./userpage/pendch/${id}`)
+                  break;
+                default:
+                  navigate('*')
+                  break;
+              }
+        }
+    }, []);
     return (
+        !localStorage.getItem('user')&&
         <section>
                 <div className="welcome" style={{maxWidth:'100%',height:'33rem'}} >
                     <span style={{gridColumn:'1/2',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',paddingLeft:'1rem'}}>

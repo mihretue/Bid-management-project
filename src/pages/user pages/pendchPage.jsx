@@ -13,7 +13,7 @@ function PendchPage() {
   const classes = useStyles();
   return (
     <Container fluid>
-        <h1>Welcome to Admin Page</h1>
+        <h1>Welcome to PENDCH Page</h1>
       <Row>
         <Col md={9}>
           <Paper className={classes.root}>

@@ -52,17 +52,17 @@ function App() {
           {/* <Route path="userpage" element={<Userpage/>}></Route>
           <Route path="manageuseraccount" element={<ManageUserAcc />} /> */}
         </Route>
-        <Route path="/userpage/admin" element={<AdminLayout />}>
+        <Route path="/userpage/admin/:id" element={<AdminLayout />}>
           <Route index element={<AdminPage />} />
         </Route>
-        <Route path="/userpage/supplier" element={<SupplierLayout />}>
-          <Route path="supplierpage" element={<SupplierPage />} />
+        <Route path="/userpage/supplier/:id" element={<SupplierLayout />}>
+          <Route index element={<SupplierPage />} />
         </Route>
-        <Route path="/userpage/phead" element={<PheadLayout />}>
-          <Route path="pheadpage" element={<PheadPage />} />
+        <Route path="/userpage/phead/:id" element={<PheadLayout />}>
+          <Route index element={<PheadPage />} />
         </Route>
-        <Route path="/userpage/pendch" element={<PendchLayout />}>
-          <Route path="pendchpage" element={<PendchPage />} />
+        <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
+          <Route index element={<PendchPage />} />
         </Route>
       </Routes>
       <Footer />

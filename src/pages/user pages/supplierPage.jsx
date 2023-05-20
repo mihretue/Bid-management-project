@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -11,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SupplierPage() {
   const classes = useStyles();
+  const {id} =useParams()
   return (
     <Container fluid>
         <h1>Welcome to Admin Page</h1>

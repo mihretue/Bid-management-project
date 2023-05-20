@@ -35,9 +35,41 @@ const handleChange = (event) => {
     .then((res)=>res.json())
     .then((res)=>{
        if(res.approved==false){
-        navigate('/waitforapproval')
+          navigate('/waitforapproval')
        }else{
         //navigate to home
+        localStorage.setItem('user',true)
+        if(res.status=="banned"){
+
+        }else{
+          if(res.status=="active"){
+            switch(res.role) {
+              case 'ppa it officer':
+                localStorage.setItem('role','admin')
+                localStorage.setItem('id',res._id)
+                navigate(`/userpage/admin/${res._id}`)
+                break;
+              case 'bidder':
+                localStorage.setItem('role','bidder')
+                localStorage.setItem('id',res._id)
+                navigate(`/userpage/supplier/${res._id}`)
+                break;
+              case 'procurement department head':
+                localStorage.setItem('role','phead')
+                localStorage.setItem('id',res._id)
+                navigate(`/userpage/phead/${res._id}`)
+                break;
+              case 'procurement endorsing committee head':
+                localStorage.setItem('role','pendch')
+                localStorage.setItem('id',res._id)
+                navigate(`/userpage/pendch/${res._id}`)
+                break;
+              default:
+                navigate('*')
+                break;
+            }
+          }
+        }
        }
     })
   }
