@@ -1,7 +1,7 @@
 import {Navbar,Nav} from "react-bootstrap";
 import React from 'react';
 import {TfiEmail} from "react-icons/tfi";
-import logo6 from "../resources/logo6.png";
+import logo6 from "../../resources/logo6.png";
 import {Link,Outlet } from "react-router-dom";
 const Layout=()=>{
 return(
@@ -15,7 +15,6 @@ return(
             <Nav.Link className="advLink" as={Link} to={"/tenders"} >Tenders</Nav.Link>
             <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
            <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
-
           </Nav>
           <Nav style={{ fontWeight: 'bold' }}>
             {!localStorage.getItem('user')&&

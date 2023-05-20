@@ -2,22 +2,37 @@ import {BrowserRouter, Routes, Route,useParams} from "react-router-dom";
 import Home from "./pages/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./components/footer";
-import Layout from "./pages/layout";
+import Userpage from "./pages/user pages/userpage";
+import WaitForApproval from "./pages/action pages/waitforapproval";
+import {TbArrowBigUpLineFilled} from 'react-icons/tb'
+import Biddocument from "./pages/action pages/biddocument";
+import Payment from "./pages/action pages/payment";
+import Download from "./pages/action pages/download";
+//Pages
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import About from "./pages/About";
 import Tenders from "./pages/tenders";
 import Nopage from './pages/nopage';
 import Tender from "./pages/tender";
-import WaitForApproval from "./pages/waitforapproval";
-import {TbArrowBigUpLineFilled} from 'react-icons/tb'
-
+//User Pages
+import AdminPage from "./pages/user pages/adminPage";
+import PheadPage from "./pages/user pages/pheadPage";
+import PendchPage from "./pages/user pages/pendchPage";
+import SupplierPage from "./pages/user pages/supplierPage";
+//Layouts
+import Layout from "./pages/layouts/layout";
+import AdminLayout from "./pages/layouts/adminLayout";
+import PheadLayout from "./pages/layouts/pheadLayout";
+import PendchLayout from "./pages/layouts/pendchLayout";
+import SupplierLayout from "./pages/layouts/supplierLayout";
+import ManageUserAcc from "./pages/user action pages/IT officer/manageuseraccount";
 function App() {
  
   return (
     
     <div>
-      
+      <div>
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -27,15 +42,39 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />}/>
           <Route path="mailus" element={<Login />} />
+          <Route path="tenders/:id/apply/payment/:id" element={<Payment />} />
+          {/* <Route path="payment" element={<Payment />} /> */}
+          <Route path="tenders/:id/apply/biddocument/:id" element={<Biddocument/>} />
+          <Route path='download' element={<Download/>}/>
           <Route path="waitforapproval" element={<WaitForApproval />} />
           <Route path="tenders/:id" element={<Tender />} />
           <Route path="*" element={<Nopage />} />
+          {/* <Route path="userpage" element={<Userpage/>}></Route>
+          <Route path="manageuseraccount" element={<ManageUserAcc />} /> */}
+        </Route>
+        <Route path="/userpage/admin" element={<AdminLayout />}>
+          <Route index element={<AdminPage />} />
+        </Route>
+        <Route path="/userpage/supplier" element={<SupplierLayout />}>
+          <Route path="supplierpage" element={<SupplierPage />} />
+        </Route>
+        <Route path="/userpage/phead" element={<PheadLayout />}>
+          <Route path="pheadpage" element={<PheadPage />} />
+        </Route>
+        <Route path="/userpage/pendch" element={<PendchLayout />}>
+          <Route path="pendchpage" element={<PendchPage />} />
         </Route>
       </Routes>
       <Footer />
       <div title="Go to the top of the page" style={{width:'4rem',height:'4rem',backgroundColor:'darkred',position:'fixed',bottom:'1.5rem',right:'1rem',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'0.5rem'}}><a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  /></a></div>
       </BrowserRouter>
+      </div>
+      
+      
+      
+      
     </div>
+    
   
   );
 }

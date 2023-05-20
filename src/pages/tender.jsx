@@ -124,7 +124,6 @@ return (<>
             
           </Table>
         </TableContainer>
-        
       </Paper>
       <Paper className="mt-3" sx={{ width: '90%',margin:'auto', overflow: 'hidden',border:'0.1rem solid gray' }}>
         <TableContainer sx={{ height:'auto' }}>
@@ -222,7 +221,8 @@ return (<>
         </TableContainer>
         
       </Paper>
-      <Link to="/login"> <Button endIcon={<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
+      <Link to={`apply/biddocument/${window.location.href.split('/')[4]}`}> 
+      <Button endIcon={<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
       Apply For This Bid
     </Button></Link> 
       </div>}

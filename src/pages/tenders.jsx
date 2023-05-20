@@ -1,14 +1,10 @@
-import { useEffect,useState } from "react"
+import { useEffect} from "react"
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import {AiOutlineSearch} from 'react-icons/ai'
 import StickyHeadTable from "../components/Table";
-import countriesData from "../data/countries";
 const Tenders=()=>{
     useEffect(()=>{document.title='Cheretanet | Bid Advertisements'})
-
-    const [countries] = useState([...countriesData]);
-
 
 return(<>
     <div id="advertss" >
