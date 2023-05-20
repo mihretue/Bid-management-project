@@ -10,6 +10,7 @@ import {IoBan} from 'react-icons/io5'
 import {RiLoaderLine} from 'react-icons/ri'
 import {FaUsers} from 'react-icons/fa'
 import {BsArrowRight} from 'react-icons/bs'
+import { Avatar } from 'evergreen-ui'
 export default function SidebarTabsExample() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['Manage User Accounts', 'Me'], [])
@@ -27,15 +28,19 @@ export default function SidebarTabsExample() {
               onSelect={() => setSelectedIndex(index)}
              
             >
-               <Button size='small' style={{height:'100'}} className='w-100 text-capitalize' 
-               startIcon={
-               tab=="Manage User Accounts"?<FaUsersCog />:
-               (tab=="Me"?<MdOutlineManageAccounts />:<MdOutlineManageAccounts />)
-               }
-               >{tab}</Button>
+               {tab}
             </Tab>
           )
         })}
+        <div className='d-none d-md-flex flex-column justify-content-center align-items-center' style={{marginTop:'15rem',height:'5rem'}}>
+        <Avatar
+         src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
+         name="Alan Turing"
+         size={40}
+        />
+        <h6 className='text-center'>Mehretu Endeshaw</h6>
+        <p className='fs-9 m-0 text-break text-center'>mihretuendeshaw84@gmil.com</p>
+       </div>
       </Tablist>
       <Pane className="col-md-9 col-12 " >
         {tabs.map((tab, index) => (
