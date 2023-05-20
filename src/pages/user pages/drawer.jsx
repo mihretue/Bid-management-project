@@ -1,209 +1,95 @@
-import * as React from 'react';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-
-const drawerWidth = 240;
-
-const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-});
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
-  }),
-);
-
-export default function MiniDrawer() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'
+import Button from '@material-ui/core/Button'
+import {AiFillHome} from 'react-icons/ai'
+import {FaUsersCog} from 'react-icons/fa'
+import {MdOutlineManageAccounts} from 'react-icons/md'
+import {AiOutlineSearch} from 'react-icons/ai'
+import {IoBan} from 'react-icons/io5'
+import {RiLoaderLine} from 'react-icons/ri'
+import {FaUsers} from 'react-icons/fa'
+import {BsArrowRight} from 'react-icons/bs'
+export default function SidebarTabsExample() {
+  const [selectedIndex, setSelectedIndex] = React.useState(0)
+  const tabs = React.useMemo(() => ['Manage User Accounts', 'Me'], [])
 
   return (
-    <Box   sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar  className='bg-danger fixed-top' style={{top:'2rem'}} open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
+    <Pane className='row container-fluid' height={240}>
+      <Tablist className="col-md-3 col-12">
+        {tabs.map((tab, index) => {
+          return (
+            <Tab
+              aria-controls={`panel-${tab}`}
+              direction="vertical"
+              isSelected={index === selectedIndex}
+              key={tab}
+              onSelect={() => setSelectedIndex(index)}
+             
+            >
+               <Button size='small' style={{height:'100'}} className='w-100 text-capitalize' 
+               startIcon={
+               tab=="Manage User Accounts"?<FaUsersCog />:
+               (tab=="Me"?<MdOutlineManageAccounts />:<MdOutlineManageAccounts />)
+               }
+               >{tab}</Button>
+            </Tab>
+          )
+        })}
+      </Tablist>
+      <Pane className="col-md-9 col-12 " >
+        {tabs.map((tab, index) => (
+          <Pane
+            aria-labelledby={tab}
+            aria-hidden={index !== selectedIndex}
+            display={index === selectedIndex ? 'inline-block' : 'none'}
+            key={tab}
+            role="tabpanel"
+            className='container-fluid'
           >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer  className='my-5 bg-primary'  variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </Box>
-    </Box>
-  );
+            {tab=="Manage User Accounts"?
+            <div className='w-100' style={{height:'10rem'}}>
+               <h3 className='m-0 text-center fs-6'>Manage User Accounts</h3>
+               <div className='row justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
+                 <div className='col-5 border rounded col-md-4 d-flex flex-column align-items-center justify-content-center'>
+                    <FaUsers style={{width:'4rem',height:'4rem'}} />
+                    <p className='m-0 fs-5 text-center'>All users</p>
+                    <p className='m-0 fs-6'>567</p>
+                    <a className="icon-link text-decoration-underline text-black" href="/#">
+                     Manage
+                     <BsArrowRight className='ms-2' />
+                    </a>
+                 </div>
+                 <div className='col-5 ms-auto ms-md-0 border rounded  col-md-4 d-flex flex-column align-items-center justify-content-center'>
+                    <RiLoaderLine style={{width:'4rem',height:'4rem'}} />
+                    <p className='m-0 fs-5 text-center'>Waiting For Approval</p>
+                    <p className='m-0 fs-6'>23</p>
+                    <a className="icon-link text-decoration-underline text-black" href="/#">
+                     Manage
+                     <BsArrowRight className='ms-2' />
+                    </a>
+                 </div>
+                 <div className='col-12 my-md-0 my-2 border rounded  col-md-4 d-flex flex-column align-items-center justify-content-center'>
+                    <IoBan style={{width:'4rem',height:'4rem'}} />
+                    <p className='m-0 fs-5 text-center'>Banned users</p>
+                    <p className='m-0 fs-6'>13</p>
+                    <a className="icon-link text-decoration-underline text-black" href="/#">
+                     Manage
+                     <BsArrowRight className='ms-2' />
+                    </a>
+                 </div>
+               </div>
+            </div>
+            :
+            (tab=="Me"?
+            <p>dfd</p>:
+            (tab=="Other"?
+            <p>heh</p>:
+            <p>hi</p>))}
+          </Pane>
+          
+        ))}
+      </Pane>
+    </Pane>
+  )
 }
