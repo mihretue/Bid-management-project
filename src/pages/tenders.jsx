@@ -2,7 +2,7 @@ import { useEffect} from "react"
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import {AiOutlineSearch} from 'react-icons/ai'
-import StickyHeadTable from "../components/Table";
+import StickyHeadTable from "../components/Bid Table";
 const Tenders=()=>{
     useEffect(()=>{document.title='Cheretanet | Bid Advertisements'})
 

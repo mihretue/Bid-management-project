@@ -119,6 +119,16 @@ app.post('/user', (request, response) => {
   .catch(err=>response.json(err))
 })
 
+app.get('/getusers', (request, response) => {
+   userModel.find().
+   then((err,docs)=>{
+    if(err) response.send(err)
+    else{
+      response.json(docs)
+    }
+     }
+    )
+});
 
 
 

@@ -20,15 +20,16 @@ import AdminPage from "./pages/user pages/adminPage";
 import PheadPage from "./pages/user pages/pheadPage";
 import PendchPage from "./pages/user pages/pendchPage";
 import SupplierPage from "./pages/user pages/supplierPage";
+import Bidder from "./pages/user pages/bidderPage";
 //Layouts
 import Layout from "./pages/layouts/layout";
 import AdminLayout from "./pages/layouts/adminLayout";
 import PheadLayout from "./pages/layouts/pheadLayout";
 import PendchLayout from "./pages/layouts/pendchLayout";
 import SupplierLayout from "./pages/layouts/supplierLayout";
-import ManageUserAcc from "./pages/user action pages/IT officer/manageuseraccount";
+//action pags
+import ManageUserAccount from "./pages/user action pages/IT officer/manageuseraccount";
 function App() {
- 
   return (
     
     <div>
@@ -54,6 +55,7 @@ function App() {
         </Route>
         <Route path="/userpage/admin/:id" element={<AdminLayout />}>
           <Route index element={<AdminPage />} />
+          <Route path="/userpage/admin/:id/manage-accounts" element={<ManageUserAccount />} />
         </Route>
         <Route path="/userpage/supplier/:id" element={<SupplierLayout />}>
           <Route index element={<SupplierPage />} />
@@ -64,9 +66,10 @@ function App() {
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
           <Route index element={<PendchPage />} />
         </Route>
+        <Route path="/userpage/bidder" element={<Bidder />} />
       </Routes>
       <Footer />
-      <div title="Go to the top of the page" style={{width:'4rem',height:'4rem',backgroundColor:'darkred',position:'fixed',bottom:'1.5rem',right:'1rem',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'0.5rem'}}><a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  /></a></div>
+      <div title="Go to the top of the page" style={{width:'4rem',height:'4rem',backgroundColor:'dark',position:'fixed',bottom:'1.5rem',right:'1rem',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'0.5rem'}}><a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  /></a></div>
       </BrowserRouter>
       </div>
       
