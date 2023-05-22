@@ -5,7 +5,7 @@ export default class About extends Component {
     return (
       <div className='container ' style={{justifyContent:"center",alignItems:"center"}}>
         <h1 className='text-center fs-3'>About Us</h1>
-        <div className='container border border-3'>
+        <div className='container border rounded'>
         <h2>Who We Are</h2>
         <p>Welcome to our bid management system, where we help businesses streamline their bidding process and improve their chances of winning contracts. 
 
