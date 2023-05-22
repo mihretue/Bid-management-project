@@ -17,6 +17,22 @@ Our team is dedicated to providing exceptional customer service and support to e
 
 Thank you for considering our bid management system. We look forward to working with you to streamline your bidding process and increase your chances of winning more contracts.</p>
       </div>
+      <div>
+           <p>
+            Contact
+ 	               Public Procurement and Property Authority
+ 	               6 killo Infront of Yekatit 12 Referral Hospital
+ 	               P.O.Box 32387
+ 	               Addis Ababa
+ 	               Ethiopia
+ 	
+                 Phone 	9430 Call Center
+                 Fax 	011 122 98 35 / 011 124 86 11
+ 	
+                 Email 	info@ppa.gov.et
+                 Website 	www.ppa.gov.et
+           </p>
+      </div>
       </div>
     )
   }
