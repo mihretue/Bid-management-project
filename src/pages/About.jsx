@@ -4,7 +4,8 @@ export default class About extends Component {
   render() {
     return (
       <div className='container ' style={{justifyContent:"center",alignItems:"center"}}>
-        <h1>About Us Page</h1>
+        <h1 className='text-center fs-3'>About Us</h1>
+        <div className='container border rounded'>
         <h2>Who We Are</h2>
         <p>Welcome to our bid management system, where we help businesses streamline their bidding process and improve their chances of winning contracts. 
 
@@ -15,7 +16,7 @@ Our bid management system is designed to simplify the bidding process, making it
 Our team is dedicated to providing exceptional customer service and support to ensure that our clients get the most out of our bid management system. We are committed to helping businesses achieve their goals and grow their revenue through successful bidding.
 
 Thank you for considering our bid management system. We look forward to working with you to streamline your bidding process and increase your chances of winning more contracts.</p>
-        <p>Resize the browser window to see that this page is responsive by the way.</p>
+      </div>
       </div>
     )
   }
