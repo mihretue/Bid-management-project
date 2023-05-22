@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "../../layouts/adminLayout";
+import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import {BsArrowLeft} from 'react-icons/bs'
 import TextField from '@mui/material/TextField';
@@ -7,13 +8,14 @@ import InputAdornment from '@mui/material/InputAdornment';
 import {AiOutlineSearch} from 'react-icons/ai'
 import StickyHeadTable from "../../../components/Accounts Table";
 const ManageUserAccount = () => {
+    const { id } = useParams();;
     return ( 
         
         <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
             <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
                <a className="icon-link text-decoration-none text-black" href="/#">
                 <BsArrowLeft className='me-2' />
-                <Link className="text-decoration-none" to='/userpage/admin/'>Back to Dashboard</Link>
+                <Link className="text-decoration-none" to={`/userpage/admin/${id}`}>Back to Dashboard</Link>
                </a>
             </div>
             <div className="container" style={{height:'auto'}}>

@@ -4,6 +4,7 @@ const bodyParser=require("body-parser");
 const mongoose = require("mongoose");
 const userModel = require("./models/user")
 const advertModel = require("./models/adverts")
+const { ObjectId } = require('mongodb');
 
 const cors=require("cors");
 const { RestorePageRounded } = require('@mui/icons-material');
@@ -95,7 +96,7 @@ app.post('/signup', (request, response) => {
 })
 
 app.post('/login', (request, response) => {
-  const input=request.body;
+  const email=request.body;
   userModel.findOne({email:input.email})
   .then((docs)=>{
     if(!docs)
@@ -113,6 +114,16 @@ app.post('/login', (request, response) => {
 app.post('/user', (request, response) => {
   const input=request.body;
   userModel.findOne({email:input.email})
+  .then((docs)=>{
+    response.json(docs)
+  })
+  .catch(err=>response.json(err))
+
+})
+
+app.get('/userbyid/:id', (request, response) => {
+  const uid=request.params.id;
+  userModel.findById(uid)
   .then((docs)=>{
     response.json(docs)
   })

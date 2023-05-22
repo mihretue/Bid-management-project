@@ -29,6 +29,7 @@ import PendchLayout from "./pages/layouts/pendchLayout";
 import SupplierLayout from "./pages/layouts/supplierLayout";
 //action pags
 import ManageUserAccount from "./pages/user action pages/IT officer/manageuseraccount";
+import ManageUser from "./pages/user action pages/IT officer/manageuser";
 function App() {
   return (
     
@@ -56,6 +57,7 @@ function App() {
         <Route path="/userpage/admin/:id" element={<AdminLayout />}>
           <Route index element={<AdminPage />} />
           <Route path="/userpage/admin/:id/manage-accounts" element={<ManageUserAccount />} />
+          <Route path="/userpage/admin/:id/manage-accounts/manage-user/:uid" element={<ManageUser />} />
         </Route>
         <Route path="/userpage/supplier/:id" element={<SupplierLayout />}>
           <Route index element={<SupplierPage />} />
