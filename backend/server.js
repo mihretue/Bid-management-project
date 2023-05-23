@@ -96,7 +96,7 @@ app.post('/signup', (request, response) => {
 })
 
 app.post('/login', (request, response) => {
-  const email=request.body;
+  const input=request.body;
   userModel.findOne({email:input.email})
   .then((docs)=>{
     if(!docs)
