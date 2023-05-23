@@ -3,8 +3,32 @@ import React from 'react';
 import {Link,Outlet } from "react-router-dom";
 import Profile from "../../resources/profile.jpg";
 import logo6 from "../../resources/logo6.png";
+import {useState,useEffect} from 'react';
+import { useParams } from "react-router-dom";
+ 
 // import FontAwesomeIcon from "@fortawesome/fontawesome-free";
 const SupplierLayout=()=>{
+
+  const {id,uid} =useParams();
+  const [user,setUser]=useState({})
+  
+
+
+  useEffect(()=>{
+    fetchUserData()
+ },[])
+ const fetchUserData=()=>{
+    //  setIsFetching(true)
+     fetch(`http://localhost:3001/userbyid/${id}`)
+     .then((res)=>res.json())
+     .then((res)=>{
+       setUser(res)
+       console.log(res)
+      //  setIsFetching(false)
+     })
+    //  .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
+   }
+
 return(
     <div>
         <Navbar expand="lg"className="container fluid" >
@@ -19,8 +43,7 @@ return(
 
           </Nav>
           <Nav style={{ fontWeight: 'bold' }}>
-          <Nav.Link as={Link} to={"/manageuseraccount"} ><button className="btn btn-outline-secondary">Manage User Account</button></Nav.Link>
-          <Nav.Link as={Link} to={"/profile"} ><button className="btn btn-outline-secondary"><img src={Profile} style={{height:"1.5rem",width:"1.5rem"}} alt="profiel image"/></button></Nav.Link>
+          <Nav.Link as={Link} to={"/profile"} ><button className="btn btn-outline-secondary"><img src={Profile} style={{height:"1.5rem",width:"1.5rem"}} alt="profiel image"/>{user.fName}</button></Nav.Link>
 
           
             {/* {!localStorage.getItem('user')&&

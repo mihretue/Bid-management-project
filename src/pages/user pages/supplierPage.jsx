@@ -5,6 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { useEffect,useState } from 'react';
+import SupplierDrawer from './supplierDrawer';
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
@@ -23,7 +26,7 @@ function SupplierPage() {
  },[])
  const fetchUserData=()=>{
     //  setIsFetching(true)
-     fetch(`http://localhost:3001/userbyid/${uid}`)
+     fetch(`http://localhost:3001/userbyid/${id}`)
      .then((res)=>res.json())
      .then((res)=>{
        setUser(res)
@@ -34,7 +37,7 @@ function SupplierPage() {
    }
   return (
     <Container fluid>
-        <h1>HI </h1>
+        <SupplierDrawer/>{/* <h1>HI {user.fName}</h1> */}
       <Row>
         <Col md={9}>
           <Paper className={classes.root}>
