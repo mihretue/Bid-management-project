@@ -27,8 +27,12 @@ import PheadLayout from "./pages/layouts/pheadLayout";
 import PendchLayout from "./pages/layouts/pendchLayout";
 import SupplierLayout from "./pages/layouts/supplierLayout";
 //action pags
-import ManageUserAccount from "./pages/user action pages/IT officer/manageuseraccount";
-import ManageUser from "./pages/user action pages/IT officer/manageuser";
+import ManageUserAccount from "./pages/user action pages/admin/manageuseraccount";
+import ManageUser from "./pages/user action pages/admin/manageuser";
+import BidComplaints from './pages/user action pages/bidder/bidcomplaints'
+import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
+import CancelledBids from './pages/user action pages/bidder/cancelledbids'
+import ClarifyRequests from './pages/user action pages/bidder/clarifyrequests'
 function App() {
   return (
     
@@ -60,6 +64,10 @@ function App() {
         </Route>
         <Route path="/userpage/supplier/:id" element={<SupplierLayout />}>
           <Route index element={<SupplierPage />} />
+          <Route path="/userpage/supplier/:id/bid-complaints" element={<BidComplaints />} />
+          <Route path="/userpage/supplier/:id/bids-in-progress" element={<BidsInProgress />} />
+          <Route path="/userpage/supplier/:id/cancelled-bids" element={<CancelledBids />} />
+          <Route path="/userpage/supplier/:id/clarification-requests" element={<ClarifyRequests />} />
         </Route>
         <Route path="/userpage/phead/:id" element={<PheadLayout />}>
           <Route index element={<PheadPage />} />

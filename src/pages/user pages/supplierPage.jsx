@@ -18,26 +18,30 @@ function SupplierPage() {
   const classes = useStyles();
   const {id,uid} =useParams();
   const [user,setUser]=useState({})
-  
+  const [isFetching,setIsFetching]=useState(false)
+  const [errorFetching,setErrorFetching]=useState(false)
+
 
 
   useEffect(()=>{
     fetchUserData()
  },[])
  const fetchUserData=()=>{
-    //  setIsFetching(true)
+     setIsFetching(true)
      fetch(`http://localhost:3001/userbyid/${id}`)
      .then((res)=>res.json())
      .then((res)=>{
        setUser(res)
        console.log(res)
-      //  setIsFetching(false)
+       setIsFetching(false)
      })
-    //  .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
+     .catch((err)=>{
+      setIsFetching(false);
+      setErrorFetching(true)})
    }
   return (
     <Container fluid>
-        <SupplierDrawer/>{/* <h1>HI {user.fName}</h1> */}
+        <SupplierDrawer/>
       <Row>
         <Col md={9}>
           <Paper className={classes.root}>

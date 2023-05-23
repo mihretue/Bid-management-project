@@ -5,28 +5,32 @@ import Profile from "../../resources/profile.jpg";
 import logo6 from "../../resources/logo6.png";
 import {useState,useEffect} from 'react';
 import { useParams } from "react-router-dom";
- 
+import {BsGear} from 'react-icons/bs'
 // import FontAwesomeIcon from "@fortawesome/fontawesome-free";
 const SupplierLayout=()=>{
 
   const {id,uid} =useParams();
   const [user,setUser]=useState({})
-  
+  const [isFetching,setIsFetching]=useState(false)
+  const [errorFetching,setErrorFetching]=useState(false)
+
 
 
   useEffect(()=>{
     fetchUserData()
  },[])
  const fetchUserData=()=>{
-    //  setIsFetching(true)
+     setIsFetching(true)
      fetch(`http://localhost:3001/userbyid/${id}`)
      .then((res)=>res.json())
      .then((res)=>{
        setUser(res)
        console.log(res)
-      //  setIsFetching(false)
+       setIsFetching(false)
      })
-    //  .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
+     .catch((err)=>{
+      setIsFetching(false);
+      setErrorFetching(true)})
    }
 
 return(
@@ -43,7 +47,32 @@ return(
 
           </Nav>
           <Nav style={{ fontWeight: 'bold' }}>
-          <Nav.Link as={Link} to={"/profile"} ><button className="btn btn-outline-secondary"><img src={Profile} style={{height:"1.5rem",width:"1.5rem"}} alt="profiel image"/>{user.fName}</button></Nav.Link>
+          <div className="dropdown">
+            <button className="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src={Profile} style={{height:"1.5rem",width:"1.5rem"}} alt="profiel image"/>
+            {isFetching?
+              <p className="m-0 d-inline ps-2">User</p>
+             :(errorFetching?
+              <p className="m-0 d-inline ps-2">User</p>
+              :
+              <p className="m-0 d-inline ps-2">{user.fName}</p>
+              ) }
+          </button>
+          <ul className="dropdown-menu d-flex flex-column justify-content-center align-items-center w-50">
+          <li>
+            <a class="dropdown-item m-0" href="#">{user.fName+' '+user.lName}</a>
+          </li>
+           <a className="icon-link text-decoration-underline text-black d-flex justify-content-center align-items-center" href="/#">
+                     <BsGear className='ms-2' />
+                     Settings
+           </a>
+    <li>
+      <button className="btn btn-primary dropdown-item m-0" href="#">
+        Log Out
+      </button>
+    </li>
+          </ul>
+          </div>
 
           
             {/* {!localStorage.getItem('user')&&
