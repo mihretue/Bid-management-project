@@ -4,7 +4,6 @@ const bodyParser=require("body-parser");
 const mongoose = require("mongoose");
 const userModel = require("./models/user")
 const advertModel = require("./models/adverts")
-
 const cors=require("cors");
 const { RestorePageRounded } = require('@mui/icons-material');
 app.use(cors());

@@ -96,6 +96,7 @@ const handleChange = (event) => {
            input.emError=false;input.emErrorM=''
            setInput({...input,pError:true,pErrorM:"Incorrect Password"})
       }else{
+        console.log(res.res)
          setIsLoggingIn(false)
          setErrorLoggingIn(true)
       }
