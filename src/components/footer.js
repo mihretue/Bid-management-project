@@ -1,6 +1,6 @@
 import React from "react"
 import {Link} from "react-router-dom";
-const Footer = () => <footer className="page-footer font-small blue pt-4 footer_bg">
+const Footer = () => <footer className="page-footer font-small  blue pt-4 footer_bg">
     <div className="container-fluid text-center text-md-left ">
         <div className="row">
             <div className="col-md-4 mt-md-0 mt-3">
