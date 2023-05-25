@@ -39,7 +39,10 @@ function SupplierPage() {
       setIsFetching(false);
       setErrorFetching(true)})
    }
+  localStorage.removeItem('user')
+
   return (
+    
     <Container fluid>
         <SupplierDrawer/>
       <Row>

@@ -7,7 +7,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import { validator } from "../services/validator";
 import LoadingButton from '@mui/lab/LoadingButton';
-import {BiError} from 'react-icons/bi'
+import { BiError } from "react-icons/bi";
+import {AiOutlineLoading3Quarters} from 'react-icons/ai'
 const Login=()=>{
     useEffect(()=>{document.title='Cheretanet | Log in'})
     const navigate=useNavigate()
@@ -39,6 +40,7 @@ const handleChange = (event) => {
        }else{
         //navigate to home
         localStorage.setItem('user',true)
+        console.log(res)
         if(res.status=="banned"){
 
         }else{

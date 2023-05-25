@@ -5,7 +5,11 @@ import Profile from "../../resources/profile.jpg";
 import logo6 from "../../resources/logo6.png";
 import {useState,useEffect} from 'react';
 import { useParams } from "react-router-dom";
-import {BsGear} from 'react-icons/bs'
+import { useNavigate } from "react-router-dom";
+import {BsGear} from 'react-icons/bs';
+import {IoIosLogOut} from "react-icons/io";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 // import FontAwesomeIcon from "@fortawesome/fontawesome-free";
 const SupplierLayout=()=>{
 
@@ -13,6 +17,7 @@ const SupplierLayout=()=>{
   const [user,setUser]=useState({})
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
+  const navigate = useNavigate();
 
 
 
@@ -46,9 +51,10 @@ return(
             <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
 
           </Nav>
-          <Nav style={{ fontWeight: 'bold' }}>
-          <div className="dropdown">
-            <button className="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          
+
+          {/* <div className="dropdown"> 
+            {/* <button className="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               <img src={Profile} style={{height:"1.5rem",width:"1.5rem"}} alt="profiel image"/>
             {isFetching?
               <p className="m-0 d-inline ps-2">User</p>
@@ -57,22 +63,18 @@ return(
               :
               <p className="m-0 d-inline ps-2">{user.fName}</p>
               ) }
-          </button>
-          <ul className="dropdown-menu d-flex flex-column justify-content-center align-items-center w-50">
+          </button> 
+
+          {/* <ul className="dropdown-menu d-flex flex-column justify-content-center align-items-center w-50">
           <li>
             <a class="dropdown-item m-0" href="#">{user.fName+' '+user.lName}</a>
           </li>
-           <a className="icon-link text-decoration-underline text-black d-flex justify-content-center align-items-center" href="/#">
-                     <BsGear className='ms-2' />
-                     Settings
-           </a>
+           
     <li>
-      <button className="btn btn-primary dropdown-item m-0" href="#">
-        Log Out
-      </button>
+      
     </li>
           </ul>
-          </div>
+          </div> 
 
           
             {/* {!localStorage.getItem('user')&&
@@ -81,7 +83,30 @@ return(
             !localStorage.getItem('user')&&
             }
             <Nav.Link as={Link} to={"/mailus"} ><TfiEmail size={30} data-toggle="tooltip" data-placement="bottom" title="Mail us" /></Nav.Link>
-          */}</Nav> 
+          */}    
+          <Nav >
+              <DropdownButton id="dropdown-basic-button "  title={isFetching?
+                  <p className="m-0 d-inline ps-2">User</p>
+                  :(errorFetching?
+                  <p className="m-0 d-inline ps-2">User</p>
+                  :
+                  <p className="m-0 d-inline ps-2">{user.fName}</p>
+                  ) } >
+                <Dropdown.Item >
+                  <Nav.Link as={Link} to={"/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
+                    <BsGear className='mx-1' />
+                      Settings
+                  </Nav.Link>
+                </Dropdown.Item>
+                <Dropdown.Item >
+                    <Nav.Link  onClick={()=>{localStorage.removeItem("user"); navigate("/")}}  className="justify-content-center text-black ">
+                      <IoIosLogOut  className='mx-1'/>
+                        Log Out
+                      
+                    </Nav.Link>
+                </Dropdown.Item>
+       
+        </DropdownButton></Nav> 
 
         </Navbar.Collapse>
       

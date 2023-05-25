@@ -33,6 +33,8 @@ import BidComplaints from './pages/user action pages/bidder/bidcomplaints'
 import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
 import CancelledBids from './pages/user action pages/bidder/cancelledbids'
 import ClarifyRequests from './pages/user action pages/bidder/clarifyrequests'
+import AllBids from './pages/user action pages/phead/allbids'
+import SpecificBid from "./pages/user action pages/phead/specificBid";
 function App() {
   return (
     
@@ -71,6 +73,9 @@ function App() {
         </Route>
         <Route path="/userpage/phead/:id" element={<PheadLayout />}>
           <Route index element={<PheadPage />} />
+          <Route path="/userpage/phead/:id/manage-bids/all-bids" element={<AllBids/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/all-bids/:bid" element={<SpecificBid/>}/>
+
         </Route>
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
           <Route index element={<PendchPage />} />
