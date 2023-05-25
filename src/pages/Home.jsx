@@ -13,11 +13,13 @@ import {FcQuestions} from 'react-icons/fc'
 import serv from '../resources/serv.svg'
 import { useNavigate } from "react-router-dom"
 const Home = () => {
+    localStorage.removeItem('user')
     const navigate=useNavigate()
     useEffect(() => {
         document.title="Cheretanet | Home"
     }, []);
     useEffect(() => {
+        
         if(localStorage.getItem('user')){
             const role=localStorage.getItem('role')
             const id=localStorage.getItem('id')

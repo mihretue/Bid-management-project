@@ -60,6 +60,18 @@ app.post('/gettenders', (request, response) => {
   })
 });
 
+app.post('/getbids', (request, response) => {
+  // const par=request.query.id
+  const pbody = request.body.ent
+
+  advertModel.find({ent:pbody})
+  .then((err,docs)=>{
+   if(err) response.send(err)
+   else
+    response.json({docs})
+  })
+});
+
 app.post('/signup', (request, response) => {
   const input=request.body;
   userModel.findOne({uName:input.userName})
