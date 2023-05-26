@@ -8,7 +8,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useEffect } from "react";
-import Button from '@mui/material/Button';
 import { Link,useParams } from "react-router-dom";
 import {IoIosArrowBack} from 'react-icons/io'
 import CircularProgress from '@mui/material/CircularProgress';
@@ -16,6 +15,7 @@ import {BiError} from 'react-icons/bi'
 import {BiLinkExternal} from 'react-icons/bi'
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 import {BsArrowLeft} from 'react-icons/bs'
+import { Button,EditIcon,TrashIcon,TickIcon,ManualIcon,PersonIcon,ArchiveIcon } from 'evergreen-ui'
 
 const columns = [
     { 
@@ -228,23 +228,39 @@ return (<>
         </TableContainer>
         
       </Paper>
-      <div className="container border d-flex flex-column justify-content-center align-items-center rounded mt-3" style={{width:'80%',minHeight:'5rem',height:'auto'}}>
+      <div className="container  d-flex flex-column justify-content-center align-items-center rounded mt-3 " style={{width:'80%',minHeight:'5rem',height:'auto'}}>
         <h6 className="text-center">Actions</h6>
-        <div className="row container-fluid g-2">
-           <button className="btn btn-secondary col-6 col-md-3">Edit Tender Information</button>
-           <button className="btn btn-secondary  col-6 col-md-3">Cancel Tender</button>
-           <button className="btn btn-secondary col-6 col-md-3">Post Bid Award</button>
-           <button className="btn btn-secondary col-6 col-md-3">View Bid Proposal Submissions</button>
+        <div className=" justify-content-center align-items-center row g-2 mb-2 container-fluid ">
+        <Button className="col-6 col-md-3 me-1"   iconBefore={EditIcon}>
+        Edit Tender
+        </Button>
+        <Button className="col-6 col-md-3 me-1 "   iconBefore={TrashIcon} intent="danger">
+            Cancel Tender
+        </Button>
+        <Button  className="col-6 col-md-3 me-1"  iconBefore={TickIcon} intent="success">
+            Post Bid Award
+        </Button>
+        <Button  className="col-6 col-md-3 "  iconBefore={ManualIcon}>
+            View Bid Proposal 
+        </Button>
          </div>
       </div>
-      <div className="container border d-flex flex-column justify-content-center align-items-center rounded mt-3" style={{width:'80%',minHeight:'5rem',height:'auto'}}>
+      <hr className=""/>
+      <div className="container  mt-3 mb-3 d-flex justify-content-center align-items-center flex-column justify-content-center align-items-center rounded mt-3" style={{width:'80%',minHeight:'5rem',height:'auto'}}>
       <h6 className="text-center">Actions Related to Applicants</h6>
-      <div className="row container-fluid g-2">
-           <button className="btn btn-secondary col-6 col-md-3">View All Bid Proposal Submissions</button>
-           <button className="btn btn-secondary  col-6 col-md-3">View Applicants That Cancelled The Bid</button>
-           <button className="btn btn-secondary col-6 col-md-3">View Complaints</button>
-           <button className="btn btn-secondary col-6 col-md-3">View Bid Proposal Submissions</button>
-         </div>
+
+      <div className="w-100 hstack gap-2 container-fluid g-2 mb-2">
+                <Button  className="col-lg-4 col-md-3 "  iconBefore={ManualIcon}>
+                    View All Bid Proposal 
+                </Button>
+                <Button  className="col-lg-4 col-md-3 "  iconBefore={PersonIcon}>
+                View Applicants That Cancelled The Bid 
+                </Button>
+                <Button  className="col-lg-4 col-md-3 "  iconBefore={ArchiveIcon}>
+                    View Complaints
+                </Button>
+                
+            </div>
          </div>
       </div>}
       </>)

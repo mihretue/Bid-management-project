@@ -35,6 +35,7 @@ import CancelledBids from './pages/user action pages/bidder/cancelledbids'
 import ClarifyRequests from './pages/user action pages/bidder/clarifyrequests'
 import AllBids from './pages/user action pages/phead/allbids'
 import SpecificBid from "./pages/user action pages/phead/specificBid";
+import NewBid from "./pages/user action pages/phead/newBid"
 function App() {
   return (
     
@@ -75,13 +76,15 @@ function App() {
           <Route index element={<PheadPage />} />
           <Route path="/userpage/phead/:id/manage-bids/all-bids" element={<AllBids/>}/>
           <Route path="/userpage/phead/:id/manage-bids/all-bids/:bid" element={<SpecificBid/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/post-bid" element={<NewBid/>}/>
+
 
         </Route>
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
           <Route index element={<PendchPage />} />
         </Route>
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
       <div title="Go to the top of the page" style={{width:'4rem',height:'4rem',backgroundColor:'dark',position:'fixed',bottom:'1.5rem',right:'1rem',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'0.5rem'}}><a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  /></a></div>
       </BrowserRouter>
       </div>
