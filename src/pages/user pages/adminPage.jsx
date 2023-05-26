@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 function AdminPage() {
   const classes = useStyles();
   const {id} =useParams()
-  // console.log(id)
   localStorage.removeItem('user')
   return (
     <div className='container rounded border' style={{height:'30rem'}}>
