@@ -72,6 +72,48 @@ app.post('/getbids', (request, response) => {
   })
 });
 
+
+app.get('/getusers/:id', (request, response) => {
+  const type=request.params.id
+    userModel.find({status:type})
+    .then((err,docs)=>{
+     if(err) response.send(err)
+     else
+      response.json({docs})
+    })
+  
+});
+
+app.get('/approve/:id',(request,response)=>{
+userModel.findOneAndUpdate({ _id: request.params.id}, {$set:{ approved:true,status:"active"}},{new:true})
+.then(updatedUser => {
+    response.json({res:"ok"})
+})
+.catch((err)=>{
+  console.log(err)
+});
+})
+
+app.get('/release/:id',(request,response)=>{
+  userModel.findOneAndUpdate({ _id: request.params.id}, {$set:{ approved:true,status:"active"}},{new:true})
+  .then(updatedUser => {
+      response.json({res:"ok"})
+  })
+  .catch((err)=>{
+    console.log(err)
+  });
+  })
+
+  app.get('/ban/:id',(request,response)=>{
+    userModel.findOneAndUpdate({ _id: request.params.id}, {$set:{ status:"banned"}},{new:true})
+    .then(updatedUser => {
+        response.json({res:"ok"})
+    })
+    .catch((err)=>{
+      console.log(err)
+    });
+    })
+
 app.post('/signup', (request, response) => {
   const input=request.body;
   userModel.findOne({uName:input.userName})

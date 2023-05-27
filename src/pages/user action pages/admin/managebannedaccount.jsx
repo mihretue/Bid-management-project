@@ -5,8 +5,7 @@ import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
 import { Pane, Dialog, Button } from 'evergreen-ui'
 
-
-const ManageUser=()=>{
+const ManageBannedAccount=()=>{
     const {id,uid}=useParams();
     const [user,setUser]=useState({})
     const [isFetching,setIsFetching]=useState(false)
@@ -17,37 +16,33 @@ const ManageUser=()=>{
        fetchUserData()
     },[])
     const fetchUserData=()=>{
-      setIsFetching(true)
-      fetch(`http://localhost:3001/userbyid/${uid}`)
-      .then((res)=>res.json())
-      .then((res)=>{
-        setUser(res)
-        setIsFetching(false)
-      })
-      .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
+        setIsFetching(true)
+        fetch(`http://localhost:3001/userbyid/${uid}`)
+        .then((res)=>res.json())
+        .then((res)=>{
+          setUser(res)
+          console.log(res)
+          setIsFetching(false)
+        })
+        .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
+      }
+
+      const releaseAccount=()=>{
+        fetch(`http://localhost:3001/release/${uid}`)
+        .then((res)=>res.json())
+        .then((res)=>{
+            if(res.res=="ok"){
+                navigate(`/userpage/admin/${id}/banned-accounts`)
+            }
+        })
+        .catch((err)=>{})
     }
-
-    const banAccount=()=>{
-      setIsFetching(true)
-      fetch(`http://localhost:3001/ban/${uid}`)
-      .then((res)=>res.json())
-      .then((res)=>{
-          if(res.res=="ok"){
-              setIsFetching(false)
-              navigate(`/userpage/admin/${id}/manage-accounts`)
-          }
-      })
-      .catch((err)=>{
-        setErrorFetching(true)
-      })
-  }
-
     return(
         <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
         <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
            <a className="icon-link text-decoration-none text-black" href="/#">
             <BsArrowLeft className='me-2' />
-            <Link className="text-decoration-none" to={`/userpage/admin/${id}/manage-accounts/`}>Back to Manage User Accounts</Link>
+            <Link className="text-decoration-none" to={`/userpage/admin/${id}/banned-accounts/`}>Back to Manage Banned Accounts</Link>
            </a>
         </div>
         <div className="container rounded my-2" style={{height:'auto'}}>
@@ -60,7 +55,6 @@ const ManageUser=()=>{
               className="mx-auto d-block"
             />
             {isFetching?'Fetching...':(errorFetching?'Error':
-<>
 <table class="table mx-auto" style={{width:'70%'}}>
 <tbody>
 <tr className="text-center" >
@@ -97,21 +91,6 @@ const ManageUser=()=>{
 </tr>
 </tbody>
 </table>
-<Pane className="mb-5 mx-auto mt-2 d-flex justify-content-center">
-      <Dialog
-        isShown={isShown}
-        title="Confirm Banning"
-        onCloseComplete={() => setIsShown(false)}
-        confirmLabel="Confirm"
-        onCancel={() => {setIsShown(false)}}
-        onConfirm={() => {setIsShown(false);banAccount()}}
-        
-      >
-        Ban User Account?
-      </Dialog>
-      <Button className="bg-primary text-white" onClick={() => setIsShown(true)}>Ban User Account</Button>
-    </Pane>
-</>
                 
             )}
             {
@@ -119,7 +98,21 @@ const ManageUser=()=>{
             }
             
         </div>
+        <Pane className="mb-5 mx-auto mt-2 d-flex justify-content-center">
+      <Dialog
+        isShown={isShown}
+        title="Confirm Release"
+        onCloseComplete={() => setIsShown(false)}
+        confirmLabel="Confirm"
+        onCancel={() => {setIsShown(false)}}
+        onConfirm={() => {setIsShown(false);releaseAccount()}}
+        
+      >
+        Release User Account?
+      </Dialog>
+      <Button className="bg-primary text-white" onClick={() => setIsShown(true)}>Release Account</Button>
+    </Pane>
     </div>)
 }
 
-export default ManageUser;
+export default ManageBannedAccount;

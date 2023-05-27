@@ -29,6 +29,10 @@ import SupplierLayout from "./pages/layouts/supplierLayout";
 //action pags
 import ManageUserAccount from "./pages/user action pages/admin/manageuseraccount";
 import ManageUser from "./pages/user action pages/admin/manageuser";
+import ApprovalRequests from './pages/user action pages/admin/approvalrequests'
+import BannedAccounts from './pages/user action pages/admin/bannedaccounts'
+import ManageBannedAccount from "./pages/user action pages/admin/managebannedaccount";
+import ManageApproval from "./pages/user action pages/admin/manageapproval";
 import BidComplaints from './pages/user action pages/bidder/bidcomplaints'
 import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
 import CancelledBids from './pages/user action pages/bidder/cancelledbids'
@@ -36,6 +40,7 @@ import ClarifyRequests from './pages/user action pages/bidder/clarifyrequests'
 import AllBids from './pages/user action pages/phead/allbids'
 import SpecificBid from "./pages/user action pages/phead/specificBid";
 import NewBid from "./pages/user action pages/phead/newBid"
+
 function App() {
   return (
     
@@ -64,6 +69,10 @@ function App() {
           <Route index element={<AdminPage />} />
           <Route path="/userpage/admin/:id/manage-accounts" element={<ManageUserAccount />} />
           <Route path="/userpage/admin/:id/manage-accounts/manage-user/:uid" element={<ManageUser />} />
+          <Route path="/userpage/admin/:id/approval-requests" element={<ApprovalRequests />} />
+          <Route path="/userpage/admin/:id/approval-requests/manage-user/:uid" element={<ManageApproval />} />
+          <Route path="/userpage/admin/:id/banned-accounts" element={<BannedAccounts />} />
+          <Route path="/userpage/admin/:id/banned-accounts/manage-user/:uid" element={<ManageBannedAccount />} />
         </Route>
         <Route path="/userpage/supplier/:id" element={<SupplierLayout />}>
           <Route index element={<SupplierPage />} />

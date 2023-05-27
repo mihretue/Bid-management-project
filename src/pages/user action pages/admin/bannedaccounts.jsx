@@ -7,8 +7,8 @@ import {BsArrowLeft} from 'react-icons/bs'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import {AiOutlineSearch} from 'react-icons/ai'
-import StickyHeadTable from "../../../components/Accounts Table";
-const ManageUserAccount = () => {
+import StickyHeadTable from "../../../components/Banned Acc Table";
+const BannedAccounts = () => {
     const { id } = useParams();
     
     return ( 
@@ -21,7 +21,7 @@ const ManageUserAccount = () => {
                </a>
             </div>
             <div className="container" style={{height:'auto'}}>
-                 <h4 className="text-center my-2">Manage User Accounts</h4>
+                 <h4 className="text-center my-2">Manage Banned Accounts</h4>
                  <div>
                  <div className="mt-3 rounded border" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
                    <TextField
@@ -45,4 +45,4 @@ const ManageUserAccount = () => {
 
     )
 }
-export default ManageUserAccount;
+export default BannedAccounts;

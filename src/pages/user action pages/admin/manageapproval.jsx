@@ -1,53 +1,48 @@
-import { useParams,useNavigate  } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import { Avatar } from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
 import { Pane, Dialog, Button } from 'evergreen-ui'
 
-
-const ManageUser=()=>{
+const ManageApproval=()=>{
     const {id,uid}=useParams();
     const [user,setUser]=useState({})
     const [isFetching,setIsFetching]=useState(false)
     const [errorFetching,setErrorFetching]=useState(false)
     const [isShown, setIsShown] = useState(false)
     const navigate=useNavigate()
+
     useEffect(()=>{
        fetchUserData()
     },[])
     const fetchUserData=()=>{
-      setIsFetching(true)
-      fetch(`http://localhost:3001/userbyid/${uid}`)
-      .then((res)=>res.json())
-      .then((res)=>{
-        setUser(res)
-        setIsFetching(false)
-      })
-      .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
+        setIsFetching(true)
+        fetch(`http://localhost:3001/userbyid/${uid}`)
+        .then((res)=>res.json())
+        .then((res)=>{
+          setUser(res)
+          setIsFetching(false)
+        })
+        .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
+      }
+
+    const approveAccount=()=>{
+        fetch(`http://localhost:3001/approve/${uid}`)
+        .then((res)=>res.json())
+        .then((res)=>{
+            if(res.res=="ok"){
+                navigate(`/userpage/admin/${id}/approval-requests`)
+            }
+        })
+        .catch((err)=>{})
     }
-
-    const banAccount=()=>{
-      setIsFetching(true)
-      fetch(`http://localhost:3001/ban/${uid}`)
-      .then((res)=>res.json())
-      .then((res)=>{
-          if(res.res=="ok"){
-              setIsFetching(false)
-              navigate(`/userpage/admin/${id}/manage-accounts`)
-          }
-      })
-      .catch((err)=>{
-        setErrorFetching(true)
-      })
-  }
-
     return(
         <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
         <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
            <a className="icon-link text-decoration-none text-black" href="/#">
             <BsArrowLeft className='me-2' />
-            <Link className="text-decoration-none" to={`/userpage/admin/${id}/manage-accounts/`}>Back to Manage User Accounts</Link>
+            <Link className="text-decoration-none" to={`/userpage/admin/${id}/approval-requests`}>Back to Manage Approval Requests</Link>
            </a>
         </div>
         <div className="container rounded my-2" style={{height:'auto'}}>
@@ -60,7 +55,6 @@ const ManageUser=()=>{
               className="mx-auto d-block"
             />
             {isFetching?'Fetching...':(errorFetching?'Error':
-<>
 <table class="table mx-auto" style={{width:'70%'}}>
 <tbody>
 <tr className="text-center" >
@@ -97,21 +91,6 @@ const ManageUser=()=>{
 </tr>
 </tbody>
 </table>
-<Pane className="mb-5 mx-auto mt-2 d-flex justify-content-center">
-      <Dialog
-        isShown={isShown}
-        title="Confirm Banning"
-        onCloseComplete={() => setIsShown(false)}
-        confirmLabel="Confirm"
-        onCancel={() => {setIsShown(false)}}
-        onConfirm={() => {setIsShown(false);banAccount()}}
-        
-      >
-        Ban User Account?
-      </Dialog>
-      <Button className="bg-primary text-white" onClick={() => setIsShown(true)}>Ban User Account</Button>
-    </Pane>
-</>
                 
             )}
             {
@@ -119,7 +98,21 @@ const ManageUser=()=>{
             }
             
         </div>
+              <Pane className="mb-5 mx-auto mt-2 d-flex justify-content-center">
+      <Dialog
+        isShown={isShown}
+        title="Confirm Approval"
+        onCloseComplete={() => setIsShown(false)}
+        confirmLabel="Confirm"
+        onCancel={() => {setIsShown(false)}}
+        onConfirm={() => {setIsShown(false);approveAccount()}}
+        
+      >
+        Approve User Account?
+      </Dialog>
+      <Button className="bg-primary text-white" onClick={() => setIsShown(true)}>Approve Account</Button>
+    </Pane>
     </div>)
 }
 
-export default ManageUser;
+export default ManageApproval;
