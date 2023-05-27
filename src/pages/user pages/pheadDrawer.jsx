@@ -45,7 +45,6 @@ export default function PheadDrawer() {
      })
     //  .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
    }
-   localStorage.removeItem('user')
 
   return (
     <Pane className='row container-fluid pb-5' style={{height:'auto'}}>

@@ -9,6 +9,8 @@ import { validator } from "../services/validator";
 import LoadingButton from '@mui/lab/LoadingButton';
 import { BiError } from "react-icons/bi";
 import {AiOutlineLoading3Quarters} from 'react-icons/ai'
+import Footer from "../components/footer";
+
 const Login=()=>{
     useEffect(()=>{document.title='Cheretanet | Log in'})
     const navigate=useNavigate()
@@ -40,7 +42,6 @@ const handleChange = (event) => {
        }else{
         //navigate to home
         localStorage.setItem('user',true)
-        console.log(res)
         if(res.status=="banned"){
 
         }else{
@@ -124,8 +125,8 @@ const handleChange = (event) => {
     }
     }
 
-return(
-    <div className="Auth-form-container">
+return(<>
+    <div className="mb-5 Auth-form-container">
         <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Log In To Your <p style={{display:'inline',color:'green'}}>cheretanet</p> Account</h3>
@@ -202,6 +203,9 @@ return(
           </div>
         </form>
       </div>
+      <Footer />
+      </>
+      
 )
 }
 

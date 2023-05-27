@@ -12,14 +12,13 @@ import { useEffect } from "react";
 import {FcQuestions} from 'react-icons/fc'
 import serv from '../resources/serv.svg'
 import { useNavigate } from "react-router-dom"
+import Footer from '../components/footer'
 const Home = () => {
-    localStorage.removeItem('user')
     const navigate=useNavigate()
     useEffect(() => {
         document.title="Cheretanet | Home"
     }, []);
     useEffect(() => {
-        
         if(localStorage.getItem('user')){
             const role=localStorage.getItem('role')
             const id=localStorage.getItem('id')
@@ -43,7 +42,6 @@ const Home = () => {
         }
     }, []);
     return (
-        !localStorage.getItem('user')&&
         <section>
                 <div className="welcome" style={{maxWidth:'100%',height:'33rem'}} >
                     <span style={{gridColumn:'1/2',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',paddingLeft:'1rem'}}>
@@ -66,8 +64,7 @@ const Home = () => {
                     </span>
                     
                 </div>
-            <br /><br /><br />
-            <div className='fluid'>
+            <div className='fluid mt-5'>
             <h2 className='fw-bold text-center'>What Can We Do For You Today?</h2>
             <div className='container fluid px-4 '>
                 <div className='row'>
@@ -148,10 +145,11 @@ const Home = () => {
                 </div>
             </div>
             </div>
-            <div className="container" style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'white',height:'20rem'}}>
+            <div className="container d-flex flex-column justify-content-center align-items-center bg-white" style={{height:'20rem'}}>
                 <h5 style={{fontFamily:"Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"}}>Steps To Be A Supplier</h5>
                 <img src={signup} style={{width:'60%',objectFit:'cover'}} alt="" />
             </div>
+            <Footer />
         </section>
     )
 }

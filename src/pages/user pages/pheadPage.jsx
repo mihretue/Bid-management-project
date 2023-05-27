@@ -39,7 +39,6 @@ function PheadPage() {
       setIsFetching(false);
       setErrorFetching(true)})
    }
-  // localStorage.removeItem('user')
 
   return (
     <Container fluid>
@@ -48,7 +47,6 @@ function PheadPage() {
         <Col md={9}>
           <Paper className={classes.root}>
             <Typography variant="h5"></Typography>
-            
           </Paper>
           <Paper style={{}}>
             

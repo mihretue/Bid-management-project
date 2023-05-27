@@ -39,7 +39,6 @@ function SupplierPage() {
       setIsFetching(false);
       setErrorFetching(true)})
    }
-  localStorage.removeItem('user')
 
   return (
     

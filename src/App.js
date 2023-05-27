@@ -33,6 +33,8 @@ import ApprovalRequests from './pages/user action pages/admin/approvalrequests'
 import BannedAccounts from './pages/user action pages/admin/bannedaccounts'
 import ManageBannedAccount from "./pages/user action pages/admin/managebannedaccount";
 import ManageApproval from "./pages/user action pages/admin/manageapproval";
+import ManageActiveAccounts from "./pages/user action pages/admin/activeaccounts";
+import ManageActiveUser from "./pages/user action pages/admin/manageactiveuser";
 import BidComplaints from './pages/user action pages/bidder/bidcomplaints'
 import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
 import CancelledBids from './pages/user action pages/bidder/cancelledbids'
@@ -56,7 +58,6 @@ function App() {
           <Route path="signup" element={<SignUp />}/>
           <Route path="mailus" element={<Login />} />
           <Route path="tenders/:id/apply/payment/:id" element={<Payment />} />
-          {/* <Route path="payment" element={<Payment />} /> */}
           <Route path="tenders/:id/apply/biddocument/:id" element={<Biddocument/>} />
           <Route path='download' element={<Download/>}/>
           <Route path="waitforapproval" element={<WaitForApproval />} />
@@ -73,6 +74,8 @@ function App() {
           <Route path="/userpage/admin/:id/approval-requests/manage-user/:uid" element={<ManageApproval />} />
           <Route path="/userpage/admin/:id/banned-accounts" element={<BannedAccounts />} />
           <Route path="/userpage/admin/:id/banned-accounts/manage-user/:uid" element={<ManageBannedAccount />} />
+          <Route path="/userpage/admin/:id/active-accounts" element={<ManageActiveAccounts />} />
+          <Route path="/userpage/admin/:id/active-accounts/manage-user/:uid" element={<ManageActiveUser />} />
         </Route>
         <Route path="/userpage/supplier/:id" element={<SupplierLayout />}>
           <Route index element={<SupplierPage />} />
@@ -93,8 +96,10 @@ function App() {
           <Route index element={<PendchPage />} />
         </Route>
       </Routes>
-      {/* <Footer /> */}
-      <div title="Go to the top of the page" style={{width:'4rem',height:'4rem',backgroundColor:'dark',position:'fixed',bottom:'1.5rem',right:'1rem',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'0.5rem'}}><a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  /></a></div>
+      <div title="Go to the top of the page" className="bg-dark d-flex justify-content-center align-items-center" style={{width:'4rem',height:'4rem',position:'fixed',bottom:'1.5rem',right:'1rem',borderRadius:'0.5rem'}}>
+        <a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  />
+        </a>
+      </div>
       </BrowserRouter>
       </div>
       

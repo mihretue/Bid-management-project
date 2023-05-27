@@ -106,7 +106,8 @@ return(
                     </Nav.Link>
                 </Dropdown.Item>
        
-        </DropdownButton></Nav> 
+        </DropdownButton>
+          </Nav> 
 
         </Navbar.Collapse>
       

@@ -27,12 +27,27 @@ const ManageActiveUser=()=>{
       .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
     }
 
+    const banAccount=()=>{
+      setIsFetching(true)
+      fetch(`http://localhost:3001/ban/${uid}`)
+      .then((res)=>res.json())
+      .then((res)=>{
+          if(res.res=="ok"){
+              setIsFetching(false)
+              navigate(`/userpage/admin/${id}/active-accounts`)
+          }
+      })
+      .catch((err)=>{
+        setErrorFetching(true)
+      })
+  }
+
     return(
         <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
         <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
            <a className="icon-link text-decoration-none text-black" href="/#">
             <BsArrowLeft className='me-2' />
-            <Link className="text-decoration-none" to={`/userpage/admin/${id}/manage-accounts/`}>Back to Manage User Accounts</Link>
+            <Link className="text-decoration-none" to={`/userpage/admin/${id}/active-accounts/`}>Back to Manage Active User Accounts</Link>
            </a>
         </div>
         <div className="container rounded my-2" style={{height:'auto'}}>
@@ -82,6 +97,20 @@ const ManageActiveUser=()=>{
 </tr>
 </tbody>
 </table>
+<Pane className="mb-5 mx-auto mt-2 d-flex justify-content-center">
+      <Dialog
+        isShown={isShown}
+        title="Confirm Banning"
+        onCloseComplete={() => setIsShown(false)}
+        confirmLabel="Confirm"
+        onCancel={() => {setIsShown(false)}}
+        onConfirm={() => {setIsShown(false);banAccount()}}
+        
+      >
+        Ban User Account?
+      </Dialog>
+      <Button className="bg-primary text-white" onClick={() => setIsShown(true)}>Ban User Account</Button>
+    </Pane>
 </>
                 
             )}

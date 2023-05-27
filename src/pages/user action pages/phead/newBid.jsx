@@ -308,11 +308,27 @@ const Newbid = () => {
      }
      else if (act===2){
        return (<FormControl >
-        <FormLabel style={{fontWeight:"bold",fontFamily:"sans-serif"}}>Valid Tax Clearance Certiticate</FormLabel>
+        <FormLabel style={{marginTop:"1rem",fontWeight:"bold",fontFamily:"sans-serif"}}>Valid Tax Clearance Certiticate</FormLabel>
         <StyledTextarea
         required
           aria-label="Your Label"
         />
+        <FormLabel style={{marginTop:"1rem",fontWeight:"bold",fontFamily:"sans-serif"}}>Valid Tax Clearance Certiticate</FormLabel>
+        <StyledTextarea
+        required
+          aria-label="Your Label"
+        />
+                <FormLabel style={{marginTop:"1rem",fontWeight:"bold",fontFamily:"sans-serif"}}>Valid Tax Clearance Certiticate</FormLabel>
+        <StyledTextarea
+        required
+          aria-label="Your Label"
+        />
+                <FormLabel style={{marginTop:"1rem",fontWeight:"bold",fontFamily:"sans-serif"}}>Valid Tax Clearance Certiticate</FormLabel>
+        <StyledTextarea
+        required
+          aria-label="Your Label"
+        />
+        
       </FormControl>) 
      }
     };
