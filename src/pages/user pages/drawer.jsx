@@ -104,8 +104,8 @@ export default function SidebarTabsExample() {
          name="Alan Turing"
          size={40}
         />
-        <h6 className='text-center'>Mehretu Endeshaw</h6>
-        <p className='fs-9 m-0 text-break text-center'>mihretuendeshaw84@gmil.com</p>
+        <h6 className='text-center'>{JSON.parse(localStorage.getItem('user')).name}</h6>
+        <p className='fs-9 m-0 text-break text-center'>{JSON.parse(localStorage.getItem('user')).email}</p>
         <p className='fs-9 m-0 text-break text-center fw-bold'>PPA IT Officer</p>
        </div>
       </Tablist>
@@ -121,7 +121,7 @@ export default function SidebarTabsExample() {
           >
             {tab=="Manage User Accounts"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
-               <h3 className='m-0 text-center fs-6'>Manage User Accounts</h3>
+               <h3 className='m-0 text-center pt-3 fs-6'>Manage User Accounts</h3>
                <div className='row justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
                  <div className='col-6 border rounded d-flex flex-column align-items-center justify-content-center'>
                     <FaUsers style={{width:'4rem',height:'4rem'}} />

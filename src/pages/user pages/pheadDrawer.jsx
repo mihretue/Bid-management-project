@@ -11,6 +11,7 @@ import {IoBan} from 'react-icons/io5'
 import {RiLoaderLine} from 'react-icons/ri'
 import {FaUsers} from 'react-icons/fa'
 import {BsArrowRight} from 'react-icons/bs'
+import {FaListAlt} from 'react-icons/fa'
 import { Avatar } from 'evergreen-ui'
 import { useParams } from 'react-router-dom';
 import {useState,useEffect} from 'react'
@@ -28,11 +29,81 @@ export default function PheadDrawer() {
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
   const navigate = useNavigate();
+  const [bids,setBids]=useState([]);
+  const [BidsisFetching,setBidsIsFetching]=useState(true)
+  const [errorBidsFetching,setErrorBidsFetching]=useState(false)
+  const [Cbids,setCBids]=useState([]);
+  const [CBidsisFetching,setCBidsIsFetching]=useState(false)
+  const [errorCBidsFetching,setErrorCBidsFetching]=useState(false)
+  const [ACbids,setAcBids]=useState([]);
+  const [AcBidsisFetching,setAcBidsIsFetching]=useState(false)
+  const [errorAcBidsFetching,setErrorAcBidsFetching]=useState(false)
+  
+  const fetchBids=()=>{
+    setBidsIsFetching(true)
+    fetch('http://localhost:3001/getbids',{
+      method:'post',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({ent:JSON.parse(localStorage.getItem('user')).pBody})
+    })
+    .then(res=>res.json())
+    .then((res)=>{
+      setBids(res)
+      console.log(res)
+      setBidsIsFetching(false)
+    })
+    .catch((err)=>{
+      setBids([])
+      setErrorBidsFetching(true)
+    })
+  }
 
+  const fetchCancelledBids=()=>{
+    setCBidsIsFetching(true)
+    fetch('http://localhost:3001/getbids/cancelled',{
+      method:'post',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({ent:JSON.parse(localStorage.getItem('user')).pBody})
+    })
+    .then(res=>res.json())
+    .then((res)=>{
+      setCBids(res)
+      console.log(res)
+      setCBidsIsFetching(false)
+    })
+    .catch((err)=>{
+      setCBids([])
+      setErrorCBidsFetching(true)
+    })
+  }
 
+  const fetchActiveBids=()=>{
+    setAcBidsIsFetching(true)
+    fetch('http://localhost:3001/getbids/active',{
+      method:'post',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({ent:JSON.parse(localStorage.getItem('user')).pBody})
+    })
+    .then(res=>res.json())
+    .then((res)=>{
+      setAcBids(res)
+      console.log(res)
+      setAcBidsIsFetching(false)
+    })
+    .catch((err)=>{
+      setCBids([])
+      setErrorAcBidsFetching(true)
+    })
+  }
 
   useEffect(()=>{
-    fetchUserData()
+    fetchUserData();fetchBids();fetchCancelledBids();fetchActiveBids()
  },[])
  const fetchUserData=()=>{
      setIsFetching(true)
@@ -75,8 +146,10 @@ export default function PheadDrawer() {
            name="Alan Turing"
            size={40}
           />
-          <h6 className='text-center'>{user.fName + " "+ user.lName}</h6>
-          <p className='fs-9 m-0 text-break text-center'>{user.email}</p>
+          <h6 className='text-center'>{JSON.parse(localStorage.getItem('user')).name}</h6>
+          <p className='fs-9 m-0 text-break text-center'>{JSON.parse(localStorage.getItem('user')).email}</p>
+          <p className='fs-9 m-0 text-break text-center'>Procurement Department Head at : </p>
+          <p className='fs-9 m-0 text-break text-center fw-bold'>{JSON.parse(localStorage.getItem('user')).pBody}</p>
          </div>
         )}
         
@@ -101,23 +174,29 @@ export default function PheadDrawer() {
 
                  </div>
                  <div onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids`)}} style={{cursor:"pointer"}} className='col-6 border rounded col-md-4 d-flex flex-column align-items-center justify-content-center'>
-                    <GrInProgress style={{width:'3rem',height:'3rem'}} />
+                    <FaListAlt style={{width:'3rem',height:'3rem'}} />
                     <p className='m-0 fs-5 text-center'>All Tenders</p>
-                    <p className='m-0 fs-6'>567</p>
+                    <p className='m-0 fs-6'>{BidsisFetching?"Fetching":(errorBidsFetching?"Error":bids.length)}</p>
 
                  </div>
-                 <div onClick={()=>{navigate (`/userpage/supplier/${id}/cancelled-bids`)}} style={{cursor:"pointer"}} className='col-6 ms-auto ms-md-0 col-md-4 border rounded   d-flex flex-column align-items-center justify-content-center'>
+                 <div onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/active-bids`)}} style={{cursor:"pointer"}} className='col-6 border rounded col-md-4 d-flex flex-column align-items-center justify-content-center'>
+                    <GrInProgress style={{width:'3rem',height:'3rem'}} />
+                    <p className='m-0 fs-5 text-center'>Active Tenders</p>
+                    <p className='m-0 fs-6'>{AcBidsisFetching?"Fetching":(errorAcBidsFetching?"Error":ACbids.length)}</p>
+
+                 </div>
+                 <div onClick={()=>{navigate (`/userpage/phead/${id}/manage-bids/cancelled-bids`)}} style={{cursor:"pointer"}} className='col-6 ms-auto ms-md-0 col-md-4 border rounded   d-flex flex-column align-items-center justify-content-center'>
                     <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem'}} />
-                    <p className='m-0 fs-5 text-center'>Cancelled Bids</p>
-                    <p className='m-0 fs-6'>23</p>
+                    <p className='m-0 fs-5 text-center'>Cancelled Tenders</p>
+                    <p className='m-0 fs-6'>{CBidsisFetching?"Fetching":(errorCBidsFetching?"Error":Cbids.length)}</p>
 
                  </div>
-                 <div  onClick={()=>{ navigate (`/userpage/supplier/${id}/clarification-requests`)}} style={{cursor:"pointer"}} className='col-6  ms-md-0 col-md-6 border rounded   d-flex flex-column align-items-center justify-content-center'>
+                 <div  onClick={()=>{ navigate (`/userpage/supplier/${id}/clarification-requests`)}} style={{cursor:"pointer"}} className='col-6  ms-md-0 col-md-4 border rounded   d-flex flex-column align-items-center justify-content-center'>
                     <MdQuestionAnswer style={{width:'4rem',height:'4rem'}} />
                     <p className='m-0 fs-5 text-center'>Bid Clarification Requests</p>
                     <p className='m-0 fs-6'>23</p>
                  </div>
-                 <div onClick={()=> {navigate (`/userpage/supplier/${id}/bid-complaints`)}} style={{cursor:"pointer"}} className='col-12 ms-md-0 border col-md-6 mx-auto rounded   d-flex flex-column align-items-center justify-content-center'>
+                 <div onClick={()=> {navigate (`/userpage/supplier/${id}/bid-complaints`)}} style={{cursor:"pointer"}} className='col-6 ms-md-0 border col-md-4 mx-auto rounded   d-flex flex-column align-items-center justify-content-center'>
                     <BiMessageRoundedError style={{width:'4rem',height:'4rem'}} />
                     <p className='m-0 fs-5 text-center'>Complaints Sent</p>
                     <p className='m-0 fs-6'>13</p>

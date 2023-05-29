@@ -30,16 +30,8 @@ useEffect(()=>{fetchTenderDetails()},[])
 const [tender,setTender]=useState({})
 const [rows,setRows]=useState([])
 const [rows2,setRows2]=useState([])
-const [rows3,setRows3]=useState([
-  {title:'Valid tax clearance certificate', Information:'Having been submitted valid tax clearance certificate issued by the tax authority (Domestic Bidders Only) in accordance with ITB Clause 4.6 '},
-  {title:'Conflict of Interest', Information:' No conflict of interest as described in ITB Clause 6.'},
-  {title:'Valid trade license or business organization registration certificate', Information:' Having been submitted valid trade license or business organization registration certificate issued by the country of establishment in accordance with ITB Clause 4.6.'},
-  {title:'Debarred by decision of the FPPA', Information:' Not having been debarred by decision of the Public Procurement Agency from participating in public procurements for breach of its obligation under previous contracts in accordance with ITB Clause 4.3.'},
-  {title:'Form Data on Joint Ventures', Information:'In the case of a bid submitted by a joint venture (JV), the Bidder has to submit the Form Data on Joint Ventures, the Agreement governing the formation of the joint venture, or letter of intent to form JV, including a draft agreement, in accordance with ITB Clause 4.1 '},
-  {title:'Nationality', Information:' Nationality in accordance with ITB Clause 4.2.'},
-  {title:'VAT registration certificate', Information:'Having been submitted VAT registration certificate issued by the tax authority (in case of contract value of Birr 200,000.00 and above) in accordance with ITB Clause 4.6. '},
-  {title:'Government Owned Entity', Information:'Compliance with conditions of ITB Clause 4.4. '}
-])
+const [rows3,setRows3]=useState([])
+const [tc,setTc]=useState("")
 const [isFetching,setIsFetching]=useState(true)
 const [errorFetching,setErrorFetching]=useState(false)
 
@@ -48,10 +40,12 @@ const a=window.location.href.split('/')[4]
   fetch(`http://localhost:3001/gettender/?id=${a}`)
   .then(res=>res.json())
   .then((res)=>{
+   console.log(res)
     setTender(res)
     setRows([
   {title:'Invitation Date', Information:res.inv},
   {title:'Procurement ID', Information:res.id},
+  {title:'Procurement Title', Information:res.title},
   {title:'Procurement Category', Information:res.cat},
   {title:'Market Type', Information:res.app},
   {title:'Procurement Method', Information:'Open'},
@@ -63,6 +57,17 @@ const a=window.location.href.split('/')[4]
   {title:'Participation Fee', Information:res.partFee},
   {title:'Bid Security Amount', Information:res.bidSec}
 ])
+  setRows3([{title:'Valid tax clearance certificate', Information:res.vTax},
+  {title:'Conflict of Interest', Information:res.coi},
+  {title:'Valid trade license or business organization registration certificate', Information:res.lic},
+  {title:'Debarred by decision of the FPPA', Information:res.lg},
+  {title:'Form Data on Joint Ventures', Information:res.vent},
+  {title:'Nationality', Information:res.nat},
+  {title:'VAT registration certificate', Information:res.vat},
+  {title:'Government Owned Entity', Information:res.gow}
+])
+
+setTc(res.tc)
   setIsFetching(false)
   })
   .catch((err)=>{
@@ -212,7 +217,7 @@ return (<>
               Terms and Conditions
                           </TableCell>
                           <TableCell  style={{align:'start',fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}}>
-                          The Company has the right to cancel the bid fully.
+                          {tc}
                           </TableCell>
                     </TableRow>
             </TableBody>

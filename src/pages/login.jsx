@@ -41,30 +41,26 @@ const handleChange = (event) => {
           navigate('/waitforapproval')
        }else{
         //navigate to home
-        localStorage.setItem('user',true)
+        // localStorage.setItem('user',true)
         if(res.status=="banned"){
 
         }else{
           if(res.status=="active"){
             switch(res.role) {
               case 'ppa it officer':
-                localStorage.setItem('role','admin')
-                localStorage.setItem('id',res._id)
+                localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/admin/${res._id}`)
                 break;
               case 'bidder':
-                localStorage.setItem('role','bidder')
-                localStorage.setItem('id',res._id)
+                localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/supplier/${res._id}`)
                 break;
               case 'procurement department head':
-                localStorage.setItem('role','phead')
-                localStorage.setItem('id',res._id)
+                localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/phead/${res._id}`)
                 break;
               case 'procurement endorsing committee head':
-                localStorage.setItem('role','pendch')
-                localStorage.setItem('id',res._id)
+                localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/pendch/${res._id}`)
                 break;
               default:

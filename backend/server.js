@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const userModel = require("./models/user")
 const advertModel = require("./models/adverts")
 const { ObjectId } = require('mongodb');
-
+const nodemailer=require('nodemailer')
 const cors=require("cors");
 const { RestorePageRounded } = require('@mui/icons-material');
 app.use(cors());
@@ -72,7 +72,6 @@ app.post('/getbids', (request, response) => {
   })
 });
 
-
 app.get('/getusers/:id', (request, response) => {
   const type=request.params.id
     userModel.find({status:type})
@@ -82,6 +81,17 @@ app.get('/getusers/:id', (request, response) => {
       response.json({docs})
     })
   
+});
+
+app.post('/getbids/:id', (request, response) => {
+  const status = request.params.id
+  const pbody = request.body.ent
+  advertModel.find({ent:pbody,status:status})
+  .then((err,docs)=>{
+   if(err) response.send(err)
+   else
+    response.json({docs})
+  })
 });
 
 app.get('/approve/:id',(request,response)=>{
@@ -149,6 +159,49 @@ app.post('/signup', (request, response) => {
       .catch(err=>response.json(err))
 })
 
+app.post('/newtender', (request, response) => {
+  const input=request.body;
+  const newUser=new advertModel({
+            id:input.id,
+            title:input.title,
+            ent:input.ent,
+            cat:input.cat,
+            app:input.app,
+            dead:input.dead,
+            bidSec:input.bsec,
+            inv:input.invD,
+            open:input.opend,
+            visit:input.visitd,
+            vTax:input.vTax,
+            coi:input.coi,
+            lic:input.lic,
+            lg:input.lg,
+            vent:input.vent,
+            nat:input.nat,
+            vat:input.vat,
+            gow:input.gow,
+            tc:input.tc,
+            pfee:input.pfee,
+            status:"active"
+          });
+          newUser.save()
+          .then((res)=>{
+            response.json({res:"ok"})
+          })
+          .catch((err)=>{response.json(err)})
+        }
+)
+
+app.get('/canceltender/:id',(request,response)=>{
+  advertModel.findOneAndUpdate({ _id: request.params.id}, {$set:{ status:"cancelled"}},{new:true})
+  .then(updatedUser => {
+      response.json({res:"ok"})
+  })
+  .catch((err)=>{
+    console.log(err)
+  });
+  })
+
 app.post('/login', (request, response) => {
   const input=request.body;
   userModel.findOne({email:input.email})
@@ -194,6 +247,37 @@ app.get('/getusers', (request, response) => {
      }
     )
 });
+
+app.get('/sendemail',(request,response)=>{
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: 'fanuelamare0925@gmail.com', // replace with your email address
+        pass: '' // replace with your password
+    }
+});
+
+// setup email data with unicode symbols
+let mailOptions = {
+    from: 'fanuelamare0925@@gmail.com', // sender address
+    to: 'fanuelamare7765@example.com', // list of receivers
+    subject: 'Test Email', // Subject line
+    text: 'Hello World!', // plain text body
+    html: '<b>Hello World!</b>' // html body
+};
+
+// send mail with defined transport object
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        response.json({res:"error"});
+    } else {
+        response.json({res:info.response});
+    }
+});
+})
 
 
 

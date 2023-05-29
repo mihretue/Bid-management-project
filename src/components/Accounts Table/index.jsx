@@ -71,7 +71,6 @@ import {GrRefresh} from 'react-icons/gr'
       .then(res=>res.json())
       .then((res)=>{
         res=res.filter((r)=>r.role!=='ppa it officer')
-        console.log(res)
         setRows(res)
         setIsFetching(false)
       })

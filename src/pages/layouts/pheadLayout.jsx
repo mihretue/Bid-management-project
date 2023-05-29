@@ -25,7 +25,6 @@ const PheadLayout=()=>{
      .then((res)=>res.json())
      .then((res)=>{
        setUser(res)
-       console.log(res)
        setIsFetching(false)
      })
      .catch((err)=>{
@@ -46,13 +45,7 @@ return(
 
           </Nav>
           <Nav style={{ fontWeight: 'bold' }}>
-          <DropdownButton id="dropdown-basic-button "  title={isFetching?
-                  <p className="m-0 d-inline ps-2">User</p>
-                  :(errorFetching?
-                  <p className="m-0 d-inline ps-2">User</p>
-                  :
-                  <p className="m-0 d-inline ps-2">{user.fName}</p>
-                  ) } >
+          <DropdownButton id="dropdown-basic-button "  title={JSON.parse(localStorage.getItem('user')).fName} >
                 <Dropdown.Item >
                   <Nav.Link as={Link} to={"/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
                     <BsGear className='mx-1' />
@@ -63,7 +56,6 @@ return(
                     <Nav.Link  onClick={()=>{localStorage.removeItem("user"); navigate("/")}}  className="justify-content-center text-black ">
                       <IoIosLogOut  className='mx-1'/>
                         Log Out
-                      
                     </Nav.Link>
                 </Dropdown.Item>
        

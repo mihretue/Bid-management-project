@@ -5,23 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import PheadDrawer from './pheadDrawer';
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-  },
-}));
+import Footer from '../../components/footer';
 
 function PheadPage() {
 
-  const classes = useStyles();
   const {id,uid} =useParams();
   const [user,setUser]=useState({})
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
-
-
 
   useEffect(()=>{
     fetchUserData()
@@ -32,28 +23,17 @@ function PheadPage() {
      .then((res)=>res.json())
      .then((res)=>{
        setUser(res)
-       console.log(res)
        setIsFetching(false)
      })
      .catch((err)=>{
       setIsFetching(false);
       setErrorFetching(true)})
    }
-
-  return (
-    <Container fluid>
+  return (<>
       <PheadDrawer/>
-      <Row>
-        <Col md={9}>
-          <Paper className={classes.root}>
-            <Typography variant="h5"></Typography>
-          </Paper>
-          <Paper style={{}}>
-            
-          </Paper>
-        </Col>
-      </Row>
-    </Container>
+      <Footer />
+      </>
+
   );
 }
 

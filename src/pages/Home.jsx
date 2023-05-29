@@ -20,8 +20,8 @@ const Home = () => {
     }, []);
     useEffect(() => {
         if(localStorage.getItem('user')){
-            const role=localStorage.getItem('role')
-            const id=localStorage.getItem('id')
+            const role=JSON.parse(localStorage.getItem('user')).role
+            const id=JSON.parse(localStorage.getItem('user')).id
             switch(role) {
                 case 'admin':
                   navigate(`./userpage/admin/${id}`)

@@ -30,16 +30,53 @@ const advertSchema = new mongoose.Schema({
     },inv: {
       type: Date,
       required: true,
-    },partFee:{
-      type:String,
-      required:true
     },visit:{
       type:String,
       required:true
     },status:{
       type:String,
       required:true
-    }
+    },
+    vTax:{
+      type:String,
+      required:true
+    },
+  coi:{
+    type:String,
+    required:true
+  },
+  lic:{
+    type:String,
+    required:true
+  },
+  lg:{
+    type:String,
+    required:true
+  },
+  vent:{
+    type:String,
+    required:true
+  },
+  nat:{
+    type:String,
+    required:true
+  },
+  vat:{
+    type:String,
+    required:true
+  },
+  gow:{
+    type:String,
+    required:true
+  },
+  tc:{
+    type:String,
+    required:true
+  },
+  pfee:{
+    type:String,
+    required:true
+  }
   },{collection:'Tenders'});
   
 

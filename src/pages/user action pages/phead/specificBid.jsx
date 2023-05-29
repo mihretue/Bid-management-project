@@ -8,15 +8,16 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useEffect } from "react";
-import { Link,useParams } from "react-router-dom";
+import { Link,useNavigate,useParams } from "react-router-dom";
 import {IoIosArrowBack} from 'react-icons/io'
 import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
+import { Pane, Dialog} from 'evergreen-ui'
 import {BiLinkExternal} from 'react-icons/bi'
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 import {BsArrowLeft} from 'react-icons/bs'
 import { Button,EditIcon,TrashIcon,TickIcon,ManualIcon,PersonIcon,ArchiveIcon } from 'evergreen-ui'
-
+import Footer from '../../../components/footer'
 const columns = [
     { 
         id: 'id', 
@@ -25,9 +26,10 @@ const columns = [
        
       }
   ]
-
 const SpecificBid = () => {
+const navigate=useNavigate()
 const {id,uid} =useParams();
+const [isShown, setIsShown] = useState(false)
 useEffect(()=>{document.title='Cheretanet | SpecificBid Information'},[])
 useEffect(()=>{fetchTenderDetails()},[])
 const [tender,setTender]=useState({})
@@ -45,6 +47,8 @@ const [rows3,setRows3]=useState([
 ])
 const [isFetching,setIsFetching]=useState(true)
 const [errorFetching,setErrorFetching]=useState(false)
+const [isCancelling,setIsCancelling]=useState(false)
+const [errorCancelling,setErrorCancelling]=useState(false)
 const {bid}=useParams()
 
 const fetchTenderDetails=()=>{
@@ -74,6 +78,24 @@ const fetchTenderDetails=()=>{
   })
 }
 
+const cancelTender=()=>{
+  setIsCancelling(true)
+  fetch(`http://localhost:3001/canceltender/${bid}`)
+  .then(res=>res.json())
+  .then((res)=>{
+    setIsCancelling(false)
+    if(res.res=="ok"){
+       navigate(`/userpage/phead/${id}/manage-bids/all-bids`)
+    }else{
+      console.log("no!")
+      setErrorCancelling(true)
+    }
+  })
+  .catch((err)=>{
+    setErrorCancelling(true)
+  })
+}
+
 
 return (<>
     <div className="container p-2 w-100 fluid" style={{minHeight:'2rem'}}>
@@ -83,7 +105,7 @@ return (<>
                </a>
     </div>
     {isFetching?
-        <div className="container" style={{border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
+        <div className="mb-5 container" style={{border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
            {errorFetching?
            <div style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
              <BiError size="1.5rem" />
@@ -97,7 +119,7 @@ return (<>
            </div>
     }</div>
        :
-      <div className="container" style={{padding:'0rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+      <div className="container mb-5" style={{padding:'0rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
         <h4 className="text-center">Tender Details</h4>
         <Paper className="mt-3" sx={{ width: '90%',margin:'auto', overflow: 'hidden',border:'0.1rem solid gray' }}>
         <TableContainer sx={{ height:'auto'  }}>
@@ -231,12 +253,22 @@ return (<>
       <div className="container  d-flex flex-column justify-content-center align-items-center rounded mt-3 " style={{width:'80%',minHeight:'5rem',height:'auto'}}>
         <h6 className="text-center">Actions</h6>
         <div className=" justify-content-center align-items-center row g-2 mb-2 container-fluid ">
-        <Button className="col-6 col-md-3 me-1"   iconBefore={EditIcon}>
+        {/* <Button className="col-6 col-md-3 me-1"   iconBefore={EditIcon}>
         Edit Tender
-        </Button>
-        <Button className="col-6 col-md-3 me-1 "   iconBefore={TrashIcon} intent="danger">
-            Cancel Tender
-        </Button>
+        </Button> */}
+        <Pane className="mx-auto mt-2 d-flex justify-content-center">
+      <Dialog
+        isShown={isShown}
+        title="Confirm Cancellation"
+        onCloseComplete={() => setIsShown(false)}
+        confirmLabel="Yes"
+        onCancel={() => {setIsShown(false)}}
+        onConfirm={() => {setIsShown(false);cancelTender()}}
+      >
+        Are You Sure You Want To Cancel This Bid?
+      </Dialog>
+      <Button className="col-6 col-md-3 me-1 "   iconBefore={TrashIcon} intent="danger" onClick={() => setIsShown(true)}>Cancel Tender</Button>
+    </Pane>
         <Button  className="col-6 col-md-3 me-1"  iconBefore={TickIcon} intent="success">
             Post Bid Award
         </Button>
@@ -263,6 +295,7 @@ return (<>
             </div>
          </div>
       </div>}
+      <Footer />
       </>)
 }                           
 export default SpecificBid;

@@ -5,6 +5,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import {BsFillCircleFill} from 'react-icons/bs'
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -41,6 +42,11 @@ import {GrRefresh} from 'react-icons/gr'
       label: 'Submission Deadline',
       align: 'center',
     },
+    {
+      id: 'status',
+      label: 'Status',
+      align: 'center',
+    },
   ];
   
   export default function StickyHeadTable() {
@@ -60,7 +66,7 @@ import {GrRefresh} from 'react-icons/gr'
         headers:{
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ent:"Ministry of Education"})
+        body:JSON.stringify({ent:JSON.parse(localStorage.getItem('user')).pBody})
       })
       .then(res=>res.json())
       .then((res)=>{
@@ -140,6 +146,9 @@ import {GrRefresh} from 'react-icons/gr'
                         </TableCell>
                         <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
             {bid.dead}
+                        </TableCell>
+                        <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
+            {bid.status=="active"?<p className="m-0"><BsFillCircleFill className="me-1" color="green" />{bid.status}</p>:<p className="m-0 text-red">{bid.status}</p>}
                         </TableCell>
                   </TableRow>
                 );

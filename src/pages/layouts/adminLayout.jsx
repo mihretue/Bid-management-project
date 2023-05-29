@@ -45,13 +45,7 @@ return(
             <Nav.Link as={Link} to={"./"} >Home</Nav.Link>
           </Nav>
           <Nav >
-              <DropdownButton id="dropdown-basic-button "  title={isFetching?
-                  <p className="m-0 d-inline ps-2">User</p>
-                  :(errorFetching?
-                  <p className="m-0 d-inline ps-2">User</p>
-                  :
-                  <p className="m-0 d-inline ps-2">{user.fName}</p>
-                  ) } >
+              <DropdownButton id="dropdown-basic-button "  title={JSON.parse(localStorage.getItem('user')).fName} >
                 <Dropdown.Item >
                   <Nav.Link as={Link} to={"/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
                     <BsGear className='mx-1' />

@@ -37,13 +37,19 @@ import ManageActiveAccounts from "./pages/user action pages/admin/activeaccounts
 import ManageActiveUser from "./pages/user action pages/admin/manageactiveuser";
 import BidComplaints from './pages/user action pages/bidder/bidcomplaints'
 import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
-import CancelledBids from './pages/user action pages/bidder/cancelledbids'
+import CancelledBids from './pages/user action pages/phead/cancelledbids'
 import ClarifyRequests from './pages/user action pages/bidder/clarifyrequests'
 import AllBids from './pages/user action pages/phead/allbids'
 import SpecificBid from "./pages/user action pages/phead/specificBid";
 import NewBid from "./pages/user action pages/phead/newBid"
-
+import ActiveBids from "./pages/user action pages/phead/activebids";
+import ManageCancelledBid from './pages/user action pages/phead/managecancelledbid'
 function App() {
+  // fetch('http://localhost:3001/sendemail')
+  // .then((res)=>res.json())
+  // .then((res)=>{console.log(res)})
+  // .catch((err)=>{console.log(err)})
+
   return (
     
     <div>
@@ -87,17 +93,19 @@ function App() {
         <Route path="/userpage/phead/:id" element={<PheadLayout />}>
           <Route index element={<PheadPage />} />
           <Route path="/userpage/phead/:id/manage-bids/all-bids" element={<AllBids/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/active-bids" element={<ActiveBids/>}/>
           <Route path="/userpage/phead/:id/manage-bids/all-bids/:bid" element={<SpecificBid/>}/>
           <Route path="/userpage/phead/:id/manage-bids/post-bid" element={<NewBid/>}/>
-
+          <Route path="/userpage/phead/:id/manage-bids/cancelled-bids" element={<CancelledBids/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/all-bids/cancelled-bid/:bid" element={<ManageCancelledBid/>}/>
 
         </Route>
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
           <Route index element={<PendchPage />} />
         </Route>
       </Routes>
-      <div title="Go to the top of the page" className="bg-dark d-flex justify-content-center align-items-center" style={{width:'4rem',height:'4rem',position:'fixed',bottom:'1.5rem',right:'1rem',borderRadius:'0.5rem'}}>
-        <a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  />
+       <div title="Go to the top of the page" className="bg-dark d-flex justify-content-center align-items-center" style={{width:'4rem',height:'4rem',position:'fixed',bottom:'1.5rem',right:'1rem',borderRadius:'0.5rem'}}>
+         <a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  />
         </a>
       </div>
       </BrowserRouter>

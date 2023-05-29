@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import {AiOutlineSearch} from 'react-icons/ai'
 import {BsArrowLeft} from 'react-icons/bs'
+import Footer from '../../../components/footer'
 
 
 function Allbids () {
@@ -37,7 +38,7 @@ function Allbids () {
                 <Link className="text-decoration-none" to={`/userpage/phead/${id}`}>Back to Dashboard</Link>
                </a>
             </div>
-      <div id="advertss" >
+      <div id="advertss" className='mb-5' >
     <h1 className='text-center fs-4 text-success '> All Tenders</h1>
     <div className="mt-3 rounded border" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
         <TextField
@@ -58,6 +59,7 @@ function Allbids () {
    </div>
 
     </div> 
+    <Footer />
     </>
     )
   }

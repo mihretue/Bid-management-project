@@ -70,6 +70,7 @@ import {GrRefresh} from 'react-icons/gr'
       fetch('http://localhost:3001/getusers/active')
       .then(res=>res.json())
       .then((res)=>{
+        res=res.filter((r)=>r.role!=='ppa it officer')
         setRows(res)
         setIsFetching(false)
       })
@@ -127,7 +128,7 @@ import {GrRefresh} from 'react-icons/gr'
               {
               rows.map((row) => {
                 return (
-                  <TableRow onClick={()=>{navigate(`./manage-user/${row._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={row.id}  hover role="checkbox" tabIndex={-1}>
+                  <TableRow onClick={()=>{navigate(`./${row._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={row.id}  hover role="checkbox" tabIndex={-1}>
                         <TableCell style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
             {row.fName+' '+row.LName}
                         </TableCell>

@@ -17,7 +17,6 @@ function AdminPage() {
   const {id} =useParams()
   return (
     <div className='container rounded border' style={{height:'30rem'}}>
-      <h3 className='text-center mb-3 h3'>Dashboard</h3>
       <SidebarTabsExample />
     </div>
   );
