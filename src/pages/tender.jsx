@@ -9,12 +9,13 @@ import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useEffect } from "react";
 import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import {IoIosArrowBack} from 'react-icons/io'
 import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
 import {BiLinkExternal} from 'react-icons/bi'
 import {BsArrowCounterclockwise} from 'react-icons/bs'
+import Footer from "../components/footer";
 const columns = [
     { 
         id: 'id', 
@@ -74,6 +75,7 @@ setTc(res.tc)
     setErrorFetching(true)
   })
 }
+ const {tid}=useParams()
 
 
 return (<>
@@ -81,22 +83,22 @@ return (<>
      <button style={{margin:'0 0 1rem 10%'}} type="button" className="btn btn-primary">
      Back To Tenders List</button>
   </Link>
-    {isFetching?
-        <div className="container" style={{border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
-           {errorFetching?
-           <div style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
+    {isFetching?<>
+      <div className="container mb-5" style={{border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
+           {errorFetching?<>
+           <div className="mb-5" style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
              <BiError size="1.5rem" />
              <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center',color:'red'}}>An Error Occurred!</p>
             <Button onClick={()=>{fetchTenderDetails();setIsFetching(true);setErrorFetching(false)}} style={{textTransform:'none'}} color="secondary" className="mt-3" variant="outlined" size="small" endIcon={<BsArrowCounterclockwise />}>Try Again</Button>
-           </div>
+           </div><Footer /></>
            :
            <div style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
               <CircularProgress size="1.5rem" color="secondary"/>
               <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center'}}>Fetching Tender Information...</p>
            </div>
-    }</div>
-       :
-      <div className="container" style={{padding:'0rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+    }</div><Footer /></>
+       :<>
+      <div className="container mb-5" style={{padding:'0rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
         <Paper sx={{ width: '90%',margin:'auto', overflow: 'hidden',border:'0.1rem solid gray' }}>
         <TableContainer sx={{ height:'auto'  }}>
           <Table stickyHeader aria-label="sticky table">
@@ -226,11 +228,11 @@ return (<>
         </TableContainer>
         
       </Paper>
-      <Link to={`apply/biddocument/${window.location.href.split('/')[4]}`}> 
+      <Link to={`./apply/bid-document/`} target="about"> 
       <Button endIcon={<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
       Apply For This Bid
     </Button></Link> 
-      </div>}
+      </div><Footer /></>}
       </>)
 }                           
 export default Tender;

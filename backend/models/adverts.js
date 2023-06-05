@@ -76,6 +76,10 @@ const advertSchema = new mongoose.Schema({
   pfee:{
     type:String,
     required:true
+  },
+  bidDocFile:{
+    type:String,
+    required:true
   }
   },{collection:'Tenders'});
   

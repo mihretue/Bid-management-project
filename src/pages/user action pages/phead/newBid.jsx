@@ -25,7 +25,7 @@ import { useNavigate,useParams,Link } from "react-router-dom";
 import Footer from '../../../components/footer'
 import {BsArrowLeft} from 'react-icons/bs'
 
-const steps = ['Basic Information', 'Eligibility Documents', 'Required Payments'];
+const steps = ['Basic Information', 'Eligibility Documents', 'Required Payments','Documents'];
 const Newbid = () => {
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
@@ -43,10 +43,13 @@ const Newbid = () => {
       natErrorM:"",vat:"",vatError:"",vatErrorM:"",gow:"",
       gowError:"",gowErrorM:"",
       tc:"",tcError:"",tcErrorM:"",pfee:"",pfeeError:"",
-      pfeeErrorM:"",invD:"",ent:JSON.parse(localStorage.getItem('user')).pBody})
+      pfeeErrorM:"",invD:"",ent:JSON.parse(localStorage.getItem('user')).pBody,bidDocFile:''})
     const [isSubmitting,setIsSubmitting]=useState(false)
     const [errorSubmitting,setIsErrorSubmitting]=useState(false)
     const [agreed,setAgreed]=useState(false)
+    const [uploading,setUploading]=useState(false)
+    const [errorUploading,setErrorUploading]=useState(false)
+    const [uploaded,setUploaded]=useState(false)
      const navigate=useNavigate()
      const {id}=useParams()
     const blue = {
@@ -141,6 +144,34 @@ const Newbid = () => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
+  const handleFileChange=(event)=>{
+      setFile(event.target.files[0]);
+  }
+
+     function handleFileSubmit(event){
+      event.preventDefault();
+      const formData = new FormData();
+      formData.append('file', file);
+      setUploading(true)
+      fetch('http://localhost:3001/uploadbiddocument',{
+        method:'post',
+        body:formData
+       }).then((res)=>res.json())
+       .then((res)=>{
+        setUploading(false)
+        if(res.res=="error"){
+          setErrorUploading(true)
+        }else{
+          setUploaded(true)
+          setInput({...input,bidDocFile:res.res})
+        }
+       })
+       .catch((err)=>{
+           setErrorUploading(true)
+       })
+     }
+   const [file,setFile]=useState(null)
 
   const handleReset = () => {
     setActiveStep(0);
@@ -385,7 +416,7 @@ const Newbid = () => {
          />
        </form>) 
       }
-    else{
+    else if(act==3){
       return (
         <form  id="form" onSubmit={(e)=>{handleNext(e,3)}}>
           <TextareaField
@@ -406,6 +437,20 @@ const Newbid = () => {
          />
         </form>
       )
+    }else{
+      return(<div style={{minHeight:'10rem'}}>
+        <h5 className="text-center">Attach The Bid Document here.</h5>
+        <form onSubmit={handleFileSubmit} className="d-flex flex-column justify-content-center align-items-center">
+          <input id="file_input" hidden type="file" onChange={handleFileChange} />
+          <button type="button" className="btn btn-primary">
+          <label className="text-white" htmlFor="file_input">
+            Attach Bid Document ( pdf format )
+          </label>
+          </button>
+          <p className="m-0">{file&&"File Attached."}</p>
+          <button type="submit" className="mt-2 btn btn-secondary">Upload</button>
+          <p className="m-0">{uploading?"Uploading File":(errorUploading?"Error Uploading File":uploaded&&"Successfully Uploaded!")}</p>
+        </form>      </div>)
     }
     };
 
@@ -468,7 +513,7 @@ const Newbid = () => {
               Back
             </Button>
             <Box sx={{ flex: '1 1 auto' }} />
-            <Button form='form' type="submit">
+            <Button form='form' type="submit" onClick={(e)=>activeStep===steps.length-1?handleNext(e,4):""}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
           </Box>

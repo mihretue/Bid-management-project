@@ -3,11 +3,12 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import {AiOutlineSearch} from 'react-icons/ai'
 import StickyHeadTable from "../components/Bid Table";
+import Footer from "../components/footer";
 const Tenders=()=>{
     useEffect(()=>{document.title='Cheretanet | Bid Advertisements'})
 
 return(<>
-    <div id="advertss" >
+    <div id="advertss" className="mb-5" >
     <div className="container text-center">
     <div className="row align-items-start border" >    
     <div className="col-lg-2 col-md-3 border col-sm-4 d-flex flex-column ">
@@ -55,6 +56,7 @@ return(<>
    </div>
 
     </div> 
+    <Footer />
     </>
 )
 }

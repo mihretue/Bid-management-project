@@ -6,12 +6,16 @@ const userModel = require("./models/user")
 const advertModel = require("./models/adverts")
 const { ObjectId } = require('mongodb');
 const nodemailer=require('nodemailer')
+const axios=require('axios')
 const cors=require("cors");
 const { RestorePageRounded } = require('@mui/icons-material');
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+const multer = require('multer');
 const port = 3001;
+const {v4:uuidv4}=require('uuid')
+const biddingModel=require('./models/bidding')
 const mongoUrl="mongodb+srv://mihretu:mihretuendeshawrkr@methane.0fjzoxr.mongodb.net/Bid?retryWrites=true&w=majority";
 mongoose.connect(mongoUrl,
   {
@@ -182,7 +186,8 @@ app.post('/newtender', (request, response) => {
             gow:input.gow,
             tc:input.tc,
             pfee:input.pfee,
-            status:"active"
+            status:"active",
+            bidDocFile:input.bidDocFile
           });
           newUser.save()
           .then((res)=>{
@@ -278,12 +283,42 @@ transporter.sendMail(mailOptions, (error, info) => {
     }
 });
 })
+const uuid=uuidv4()
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/biddocs')
+  },
+  filename: function (req, file, cb) {
+    const ext = file.originalname.split('.').pop();
+    const fileName = uuidv4()
+    cb(null, `${fileName}.${ext}`);
+  }
+});
 
+const upload = multer({ storage: storage });
 
+app.post('/uploadbiddocument' ,(req, res) => {
+  upload.single('file')(req,res,(err=>{
+    if(err){
+      res.json({res:"error"});
+    }else{
+      res.json({res:req.file.filename});
+    }
+  }))
+  
+});
 
+app.get('/checkbidder', (request, response) => {
+  const par=request.query.id
+  biddingModel.findOne({bidderId:par})
+  .then((err,docs)=>{
+   if(err) response.send(err)
+   else
+    response.json({docs})
+  })
+});
 
-
-
+app.
 
 
 

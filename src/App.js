@@ -51,7 +51,6 @@ function App() {
   // .catch((err)=>{console.log(err)})
 
   return (
-    
     <div>
       <div>
       <BrowserRouter>
@@ -63,8 +62,8 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />}/>
           <Route path="mailus" element={<Login />} />
-          <Route path="tenders/:id/apply/payment/:id" element={<Payment />} />
-          <Route path="tenders/:id/apply/biddocument/:id" element={<Biddocument/>} />
+          <Route path="tenders/:tid/apply/payment" element={<Payment />} />
+          <Route path="tenders/:tid/apply/bid-document" element={<Biddocument/>} />
           <Route path='download' element={<Download/>}/>
           <Route path="waitforapproval" element={<WaitForApproval />} />
           <Route path="tenders/:id" element={<Tender />} />
