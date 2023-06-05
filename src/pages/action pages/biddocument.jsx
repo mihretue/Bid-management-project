@@ -52,7 +52,7 @@ const Biddocument = () => {
         <p id="checkp" className="fs-10 m-0 text-center" style={{display:'none'}}>
            {isChecking?"Checking Payment Status...":(errorChecking?"Some Error Occurred!":(payed?"You have payed for the bid document, you can now download the bid document.":"Redirecting you to the payment page..."))}
         </p>
-        <button onClick={()=>{navigate(`/tenders/${tid}/apply/bid-proposal-form`)}} hidden={payed?false:true} className="btn btn-success mt-2">Continue Application</button>
+        <button onClick={()=>{navigate(`/tenders/${tid}/apply/bid-proposal`)}} hidden={payed?false:true} className="btn btn-success mt-2">Continue Application</button>
     </div>:
     <div className="container border rounded mb-5" style={{minHeight:'15rem',height:'auto'}}>
     <h4 className="text-center pt-4 word-break mx-auto" style={{maxWidth:"20rem"}}>To apply for bids, you need to log in. </h4>

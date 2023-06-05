@@ -7,7 +7,7 @@ import WaitForApproval from "./pages/action pages/waitforapproval";
 import {TbArrowBigUpLineFilled} from 'react-icons/tb'
 import Biddocument from "./pages/action pages/biddocument";
 import Payment from "./pages/action pages/payment";
-import Download from "./pages/action pages/download";
+import ApplicationSuccess from "./pages/action pages/applSuccess";
 //Pages
 import Login from './pages/login';
 import SignUp from './pages/signup';
@@ -44,7 +44,7 @@ import SpecificBid from "./pages/user action pages/phead/specificBid";
 import NewBid from "./pages/user action pages/phead/newBid"
 import ActiveBids from "./pages/user action pages/phead/activebids";
 import ManageCancelledBid from './pages/user action pages/phead/managecancelledbid'
-import BidProposalForm from "./pages/action pages/bidproposalform";
+import BidProposal from "./pages/action pages/bidproposalform";
 function App() {
   // fetch('http://localhost:3001/sendemail')
   // .then((res)=>res.json())
@@ -65,8 +65,8 @@ function App() {
           <Route path="mailus" element={<Login />} />
           <Route path="tenders/:tid/apply/payment" element={<Payment />} />
           <Route path="tenders/:tid/apply/bid-document" element={<Biddocument/>} />
-          <Route path="tenders/:tid/apply/bid-proposal-form" element={<BidProposalForm />} />
-          <Route path='download' element={<Download/>}/>
+          <Route path="tenders/:tid/apply/bid-proposal" element={<BidProposal />} />
+          <Route path="tenders/:tid/apply/success" element={<ApplicationSuccess />} />
           <Route path="waitforapproval" element={<WaitForApproval />} />
           <Route path="tenders/:id" element={<Tender />} />
           <Route path="*" element={<Nopage />} />

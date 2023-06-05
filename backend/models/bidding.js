@@ -21,6 +21,13 @@ const biddingSchema = new mongoose.Schema({
     bidSecPayment:{
         type:"String",
         default:"not-payed"
+    },
+    bidPropFile:{
+      type:String,
+      default:"not-provided"
+    },appTime:{
+      type:Date,
+      default:"0000-00-00"
     }
   },{collection:'bidding'});
   
