@@ -318,7 +318,23 @@ app.get('/checkbidder', (request, response) => {
   })
 });
 
-app.
+app.get('/makepayment',(request,response)=>{
+  const {tid,uid}=request.query
+  const tidm=new mongoose.Types.ObjectId(tid)
+  const uidm=new mongoose.Types.ObjectId(uid)
+          const newBidding=new biddingModel({
+            bidderId:uidm,
+            bidId:tidm,
+            bidDocPayment:"payed",
+            bidderStatus:"bidding"
+          });
+          newBidding.save()
+          .then((res)=>{
+            response.json({res:"ok"})
+          })
+          .catch((err)=>{response.json(err)})
+        }
+)
 
 
 

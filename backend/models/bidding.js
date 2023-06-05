@@ -11,14 +11,16 @@ const biddingSchema = new mongoose.Schema({
    },
    bidderStatus:{
     type:"String",
-    required:true
+    required:true,
    },
    bidDocPayment:{
     type:"String",
-    required:true
+    required:true,
+    default:"not-payed"
    },
     bidSecPayment:{
-        type:"String"
+        type:"String",
+        default:"not-payed"
     }
   },{collection:'bidding'});
   

@@ -16,10 +16,10 @@ return(
             <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
            <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
           </Nav>
-          <Nav>
-            <Nav.Link as={Link} to={"/login"} ><button className="btn btn-primary">Login</button></Nav.Link>
-            <Nav.Link as={Link} to={"/signup"} ><button className="btn btn-outline-secondary">Sign Up</button></Nav.Link>
-            <Nav.Link as={Link} to={"/mailus"} ><TfiEmail size={30} data-toggle="tooltip" data-placement="bottom" title="Mail us" /></Nav.Link>
+          <Nav style={{marginLeft:'-50px'}}>
+            <Nav.Link as={Link} to={"/login"} ><button className="btn " style={{marginLeft:"-10px"}}>Login</button></Nav.Link>
+            <Nav.Link as={Link} to={"/signup"} ><button className="btn">Sign Up</button></Nav.Link>
+            <Nav.Link as={Link} to={"/mailus"} ><TfiEmail size={25} data-toggle="tooltip" data-placement="bottom" title="Mail us" style={{marginLeft:'10px'}}/></Nav.Link>
           </Nav>
         </Navbar.Collapse>
       
