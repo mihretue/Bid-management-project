@@ -33,6 +33,18 @@ const BidProposal=()=>{
          })
     }
 
+    const registerBidder=()=>{
+      let q={tid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
+      fetch(`http://localhost:3001/registerbidder?${q}`)
+        .then((res)=>res.json())
+        .then((res)=>{
+            if(res.res=="ok"){
+                navigate(`/tenders/${tid}/apply/success`)
+            }
+        })
+        .catch((err)=>{console.log(err)})
+    }
+
     const saveBidProposal=()=>{
         let q={tid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
         q=new URLSearchParams(q).toString()
@@ -44,7 +56,8 @@ const BidProposal=()=>{
         .then((res)=>res.json())
         .then((res)=>{
             if(res.res=="ok"){
-                navigate(`/tenders/${tid}/apply/success`)
+                registerBidder()
+                setInput([])
             }
         })
         .catch((err)=>{console.log(err)})
@@ -68,7 +81,7 @@ const BidProposal=()=>{
           <button disabled={uploaded?true:false} type="submit" className="mt-2 btn btn-secondary">Upload</button>
           <p className="m-0">{uploading?"Uploading File":(errorUploading?"Error Uploading File":uploaded&&"Successfully Uploaded!")}</p>
         </form>   
-        <button onClick={saveBidProposal} className='btn mt-2 btn-success'>Continue</button>
+        <button onClick={saveBidProposal} hidden={uploaded?false:true} className='btn mt-2 btn-success'>Continue</button>
     </div>
     <Footer />
     </>)

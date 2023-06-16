@@ -18,12 +18,14 @@ const Biddocument = () => {
      })
    }
    const checkBidder=()=>{
+    let q={bid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
      setIsChecking(true)
      document.getElementById('checkp').style.display="inline"
-     fetch(`http://localhost:3001/checkbidder?id=${JSON.parse(localStorage.getItem('user')).id}`)
+     fetch(`http://localhost:3001/checkbidder?${q}`)
      .then((res)=>res.json())
      .then((res)=>{
-        if(Object.keys(res).length==0){
+        console.log(res)
+        if(Object.keys(res).length==0){//bidder doesn't exist
             setPayed(false)
             setTimeout(()=>{
                 navigate(`/tenders/${tid}/apply/payment`)

@@ -1,13 +1,18 @@
 const express = require('express');
+const http=require('http')
 const app = express();
 const bodyParser=require("body-parser");
 const mongoose = require("mongoose");
 const userModel = require("./models/user")
 const advertModel = require("./models/adverts")
+const messageModel = require('./models/message');
 const { ObjectId } = require('mongodb');
 const nodemailer=require('nodemailer')
 const axios=require('axios')
 const cors=require("cors");
+const socketIo=require('socket.io')
+const server=http.createServer(app)
+const io=socketIo(server)
 const { RestorePageRounded } = require('@mui/icons-material');
 app.use(cors());
 app.use(express.json());
@@ -16,7 +21,10 @@ const multer = require('multer');
 const port = 3001;
 const {v4:uuidv4}=require('uuid')
 const biddingModel=require('./models/bidding')
+const dotenv=require('dotenv')
+
 const mongoUrl="mongodb+srv://mihretu:mihretuendeshawrkr@methane.0fjzoxr.mongodb.net/Bid?retryWrites=true&w=majority";
+dotenv.config();
 mongoose.connect(mongoUrl,
   {
     useNewUrlParser: true,
@@ -332,7 +340,7 @@ app.post('/uploadbidproposal' ,(req, res) => {
 
 app.post('/savebidproposal',(request,response)=>{
   const input=request.body;
-  biddingModel.findOneAndUpdate({bidId: request.query.tid,bidderId:request.query.uid}, {$set:{ bidPropFile:input.bidPropFile,appTime:input.appTime}},{new:true})
+  biddingModel.findOneAndUpdate({bidId: request.query.tid,bidderId:request.query.uid}, {$set:{ bidPropFile:input.bidPropFile,appTime:input.appTime}},{new:true,useFindAndModify:false})
   .then(updatedUser => {
       response.json({res:"ok"})
   })
@@ -340,14 +348,24 @@ app.post('/savebidproposal',(request,response)=>{
     console.log(err)
   });
   })
+//register after bid prop is filled successfully
+app.get('/registerbidder',(request,response)=>{
+    biddingModel.findOneAndUpdate({bidId: request.query.tid,bidderId:request.query.uid}, {$set:{ bidderStatus:"bidding"}},{new:true,useFindAndModify:false})
+    .then(updatedUser => {
+        response.json({res:"ok"})
+    })
+    .catch((err)=>{
+      console.log(err)
+    });
+  })
 
 app.get('/checkbidder', (request, response) => {
-  const par=request.query.id
-  biddingModel.findOne({bidderId:par})
+  const {bid,uid}=request.query;
+  biddingModel.findOne({bidderId:uid,bidId:bid})
   .then((err,docs)=>{
    if(err) response.send(err)
    else
-    response.json({docs})
+    response.json({uid:uid,bid:bid})
   })
 });
 
@@ -359,7 +377,6 @@ app.get('/makepayment',(request,response)=>{
             bidderId:uidm,
             bidId:tidm,
             bidDocPayment:"payed",
-            bidderStatus:"bidding"
           });
           newBidding.save()
           .then((res)=>{
@@ -368,7 +385,123 @@ app.get('/makepayment',(request,response)=>{
           .catch((err)=>{response.json(err)})
         }
 )
+//SOCKET IO
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  
+  socket.on('chat message', (data) => {
+    console.log('message: ' + data.message);
+    const recipientSocket = io.sockets.sockets.get(data.recipientSocketId);
+    recipientSocket.emit('private chat message', data.message);
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
 
 
 
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+
+
+
+
+
+
+
+
+
+
+
+
+
+//CHAPA//
+  const router = require("express").Router();
+  const request = require("request");
+  const tx_ref = uuidv4();
+  const SECRET_KEY="CHASECK_TEST-x53OdtP7UdSj9ybRLKZEdB4FTYIuH3VX"
+  app.post("/api/payment/initialize/orders", async (req, res) => {
+  try {
+    const {
+      key,
+      amount,
+      currency,
+      email,
+      first_name,
+      last_name,
+      phone_number,
+      callback_url,
+      return_url,
+    } =  req.body; 
+    
+    const options = {
+      method: "POST",
+      url: "https://api.chapa.co/v1/transaction/initialize",
+      headers: {
+        Authorization: `Bearer ${SECRET_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        key,
+        amount,
+        currency,
+        email,
+        first_name,
+        last_name,
+        phone_number,
+        tx_ref,
+        callback_url, 
+        //   return_url,
+        "customization[title]": "Payment for my favourite merchant",
+        "customization[description]": "I love online payments.",
+        "subaccounts[id]": "1c98dafb-a0dc-4d1b-a08d-dc3bfe996b9c",
+      }),
+    };
+    request(options, (error, response, body) => {
+      if (error) throw new Error(error);
+      const data = JSON.parse(response.body).data;
+      console.log(JSON.parse(response.body))
+      // res.json({ checkoutUrl: data.checkout_url });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  });
+
+  app.get("/api/payment/verify", async (req, res) => {
+  try {
+    var request = require("request");
+    var options = {
+      method: "GET",
+      url: `https://api.chapa.co/v1/transaction/verify/${tx_ref}`,
+      //   https://checkout.chapa.co/checkout/test-payment-receipt/APAqop5avZGC5
+      headers: {
+        Authorization: `Bearer ${SECRET_KEY}`,
+      },
+    };
+    request(options, async function (error, response)  {
+      if (error) throw new Error(error);
+      // console.log(response.body);
+      // res.json(JSON.parse.body);
+      // const paymentDetails = res.json(JSON.parse.body);
+      const paymentDetails = JSON.parse(response.body);
+      // const payment = new Payment(paymentDetails.data);
+      // await payment.save();
+
+      res.json(paymentDetails);
+    
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  });
+
+   app.get('/data', async (req, res) => {
+  // const { status, limit } = req.query;
+  const payments = await Payment.find();
+  res.json(payments);
+  // console.log(payments);
+  });
+ //CHAPA
+
+server.listen(port, () => console.log(`App listening on port ${port}!`));

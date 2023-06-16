@@ -12,6 +12,7 @@ const biddingSchema = new mongoose.Schema({
    bidderStatus:{
     type:"String",
     required:true,
+    default:"not-bidding"
    },
    bidDocPayment:{
     type:"String",
@@ -26,8 +27,8 @@ const biddingSchema = new mongoose.Schema({
       type:String,
       default:"not-provided"
     },appTime:{
-      type:Date,
-      default:"0000-00-00"
+      type:String,
+      default:Date.now()
     }
   },{collection:'bidding'});
   

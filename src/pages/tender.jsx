@@ -67,8 +67,8 @@ const a=window.location.href.split('/')[4]
   {title:'VAT registration certificate', Information:res.vat},
   {title:'Government Owned Entity', Information:res.gow}
 ])
-
-setTc(res.tc)
+  setTc(res.tc)
+  fetchBidderStatus()
   setIsFetching(false)
   })
   .catch((err)=>{
@@ -76,7 +76,30 @@ setTc(res.tc)
   })
 }
  const {tid}=useParams()
-
+ const [isChecking,setIsChecking]=useState(false)
+ const [errorChecking,setErrorChecking]=useState(false)
+ const [status,setStatus]=useState("")
+ 
+ const fetchBidderStatus=()=>{
+  let q={bid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
+  setIsChecking(true)
+  fetch(`http://localhost:3001/checkbidder?${q}}`)
+  .then((res)=>res.json())
+  .then((res)=>{
+     if(Object.keys(res).length==0){//bidder doesn't exist
+         setStatus("not-bidding")
+     }else{//bidder exists
+      if(res.bidderStatus=="bidding")
+         setStatus("bidding")
+      else
+         setStatus("not-bidding")
+     }
+     setIsChecking(false)
+ })
+  .catch((err)=>{
+     setErrorChecking(true)
+  })
+ }
 
 return (<>
   <Link to={'/tenders'} style={{textDecoration:'none'}}>
@@ -228,11 +251,12 @@ return (<>
         </TableContainer>
         
       </Paper>
-      <Link to={`./apply/bid-document/`} target="about"> 
-      <Button endIcon={<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
-      Apply For This Bid
+      <Link to={status=="not-bidding"?`./apply/bid-document/`:'#'} target="about"> 
+      <Button disabled={isChecking?true:(errorChecking?true:(status=="bidding"?true:false))} endIcon={status=="not-bidding"&&<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
+      {isChecking?"Checking Status...":(errorChecking?"Some Error Occurred":(status=="bidding"?"You have applied for this bid":"Apply For This Bid"))}
     </Button></Link> 
-      </div><Footer /></>}
+      </div>
+      <Footer /></>}
       </>)
 }                           
 export default Tender;

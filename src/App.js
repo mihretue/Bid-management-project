@@ -45,6 +45,8 @@ import NewBid from "./pages/user action pages/phead/newBid"
 import ActiveBids from "./pages/user action pages/phead/activebids";
 import ManageCancelledBid from './pages/user action pages/phead/managecancelledbid'
 import BidProposal from "./pages/action pages/bidproposalform";
+import { BiMessageSquareDots } from "react-icons/bi";
+import Messages from "./pages/messages";
 function App() {
   // fetch('http://localhost:3001/sendemail')
   // .then((res)=>res.json())
@@ -69,6 +71,7 @@ function App() {
           <Route path="tenders/:tid/apply/success" element={<ApplicationSuccess />} />
           <Route path="waitforapproval" element={<WaitForApproval />} />
           <Route path="tenders/:id" element={<Tender />} />
+          <Route path="messages" element={<Messages />} />
           <Route path="*" element={<Nopage />} />
           {/* <Route path="userpage" element={<Userpage/>}></Route>
           <Route path="manageuseraccount" element={<ManageUserAcc />} /> */}
