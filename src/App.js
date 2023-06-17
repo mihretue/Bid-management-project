@@ -47,6 +47,8 @@ import ManageCancelledBid from './pages/user action pages/phead/managecancelledb
 import BidProposal from "./pages/action pages/bidproposalform";
 import { BiMessageSquareDots } from "react-icons/bi";
 import Messages from "./pages/messages";
+import Message from "./pages/message";
+
 function App() {
   // fetch('http://localhost:3001/sendemail')
   // .then((res)=>res.json())
@@ -93,6 +95,7 @@ function App() {
           <Route path="/userpage/supplier/:id/cancelled-bids" element={<CancelledBids />} />
           <Route path="/userpage/supplier/:id/clarification-requests" element={<ClarifyRequests />} />
           <Route path="/userpage/supplier/:id/messages" element={<Messages />} />
+          <Route path="/userpage/supplier/:id/messages/:mid" element={<Message />} />
         </Route>
         <Route path="/userpage/phead/:id" element={<PheadLayout />}>
           <Route index element={<PheadPage />} />

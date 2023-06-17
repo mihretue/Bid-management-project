@@ -121,11 +121,18 @@ export default function SidebarTabsExample() {
                    <h3 className='m-0 text-center col-10 fs-6'>Inbox Messages</h3>
                    <button onClick={fetchInbox} className='text-white btn ms-auto col-2 rounded bg-dark'>Refresh</button>
                 </div>
-               {inboxIsFetching?"Fetching inbox messges":(inboxErrorFetching?"error":
+               {inboxIsFetching?
+               <div className='mt-2 container border rounded p-4 text-center'>
+                 Fetching Inbox Messages...
+               </div>
+               :(inboxErrorFetching?
+                <div className='mt-2 container text-danger border rounded p-4 text-center'>
+                 Error Fetching Inbox Messages...
+               </div>:
                 <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid my-3 mx-auto' style={{minHeight:'10rem',maxHeight:'20rem'}}>
                  {inbox.map((inb)=>{
                        return(
-                        <div className=' row border mt-1' style={{height:'3rem'}}>
+                        <div onClick={()=>{navigate(`/userpage/supplier/${id}/messages/${inb._id}`)}} className='row border mt-1' style={{height:'3rem',cursor:'pointer'}}>
                           <div className='col-2 justify-content-center align-items-center d-flex'>
                           <p className="d-inline-flex m-0 border rounded p-1" style={{backgroundColor:inb.Seen?'white':'red'}} >
                            {inb.seen==true?"Seen":"New"}
@@ -155,11 +162,17 @@ export default function SidebarTabsExample() {
                    <h3 className='m-0 text-center col-10 fs-6'>Sent Messages</h3>
                    <button onClick={fetchSent} className='text-white btn ms-auto col-2 rounded bg-dark'>Refresh</button>
                 </div>
-               {sentIsFetching?"Fetching sent messges":(sentErrorFetching?"error":
+               {sentIsFetching?
+               <div className='container mt-2 border rounded p-4 text-center'>
+               Fetching Sent Messages...
+             </div>:(sentErrorFetching?
+             <div className='mt-2 container text-danger border rounded p-4 text-center'>
+             Error Fetching Sent Messages!
+           </div>:
                 <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid my-3 mx-auto' style={{minHeight:'10rem',maxHeight:'20rem'}}>
                  {sent.map((snt)=>{
                        return(
-                        <div className='row border mt-1' style={{height:'3rem'}}>
+                        <div className='row border mt-1' style={{height:'3rem',cursor:'pointer'}}>
                           <div className='col-10 row'>
                             <div className='fw-bold col-12'>{snt.to}</div>
                             <div className=' col-12 row'>
@@ -176,7 +189,7 @@ export default function SidebarTabsExample() {
                </div>)}
             </div>
             :
-            (tab=="New Message"?
+          (tab=="New Message"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
                <h3 className='m-0 text-center pt-3 fs-6'>New Message</h3>
                <div className='justify-between container my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
@@ -187,7 +200,7 @@ export default function SidebarTabsExample() {
           id="outlined-error-helper-text"
           label="To"
           name="to"
-          helperText={newMsg.toErrorM}
+          helperText={"Receipient's Email Address" || newMsg.toErrorM}
           required
           size="small"
           style={{width:'100%'}}
