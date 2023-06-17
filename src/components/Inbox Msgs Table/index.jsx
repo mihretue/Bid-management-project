@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -81,7 +79,7 @@ import {GrRefresh} from 'react-icons/gr'
     }
 
     
-    const handleChangePage = (event, newPage) => {
+    const handleChangePage = (newPage) => {
       setPage(newPage);
     };
   

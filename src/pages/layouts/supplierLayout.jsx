@@ -1,7 +1,6 @@
 import {Navbar,Nav} from "react-bootstrap";
 import React from 'react';
 import {Link,Outlet } from "react-router-dom";
-import Profile from "../../resources/profile.jpg";
 import logo6 from "../../resources/logo6.png";
 import {useState,useEffect} from 'react';
 import { useParams } from "react-router-dom";
@@ -10,7 +9,6 @@ import {BsGear} from 'react-icons/bs';
 import {IoIosLogOut} from "react-icons/io";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-// import FontAwesomeIcon from "@fortawesome/fontawesome-free";
 const SupplierLayout=()=>{
 
   const {id,uid} =useParams();

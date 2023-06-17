@@ -2,7 +2,6 @@ import React from "react"
 import { Link,useParams,useNavigate } from "react-router-dom"
 import Footer from "../../components/footer"
 import { useState } from "react";
-import { useEffect } from "react";
 // import Download from "./download"
 const Biddocument = () => {
    const {tid}=useParams();
@@ -38,6 +37,7 @@ const Biddocument = () => {
     })
      .catch((err)=>{
         setErrorChecking(true)
+        console.log(err)
      })
    }
 

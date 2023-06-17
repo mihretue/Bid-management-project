@@ -3,7 +3,6 @@ import React from 'react';
 import {Link,Outlet } from "react-router-dom";
 import Profile from "../../resources/profile.jpg";
 import logo6 from "../../resources/logo6.png";
-// import FontAwesomeIcon from "@fortawesome/fontawesome-free";
 const PendchLayout=()=>{
 return(
     <div>

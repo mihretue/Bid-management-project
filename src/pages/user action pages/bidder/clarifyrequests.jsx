@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom'
-import { Avatar } from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
 const ClarifyRequests=()=>{

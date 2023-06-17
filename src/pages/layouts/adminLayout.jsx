@@ -2,7 +2,6 @@ import {Navbar,Nav} from "react-bootstrap";
 import React from 'react';
 import {Link,Outlet } from "react-router-dom";
 import logo6 from "../../resources/logo6.png";
-import {MdAccountCircle} from 'react-icons/md'
 import {BsGear} from 'react-icons/bs';
 import {IoIosLogOut} from "react-icons/io";
 import Dropdown from 'react-bootstrap/Dropdown';

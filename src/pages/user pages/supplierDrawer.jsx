@@ -1,15 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
-import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'
-import Button from '@material-ui/core/Button'
-import {AiFillHome} from 'react-icons/ai'
-import {FaUsersCog} from 'react-icons/fa'
-import {MdOutlineManageAccounts} from 'react-icons/md'
-import {AiOutlineSearch} from 'react-icons/ai'
-import {IoBan} from 'react-icons/io5'
-import {RiLoaderLine} from 'react-icons/ri'
-import {FaUsers} from 'react-icons/fa'
+import { Pane, Tablist, Tab} from 'evergreen-ui'
 import {BsArrowRight} from 'react-icons/bs'
 import { Avatar } from 'evergreen-ui'
 import { useParams } from 'react-router-dom';
@@ -22,7 +13,7 @@ import {BiMessageRoundedError} from 'react-icons/bi'
 export default function SupplierDrawer() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['Manage Bids', 'Me'], [])
-  const {id,uid} =useParams();
+  const {id} =useParams();
   const [user,setUser]=useState({})
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
