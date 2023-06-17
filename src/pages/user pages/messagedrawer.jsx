@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'
 import TextField from '@mui/material/TextField';
 import { useEffect } from 'react'
+
 export default function SidebarTabsExample() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['New Message','Inbox', 'Sent'], [])
@@ -79,7 +80,8 @@ export default function SidebarTabsExample() {
 
   useEffect(()=>{fetchInbox();fetchSent()},[])
 
-
+  const navigate = useNavigate();
+  const  id= useParams;
 
   return (
     <Pane className='row container-fluid pb-5 p-2' style={{height:'auto'}}>
