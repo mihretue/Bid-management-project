@@ -71,7 +71,6 @@ function App() {
           <Route path="tenders/:tid/apply/success" element={<ApplicationSuccess />} />
           <Route path="waitforapproval" element={<WaitForApproval />} />
           <Route path="tenders/:id" element={<Tender />} />
-          <Route path="messages" element={<Messages />} />
           <Route path="*" element={<Nopage />} />
           {/* <Route path="userpage" element={<Userpage/>}></Route>
           <Route path="manageuseraccount" element={<ManageUserAcc />} /> */}
@@ -93,6 +92,7 @@ function App() {
           <Route path="/userpage/supplier/:id/bids-in-progress" element={<BidsInProgress />} />
           <Route path="/userpage/supplier/:id/cancelled-bids" element={<CancelledBids />} />
           <Route path="/userpage/supplier/:id/clarification-requests" element={<ClarifyRequests />} />
+          <Route path="/userpage/supplier/:id/messages" element={<Messages />} />
         </Route>
         <Route path="/userpage/phead/:id" element={<PheadLayout />}>
           <Route index element={<PheadPage />} />

@@ -385,28 +385,79 @@ app.get('/makepayment',(request,response)=>{
           .catch((err)=>{response.json(err)})
         }
 )
-//SOCKET IO
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  
-  socket.on('chat message', (data) => {
-    console.log('message: ' + data.message);
-    const recipientSocket = io.sockets.sockets.get(data.recipientSocketId);
-    recipientSocket.emit('private chat message', data.message);
-  });
-  
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
+//MESSAGES
+
+app.get('/getinbox', (request, response) => {
+  const par=request.query.email
+  messageModel.find({to:par})
+  .then((err,docs)=>{
+   if(err) response.send(err)
+   else
+    response.json({docs})
+  })
 });
 
+app.get('/getsent', (request, response) => {
+  const par=request.query.email
+  messageModel.find({from:par})
+  .then((err,docs)=>{
+   if(err) response.send(err)
+   else
+    response.json({docs})
+  })
+});
 
+const msgFilestorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/msgfiles')
+  },
+  filename: function (req, file, cb) {
+    const ext = file.originalname.split('.').pop();
+    const fileName = uuidv4()
+    cb(null, `${fileName}.${ext}`);
+  }
+});
 
+const uploadMsgFile = multer({ storage: msgFilestorage });
 
-
-
-
-
+app.post('/savemsg', (request, response) => {
+  const newMsg=request.body;
+  if(newMsg.file){
+  uploadMsgFile.single('file')(request,response,(err=>{
+    if(err){
+      res.json({res:"error"});
+    }else{
+      const msg=new messageModel({
+        to:newMsg.to,
+        from:newMsg.from,
+        from_name:newMsg.from_name,
+        subject:newMsg.subject,
+        body:newMsg.body,
+        file:newMsg.file.filename
+      });
+      msg.save()
+      .then((res)=>{
+        response.json({res:"ok"})
+      })
+      .catch((err)=>{response.json(err)})
+    }
+  }))}else{
+    const msg=new messageModel({
+      to:newMsg.to,
+      from:newMsg.from,
+      from_name:newMsg.from_name,
+      subject:newMsg.subject,
+      body:newMsg.body,
+      file:""
+    });
+    msg.save()
+    .then((res)=>{
+      response.json({res:"ok"})
+    })
+    .catch((err)=>{response.json(err)})
+  }
+    }
+)
 
 
 

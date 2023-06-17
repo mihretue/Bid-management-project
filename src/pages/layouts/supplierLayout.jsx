@@ -43,47 +43,17 @@ return(
         <Navbar expand="lg"className="container fluid" >
         <Navbar.Brand href="#home"><img src={logo6} style={{width:'10rem',height:'2rem'}} alt="message"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="align-items-end">
-          <Nav className="me-auto nav_item fw-bold" >
+        <Navbar.Collapse id="basic-navbar-nav" className="">
+          <Nav className="me-auto nav_item">
             <Nav.Link as={Link} to={"/"} >Home</Nav.Link>
             <Nav.Link className="advLink" as={Link} to={"/tenders"} >Tenders</Nav.Link>
+            <Nav.Link as={Link} to={`./messages`} >Messages</Nav.Link>
+            <Nav.Link className="advLink" as={Link} to={"/tenders"} >Notifications</Nav.Link>
+          </Nav> 
+          <Nav className="me-3">
             <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
             <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
-
           </Nav>
-          
-
-          {/* <div className="dropdown"> 
-            {/* <button className="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src={Profile} style={{height:"1.5rem",width:"1.5rem"}} alt="profiel image"/>
-            {isFetching?
-              <p className="m-0 d-inline ps-2">User</p>
-             :(errorFetching?
-              <p className="m-0 d-inline ps-2">User</p>
-              :
-              <p className="m-0 d-inline ps-2">{user.fName}</p>
-              ) }
-          </button> 
-
-          {/* <ul className="dropdown-menu d-flex flex-column justify-content-center align-items-center w-50">
-          <li>
-            <a class="dropdown-item m-0" href="#">{user.fName+' '+user.lName}</a>
-          </li>
-           
-    <li>
-      
-    </li>
-          </ul>
-          </div> 
-
-          
-            {/* {!localStorage.getItem('user')&&
-            <Nav.Link as={Link} to={"/login"} ><button className="btn btn-primary">Login</button></Nav.Link>}
-            {
-            !localStorage.getItem('user')&&
-            }
-            <Nav.Link as={Link} to={"/mailus"} ><TfiEmail size={30} data-toggle="tooltip" data-placement="bottom" title="Mail us" /></Nav.Link>
-          */}    
           <Nav >
               <DropdownButton id="dropdown-basic-button "  title={isFetching?
                   <p className="m-0 d-inline ps-2">User</p>
