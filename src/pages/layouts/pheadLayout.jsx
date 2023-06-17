@@ -1,7 +1,7 @@
 import {Navbar,Nav} from "react-bootstrap";
 import React, { useState,useEffect } from 'react';
 import {Link,Outlet,useParams,useNavigate } from "react-router-dom";
-import Profile from "../../resources/profile.jpg";
+import BackImage from "../../resources/backuser.jpg";
 import logo6 from "../../resources/logo6.png";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -32,7 +32,7 @@ const PheadLayout=()=>{
       setErrorFetching(true)})
    }
 return(
-    <div>
+    <div >
         <Navbar expand="lg"className="container fluid" >
         <Navbar.Brand href="#home"><img src={logo6} style={{width:'10rem',height:'2rem'}} alt="message"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

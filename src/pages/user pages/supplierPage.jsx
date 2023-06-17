@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { useEffect,useState } from 'react';
 import SupplierDrawer from './supplierDrawer';
+import img from "../../resources/userbackground.png"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +43,7 @@ function SupplierPage() {
 
   return (
     
-    <Container fluid>
+    <Container fluid style={{backgroundImage:{img}}}>
         <SupplierDrawer/>
       <Row>
         <Col md={9}>

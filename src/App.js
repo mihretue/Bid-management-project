@@ -38,6 +38,7 @@ import ManageActiveUser from "./pages/user action pages/admin/manageactiveuser";
 import BidComplaints from './pages/user action pages/bidder/bidcomplaints'
 import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
 import CancelledBids from './pages/user action pages/phead/cancelledbids'
+import BidderCancelled from './pages/user action pages/bidder/cancelledbids'
 import ClarifyRequests from './pages/user action pages/bidder/clarifyrequests'
 import AllBids from './pages/user action pages/phead/allbids'
 import SpecificBid from "./pages/user action pages/phead/specificBid";
@@ -64,7 +65,6 @@ function App() {
           <Route index element={<Home />} />
           <Route path="tenders" element={<Tenders />} />
           <Route path="about" element={<About />} />
-          <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />}/>
           <Route path="mailus" element={<Login />} />
           <Route path="tenders/:tid/apply/payment" element={<Payment />} />
@@ -77,6 +77,8 @@ function App() {
           {/* <Route path="userpage" element={<Userpage/>}></Route>
           <Route path="manageuseraccount" element={<ManageUserAcc />} /> */}
         </Route>
+        <Route path="login" element={<Login />} />
+
         <Route path="/userpage/admin/:id" element={<AdminLayout />}>
           <Route index element={<AdminPage />} />
           <Route path="/userpage/admin/:id/manage-accounts" element={<ManageUserAccount />} />
@@ -92,7 +94,7 @@ function App() {
           <Route index element={<SupplierPage />} />
           <Route path="/userpage/supplier/:id/bid-complaints" element={<BidComplaints />} />
           <Route path="/userpage/supplier/:id/bids-in-progress" element={<BidsInProgress />} />
-          <Route path="/userpage/supplier/:id/cancelled-bids" element={<CancelledBids />} />
+          <Route path="/userpage/supplier/:id/cancelled-bids" element={<BidderCancelled />} />
           <Route path="/userpage/supplier/:id/clarification-requests" element={<ClarifyRequests />} />
           <Route path="/userpage/supplier/:id/messages" element={<Messages />} />
           <Route path="/userpage/supplier/:id/messages/:mid" element={<Message />} />

@@ -7,8 +7,8 @@ export default class bidderLayout extends Component {
   render() {
     return (
       <div>
-                <Navbar expand="lg"className="container fluid" >
-          <Navbar.Brand href="#home"><img src={logo6} style={{width:'10rem',height:'2rem'}} alt="message"/></Navbar.Brand>
+        <Navbar expand="lg"className="container fluid" >
+        <Navbar.Brand href="#home"><img src={logo6} style={{width:'10rem',height:'2rem'}} alt="message"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="align-items-end">
           <Nav className="me-auto nav_item fw-bold" >

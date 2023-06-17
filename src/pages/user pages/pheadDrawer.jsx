@@ -110,7 +110,7 @@ export default function PheadDrawer() {
 
   return (
     <Pane className='row container-fluid pb-5' style={{height:'auto'}}>
-      <Tablist className="col-md-3 col-12" style={{height:'auto'}}>
+      <Tablist className="col-md-3 col-12" style={{height:'auto',backgroundColor:"#e1f5e8"}}>
         {tabs.map((tab, index) => {
           return (
             <Tab
@@ -119,7 +119,7 @@ export default function PheadDrawer() {
               isSelected={index === selectedIndex}
               key={tab}
               onSelect={() => setSelectedIndex(index)}
-             
+              className='mt-1'
             >
                {tab}
             </Tab>
@@ -131,7 +131,7 @@ export default function PheadDrawer() {
          </div>
         :
         (errorFetching?'error':
-          <div className='d-none d-md-flex flex-column justify-content-center align-items-center' style={{marginTop:'15rem',height:'5rem'}}>
+          <div className='d-none d-md-flex flex-column mb-5 justify-content-center align-items-center' style={{marginTop:'15rem',height:'5rem'}}>
           <Avatar
            src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
            name="Alan Turing"
@@ -145,7 +145,7 @@ export default function PheadDrawer() {
         )}
         
       </Tablist>
-      <Pane className="col-md-9 col-12 " style={{height:'auto'}}>
+      <Pane className="col-md-9 col-12 panew" style={{height:'auto'}}>
         {tabs.map((tab, index) => (
           <Pane
             aria-labelledby={tab}
@@ -159,35 +159,35 @@ export default function PheadDrawer() {
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
                <h3 className='m-0 text-center fs-6'>Manage Bids</h3>
                <div className='row g-3 justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
-               <div onClick={() => {navigate(`/userpage/phead/${id}/manage-bids/post-bid`)}} style={{cursor:"pointer"}}  className='cursor-pointer col-6 border rounded col-md-4 d-flex flex-column align-items-center justify-content-center'>
+               <div onClick={() => {navigate(`/userpage/phead/${id}/manage-bids/post-bid`)}} style={{cursor:"pointer"}}  className='cursor-pointer col-6  col-md-4 d-flex flex-column align-items-center justify-content-center'>
                     <MdAssignmentAdd style={{width:'3rem',height:'3rem'}} />
                     <p className='m-0 fs-5 text-center'>Post Tender</p>
 
                  </div>
-                 <div onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids`)}} style={{cursor:"pointer"}} className='col-6 border rounded col-md-4 d-flex flex-column align-items-center justify-content-center'>
+                 <div onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids`)}} style={{cursor:"pointer"}} className='col-6  col-md-4 d-flex flex-column align-items-center justify-content-center'>
                     <FaListAlt style={{width:'3rem',height:'3rem'}} />
                     <p className='m-0 fs-5 text-center'>All Tenders</p>
                     <p className='m-0 fs-6'>{BidsisFetching?"Fetching":(errorBidsFetching?"Error":bids.length)}</p>
 
                  </div>
-                 <div onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/active-bids`)}} style={{cursor:"pointer"}} className='col-6 border rounded col-md-4 d-flex flex-column align-items-center justify-content-center'>
+                 <div onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/active-bids`)}} style={{cursor:"pointer"}} className='col-6  col-md-4 d-flex flex-column align-items-center justify-content-center'>
                     <GrInProgress style={{width:'3rem',height:'3rem'}} />
                     <p className='m-0 fs-5 text-center'>Active Tenders</p>
                     <p className='m-0 fs-6'>{AcBidsisFetching?"Fetching":(errorAcBidsFetching?"Error":ACbids.length)}</p>
 
                  </div>
-                 <div onClick={()=>{navigate (`/userpage/phead/${id}/manage-bids/cancelled-bids`)}} style={{cursor:"pointer"}} className='col-6 ms-auto ms-md-0 col-md-4 border rounded   d-flex flex-column align-items-center justify-content-center'>
+                 <div onClick={()=>{navigate (`/userpage/phead/${id}/manage-bids/cancelled-bids`)}} style={{cursor:"pointer"}} className='col-6 ms-auto ms-md-0 col-md-4    d-flex flex-column align-items-center justify-content-center'>
                     <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem'}} />
                     <p className='m-0 fs-5 text-center'>Cancelled Tenders</p>
                     <p className='m-0 fs-6'>{CBidsisFetching?"Fetching":(errorCBidsFetching?"Error":Cbids.length)}</p>
 
                  </div>
-                 <div  onClick={()=>{ navigate (`/userpage/supplier/${id}/clarification-requests`)}} style={{cursor:"pointer"}} className='col-6  ms-md-0 col-md-4 border rounded   d-flex flex-column align-items-center justify-content-center'>
+                 <div  onClick={()=>{ navigate (`/userpage/supplier/${id}/clarification-requests`)}} style={{cursor:"pointer"}} className='col-6  ms-md-0 col-md-4    d-flex flex-column align-items-center justify-content-center'>
                     <MdQuestionAnswer style={{width:'4rem',height:'4rem'}} />
                     <p className='m-0 fs-5 text-center'>Bid Clarification Requests</p>
                     <p className='m-0 fs-6'>23</p>
                  </div>
-                 <div onClick={()=> {navigate (`/userpage/supplier/${id}/bid-complaints`)}} style={{cursor:"pointer"}} className='col-6 ms-md-0 border col-md-4 mx-auto rounded   d-flex flex-column align-items-center justify-content-center'>
+                 <div onClick={()=> {navigate (`/userpage/supplier/${id}/bid-complaints`)}} style={{cursor:"pointer"}} className='col-6 ms-md-0  col-md-4 mx-auto rounded   d-flex flex-column align-items-center justify-content-center'>
                     <BiMessageRoundedError style={{width:'4rem',height:'4rem'}} />
                     <p className='m-0 fs-5 text-center'>Complaints Sent</p>
                     <p className='m-0 fs-6'>13</p>
