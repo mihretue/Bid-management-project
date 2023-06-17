@@ -7,7 +7,7 @@ import WaitForApproval from "./pages/action pages/waitforapproval";
 import {TbArrowBigUpLineFilled} from 'react-icons/tb'
 import Biddocument from "./pages/action pages/biddocument";
 import Payment from "./pages/action pages/payment";
-import Download from "./pages/action pages/download";
+import ApplicationSuccess from "./pages/action pages/applSuccess";
 //Pages
 import Login from './pages/login';
 import SignUp from './pages/signup';
@@ -20,7 +20,6 @@ import AdminPage from "./pages/user pages/adminPage";
 import PheadPage from "./pages/user pages/pheadPage";
 import PendchPage from "./pages/user pages/pendchPage";
 import SupplierPage from "./pages/user pages/supplierPage";
-import Bidder from "./pages/user pages/bidderPage";
 //Layouts
 import Layout from "./pages/layouts/layout";
 import AdminLayout from "./pages/layouts/adminLayout";
@@ -28,11 +27,33 @@ import PheadLayout from "./pages/layouts/pheadLayout";
 import PendchLayout from "./pages/layouts/pendchLayout";
 import SupplierLayout from "./pages/layouts/supplierLayout";
 //action pags
-import ManageUserAccount from "./pages/user action pages/IT officer/manageuseraccount";
-import ManageUser from "./pages/user action pages/IT officer/manageuser";
+import ManageUserAccount from "./pages/user action pages/admin/manageuseraccount";
+import ManageUser from "./pages/user action pages/admin/manageuser";
+import ApprovalRequests from './pages/user action pages/admin/approvalrequests'
+import BannedAccounts from './pages/user action pages/admin/bannedaccounts'
+import ManageBannedAccount from "./pages/user action pages/admin/managebannedaccount";
+import ManageApproval from "./pages/user action pages/admin/manageapproval";
+import ManageActiveAccounts from "./pages/user action pages/admin/activeaccounts";
+import ManageActiveUser from "./pages/user action pages/admin/manageactiveuser";
+import BidComplaints from './pages/user action pages/bidder/bidcomplaints'
+import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
+import CancelledBids from './pages/user action pages/phead/cancelledbids'
+import ClarifyRequests from './pages/user action pages/bidder/clarifyrequests'
+import AllBids from './pages/user action pages/phead/allbids'
+import SpecificBid from "./pages/user action pages/phead/specificBid";
+import NewBid from "./pages/user action pages/phead/newBid"
+import ActiveBids from "./pages/user action pages/phead/activebids";
+import ManageCancelledBid from './pages/user action pages/phead/managecancelledbid'
+import BidProposal from "./pages/action pages/bidproposalform";
+import { BiMessageSquareDots } from "react-icons/bi";
+import Messages from "./pages/messages";
 function App() {
+  // fetch('http://localhost:3001/sendemail')
+  // .then((res)=>res.json())
+  // .then((res)=>{console.log(res)})
+  // .catch((err)=>{console.log(err)})
+
   return (
-    
     <div>
       <div>
       <BrowserRouter>
@@ -44,10 +65,10 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />}/>
           <Route path="mailus" element={<Login />} />
-          <Route path="tenders/:id/apply/payment/:id" element={<Payment />} />
-          {/* <Route path="payment" element={<Payment />} /> */}
-          <Route path="tenders/:id/apply/biddocument/:id" element={<Biddocument/>} />
-          <Route path='download' element={<Download/>}/>
+          <Route path="tenders/:tid/apply/payment" element={<Payment />} />
+          <Route path="tenders/:tid/apply/bid-document" element={<Biddocument/>} />
+          <Route path="tenders/:tid/apply/bid-proposal" element={<BidProposal />} />
+          <Route path="tenders/:tid/apply/success" element={<ApplicationSuccess />} />
           <Route path="waitforapproval" element={<WaitForApproval />} />
           <Route path="tenders/:id" element={<Tender />} />
           <Route path="*" element={<Nopage />} />
@@ -58,20 +79,39 @@ function App() {
           <Route index element={<AdminPage />} />
           <Route path="/userpage/admin/:id/manage-accounts" element={<ManageUserAccount />} />
           <Route path="/userpage/admin/:id/manage-accounts/manage-user/:uid" element={<ManageUser />} />
+          <Route path="/userpage/admin/:id/approval-requests" element={<ApprovalRequests />} />
+          <Route path="/userpage/admin/:id/approval-requests/manage-user/:uid" element={<ManageApproval />} />
+          <Route path="/userpage/admin/:id/banned-accounts" element={<BannedAccounts />} />
+          <Route path="/userpage/admin/:id/banned-accounts/manage-user/:uid" element={<ManageBannedAccount />} />
+          <Route path="/userpage/admin/:id/active-accounts" element={<ManageActiveAccounts />} />
+          <Route path="/userpage/admin/:id/active-accounts/manage-user/:uid" element={<ManageActiveUser />} />
         </Route>
         <Route path="/userpage/supplier/:id" element={<SupplierLayout />}>
           <Route index element={<SupplierPage />} />
+          <Route path="/userpage/supplier/:id/bid-complaints" element={<BidComplaints />} />
+          <Route path="/userpage/supplier/:id/bids-in-progress" element={<BidsInProgress />} />
+          <Route path="/userpage/supplier/:id/cancelled-bids" element={<CancelledBids />} />
+          <Route path="/userpage/supplier/:id/clarification-requests" element={<ClarifyRequests />} />
+          <Route path="/userpage/supplier/:id/messages" element={<Messages />} />
         </Route>
         <Route path="/userpage/phead/:id" element={<PheadLayout />}>
           <Route index element={<PheadPage />} />
+          <Route path="/userpage/phead/:id/manage-bids/all-bids" element={<AllBids/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/active-bids" element={<ActiveBids/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/all-bids/:bid" element={<SpecificBid/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/post-bid" element={<NewBid/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/cancelled-bids" element={<CancelledBids/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/all-bids/cancelled-bid/:bid" element={<ManageCancelledBid/>}/>
+
         </Route>
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
           <Route index element={<PendchPage />} />
         </Route>
-        <Route path="/userpage/bidder" element={<Bidder />} />
       </Routes>
-      <Footer />
-      <div title="Go to the top of the page" style={{width:'4rem',height:'4rem',backgroundColor:'dark',position:'fixed',bottom:'1.5rem',right:'1rem',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'0.5rem'}}><a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  /></a></div>
+       <div title="Go to the top of the page" className="bg-dark d-flex justify-content-center align-items-center" style={{width:'4rem',height:'4rem',position:'fixed',bottom:'1.5rem',right:'1rem',borderRadius:'0.5rem'}}>
+         <a href="#top"><TbArrowBigUpLineFilled style={{width:'2rem',color:'white',height:'2rem'}}  />
+        </a>
+      </div>
       </BrowserRouter>
       </div>
       

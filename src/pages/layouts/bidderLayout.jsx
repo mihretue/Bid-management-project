@@ -15,10 +15,10 @@ export default class bidderLayout extends Component {
             <Nav.Link as={Link} to={"/"} >Home</Nav.Link>
             <Nav.Link className="advLink" as={Link} to={"/tenders"} >Tenders</Nav.Link>
             <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
-           <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
+            <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
           </Nav>
+          
         </Navbar.Collapse>
-      
     </Navbar>
     <Outlet  />
       </div>

@@ -9,12 +9,13 @@ import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useEffect } from "react";
 import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import {IoIosArrowBack} from 'react-icons/io'
 import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
 import {BiLinkExternal} from 'react-icons/bi'
 import {BsArrowCounterclockwise} from 'react-icons/bs'
+import Footer from "../components/footer";
 const columns = [
     { 
         id: 'id', 
@@ -30,16 +31,8 @@ useEffect(()=>{fetchTenderDetails()},[])
 const [tender,setTender]=useState({})
 const [rows,setRows]=useState([])
 const [rows2,setRows2]=useState([])
-const [rows3,setRows3]=useState([
-  {title:'Valid tax clearance certificate', Information:'Having been submitted valid tax clearance certificate issued by the tax authority (Domestic Bidders Only) in accordance with ITB Clause 4.6 '},
-  {title:'Conflict of Interest', Information:' No conflict of interest as described in ITB Clause 6.'},
-  {title:'Valid trade license or business organization registration certificate', Information:' Having been submitted valid trade license or business organization registration certificate issued by the country of establishment in accordance with ITB Clause 4.6.'},
-  {title:'Debarred by decision of the FPPA', Information:' Not having been debarred by decision of the Public Procurement Agency from participating in public procurements for breach of its obligation under previous contracts in accordance with ITB Clause 4.3.'},
-  {title:'Form Data on Joint Ventures', Information:'In the case of a bid submitted by a joint venture (JV), the Bidder has to submit the Form Data on Joint Ventures, the Agreement governing the formation of the joint venture, or letter of intent to form JV, including a draft agreement, in accordance with ITB Clause 4.1 '},
-  {title:'Nationality', Information:' Nationality in accordance with ITB Clause 4.2.'},
-  {title:'VAT registration certificate', Information:'Having been submitted VAT registration certificate issued by the tax authority (in case of contract value of Birr 200,000.00 and above) in accordance with ITB Clause 4.6. '},
-  {title:'Government Owned Entity', Information:'Compliance with conditions of ITB Clause 4.4. '}
-])
+const [rows3,setRows3]=useState([])
+const [tc,setTc]=useState("")
 const [isFetching,setIsFetching]=useState(true)
 const [errorFetching,setErrorFetching]=useState(false)
 
@@ -48,10 +41,12 @@ const a=window.location.href.split('/')[4]
   fetch(`http://localhost:3001/gettender/?id=${a}`)
   .then(res=>res.json())
   .then((res)=>{
+   console.log(res)
     setTender(res)
     setRows([
   {title:'Invitation Date', Information:res.inv},
   {title:'Procurement ID', Information:res.id},
+  {title:'Procurement Title', Information:res.title},
   {title:'Procurement Category', Information:res.cat},
   {title:'Market Type', Information:res.app},
   {title:'Procurement Method', Information:'Open'},
@@ -63,35 +58,70 @@ const a=window.location.href.split('/')[4]
   {title:'Participation Fee', Information:res.partFee},
   {title:'Bid Security Amount', Information:res.bidSec}
 ])
+  setRows3([{title:'Valid tax clearance certificate', Information:res.vTax},
+  {title:'Conflict of Interest', Information:res.coi},
+  {title:'Valid trade license or business organization registration certificate', Information:res.lic},
+  {title:'Debarred by decision of the FPPA', Information:res.lg},
+  {title:'Form Data on Joint Ventures', Information:res.vent},
+  {title:'Nationality', Information:res.nat},
+  {title:'VAT registration certificate', Information:res.vat},
+  {title:'Government Owned Entity', Information:res.gow}
+])
+  setTc(res.tc)
+  fetchBidderStatus()
   setIsFetching(false)
   })
   .catch((err)=>{
     setErrorFetching(true)
   })
 }
-
+ const {tid}=useParams()
+ const [isChecking,setIsChecking]=useState(false)
+ const [errorChecking,setErrorChecking]=useState(false)
+ const [status,setStatus]=useState("")
+ 
+ const fetchBidderStatus=()=>{
+  let q={bid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
+  setIsChecking(true)
+  fetch(`http://localhost:3001/checkbidder?${q}}`)
+  .then((res)=>res.json())
+  .then((res)=>{
+     if(Object.keys(res).length==0){//bidder doesn't exist
+         setStatus("not-bidding")
+     }else{//bidder exists
+      if(res.bidderStatus=="bidding")
+         setStatus("bidding")
+      else
+         setStatus("not-bidding")
+     }
+     setIsChecking(false)
+ })
+  .catch((err)=>{
+     setErrorChecking(true)
+  })
+ }
 
 return (<>
   <Link to={'/tenders'} style={{textDecoration:'none'}}>
      <button style={{margin:'0 0 1rem 10%'}} type="button" className="btn btn-primary">
      Back To Tenders List</button>
   </Link>
-    {isFetching?
-        <div className="container" style={{border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
-           {errorFetching?
-           <div style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
+    {isFetching?<>
+      <div className="container mb-5" style={{border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
+           {errorFetching?<>
+           <div className="mb-5" style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
              <BiError size="1.5rem" />
              <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center',color:'red'}}>An Error Occurred!</p>
             <Button onClick={()=>{fetchTenderDetails();setIsFetching(true);setErrorFetching(false)}} style={{textTransform:'none'}} color="secondary" className="mt-3" variant="outlined" size="small" endIcon={<BsArrowCounterclockwise />}>Try Again</Button>
-           </div>
+           </div><Footer /></>
            :
            <div style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
               <CircularProgress size="1.5rem" color="secondary"/>
               <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center'}}>Fetching Tender Information...</p>
            </div>
-    }</div>
-       :
-      <div className="container" style={{padding:'0rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+    }</div><Footer /></>
+       :<>
+      <div className="container mb-5" style={{padding:'0rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
         <Paper sx={{ width: '90%',margin:'auto', overflow: 'hidden',border:'0.1rem solid gray' }}>
         <TableContainer sx={{ height:'auto'  }}>
           <Table stickyHeader aria-label="sticky table">
@@ -212,7 +242,7 @@ return (<>
               Terms and Conditions
                           </TableCell>
                           <TableCell  style={{align:'start',fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}}>
-                          The Company has the right to cancel the bid fully.
+                          {tc}
                           </TableCell>
                     </TableRow>
             </TableBody>
@@ -221,11 +251,12 @@ return (<>
         </TableContainer>
         
       </Paper>
-      <Link to={`apply/biddocument/${window.location.href.split('/')[4]}`}> 
-      <Button endIcon={<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
-      Apply For This Bid
+      <Link to={status=="not-bidding"?`./apply/bid-document/`:'#'} target="about"> 
+      <Button disabled={isChecking?true:(errorChecking?true:(status=="bidding"?true:false))} endIcon={status=="not-bidding"&&<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
+      {isChecking?"Checking Status...":(errorChecking?"Some Error Occurred":(status=="bidding"?"You have applied for this bid":"Apply For This Bid"))}
     </Button></Link> 
-      </div>}
+      </div>
+      <Footer /></>}
       </>)
 }                           
 export default Tender;

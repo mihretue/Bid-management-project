@@ -23,6 +23,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {BiError} from 'react-icons/bi'
+import Footer from "../components/footer";
 
 export default function (props) {
     useEffect(()=>{document.title='Cheretanet | Sign Up'})
@@ -157,8 +158,8 @@ export default function (props) {
   }
   }
 
-  return (
-    <div className="Auth-form-container" style={{width:'85%',margin:'1rem auto'}}>
+  return (<>
+    <div className="mb-5 Auth-form-container" style={{width:'85%',margin:'1rem auto'}}>
       <form className="Auth-form" onSubmit={handleSubmit} >
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Create Your <p style={{display:'inline',color:'green'}}>cheretanet</p> Account</h3>
@@ -384,5 +385,7 @@ helperText={input.cpErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"
         </div>
       </form>
     </div>
+    <Footer />
+    </>
   )
 }

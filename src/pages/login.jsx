@@ -7,7 +7,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import { validator } from "../services/validator";
 import LoadingButton from '@mui/lab/LoadingButton';
-import {BiError} from 'react-icons/bi'
+import { BiError } from "react-icons/bi";
+import {AiOutlineLoading3Quarters} from 'react-icons/ai'
+import Footer from "../components/footer";
+
 const Login=()=>{
     useEffect(()=>{document.title='Cheretanet | Log in'})
     const navigate=useNavigate()
@@ -38,30 +41,26 @@ const handleChange = (event) => {
           navigate('/waitforapproval')
        }else{
         //navigate to home
-        localStorage.setItem('user',true)
+        // localStorage.setItem('user',true)
         if(res.status=="banned"){
 
         }else{
           if(res.status=="active"){
             switch(res.role) {
               case 'ppa it officer':
-                localStorage.setItem('role','admin')
-                localStorage.setItem('id',res._id)
+                localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/admin/${res._id}`)
                 break;
               case 'bidder':
-                localStorage.setItem('role','bidder')
-                localStorage.setItem('id',res._id)
+                localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/supplier/${res._id}`)
                 break;
               case 'procurement department head':
-                localStorage.setItem('role','phead')
-                localStorage.setItem('id',res._id)
+                localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/phead/${res._id}`)
                 break;
               case 'procurement endorsing committee head':
-                localStorage.setItem('role','pendch')
-                localStorage.setItem('id',res._id)
+                localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/pendch/${res._id}`)
                 break;
               default:
@@ -122,8 +121,8 @@ const handleChange = (event) => {
     }
     }
 
-return(
-    <div className="Auth-form-container">
+return(<>
+    <div className="mb-5 Auth-form-container">
         <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Log In To Your <p style={{display:'inline',color:'green'}}>cheretanet</p> Account</h3>
@@ -200,6 +199,9 @@ return(
           </div>
         </form>
       </div>
+      <Footer />
+      </>
+      
 )
 }
 

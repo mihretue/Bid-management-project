@@ -4,6 +4,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { useEffect,useState } from 'react';
+import SupplierDrawer from './supplierDrawer';
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
@@ -12,10 +16,34 @@ const useStyles = makeStyles((theme) => ({
 
 function SupplierPage() {
   const classes = useStyles();
-  const {id} =useParams()
+  const {id,uid} =useParams();
+  const [user,setUser]=useState({})
+  const [isFetching,setIsFetching]=useState(false)
+  const [errorFetching,setErrorFetching]=useState(false)
+
+
+
+  useEffect(()=>{
+    fetchUserData()
+ },[])
+ const fetchUserData=()=>{
+     setIsFetching(true)
+     fetch(`http://localhost:3001/userbyid/${id}`)
+     .then((res)=>res.json())
+     .then((res)=>{
+       setUser(res)
+       console.log(res)
+       setIsFetching(false)
+     })
+     .catch((err)=>{
+      setIsFetching(false);
+      setErrorFetching(true)})
+   }
+
   return (
+    
     <Container fluid>
-        <h1>Welcome to Admin Page</h1>
+        <SupplierDrawer/>
       <Row>
         <Col md={9}>
           <Paper className={classes.root}>
