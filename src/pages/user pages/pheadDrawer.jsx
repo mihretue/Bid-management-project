@@ -1,16 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'
-import Button from '@material-ui/core/Button'
-import {AiFillHome} from 'react-icons/ai'
-import {FaUsersCog} from 'react-icons/fa'
-import {MdOutlineManageAccounts} from 'react-icons/md'
-import {AiOutlineSearch} from 'react-icons/ai'
-import {IoBan} from 'react-icons/io5'
-import {RiLoaderLine} from 'react-icons/ri'
-import {FaUsers} from 'react-icons/fa'
-import {BsArrowRight} from 'react-icons/bs'
 import {FaListAlt} from 'react-icons/fa'
 import { Avatar } from 'evergreen-ui'
 import { useParams } from 'react-router-dom';
@@ -24,7 +15,7 @@ import {MdAssignmentAdd} from "react-icons/md"
 export default function PheadDrawer() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['Manage Tenders', 'Me'], [])
-  const {id,uid} =useParams();
+  const {id} =useParams();
   const [user,setUser]=useState({})
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)

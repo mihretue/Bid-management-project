@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Avatar } from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
-import { Pane, Dialog, Button } from 'evergreen-ui'
 
 
 const ManageActiveUser=()=>{
@@ -11,8 +10,6 @@ const ManageActiveUser=()=>{
     const [user,setUser]=useState({})
     const [isFetching,setIsFetching]=useState(false)
     const [errorFetching,setErrorFetching]=useState(false)
-    const [isShown, setIsShown] = useState(false)
-    const navigate=useNavigate()
     useEffect(()=>{
        fetchUserData()
     },[])
@@ -24,7 +21,7 @@ const ManageActiveUser=()=>{
         setUser(res)
         setIsFetching(false)
       })
-      .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
+      .catch((err)=>{setIsFetching(false);setErrorFetching(true);console.log(err)})
     }
 
     return(

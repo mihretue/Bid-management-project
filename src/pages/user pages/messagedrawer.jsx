@@ -1,19 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Link, useParams,useNavigate } from 'react-router-dom'
+import { useParams,useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'
-import IStickyHeadTable from "../../components/Inbox Msgs Table";
-import SStickyHeadTable from "../../components/Sent Msgs Table";
-import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import { useEffect } from 'react'
-import { fabClasses } from '@mui/material'
 export default function SidebarTabsExample() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['New Message','Inbox', 'Sent'], [])
-  const {id}=useParams()
-  const navigate=useNavigate()
   const [inbox,setInbox]=useState([])
   const [inboxIsFetching,setInboxIsFetching]=useState(false)
   const [inboxErrorFetching,setInboxErrorFetching]=useState(false)

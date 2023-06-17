@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import anime from 'animejs';
 import {Link} from "react-router-dom";
-import arrowlef  from '../../resources/arrowleft.jpg';
 
 const WaitForApproval = ()=> {
     useEffect(()=>{document.title='Cheretanet | Wait For Approval'})

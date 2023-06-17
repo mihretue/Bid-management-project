@@ -30,6 +30,7 @@ const BidProposal=()=>{
          })
          .catch((err)=>{
              setErrorUploading(true)
+             console.log(err)
          })
     }
 
