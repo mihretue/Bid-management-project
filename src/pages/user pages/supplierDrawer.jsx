@@ -10,7 +10,7 @@ import {MdOutlineCancelPresentation} from 'react-icons/md'
 import {MdQuestionAnswer} from 'react-icons/md'
 import {BiMessageRoundedError} from 'react-icons/bi'
 import img from '../../resources/userbackground.png'
-
+import Footer from '../../components/footer'
 export default function SupplierDrawer() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['Manage Bids', 'Me'], [])
@@ -36,9 +36,9 @@ export default function SupplierDrawer() {
      .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
    }
 
-  return (
-    <Pane className='row container-fluid pb-5' style={{height:'auto'}}>
-      <Tablist className="col-md-3 col-12 rounded " style={{height:'auto',backgroundColor:"#e1f5e8"}}>
+  return (<>
+    <Pane className='row mb-5 container mx-auto border rounded pb-5' style={{height:'auto'}}>
+      <Tablist className="col-md-3 col-12 " style={{height:'auto'}}>
         {tabs.map((tab, index) => {
           return (
             <Tab
@@ -86,31 +86,31 @@ export default function SupplierDrawer() {
             <div className='w-100' style={{minHeight:'10rem',height:"auto",backgroundImage:{img}}}>
                <h3 className='m-0 text-center fs-6 mt-1'>Manage Bids</h3>
                <div className='row g-3 justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
-                 <div className='col-6  col-md-4 d-flex flex-column align-items-center justify-content-center' >
-                    <Link style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/bids-in-progress`}>
+                 <div className='col-6' >
+                    <Link className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/bids-in-progress`}>
                     <GrInProgress style={{width:'2.5rem',height:'3rem'}} />
                       <br/>
-                      Bids in Progress
+                      <p>Bids in Progress</p>
                     </Link>
                  </div>
-                 <div className='col-6 ms-auto ms-md-0 col-md-4 col-md-4 d-flex flex-column align-items-center justify-content-center'>
-                    <Link style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/cancelled-bids`}>
+                 <div className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
+                    <Link className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/cancelled-bids`}>
                       <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem'}} />
                       <br/>
                       Cancelled Bids
                     </Link>
                   
                 </div>
-                <div className='col-6 ms-auto ms-md-0 col-md-4   col-md-4 d-flex flex-column align-items-center justify-content-center'>
+                <div className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
                     
-                    <Link style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/clarification-requests`} >
+                    <Link className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/clarification-requests`} >
                     <MdQuestionAnswer style={{width:'4rem',height:'4rem'}} /><br/> 
                     Bid Clarification Requests
                     </Link>
                     
                 </div>
-                <div className='col-6 d-flex flex-column align-items-center justify-content-center col-md-4  col-md-4 '>
-                      <Link to={`/userpage/supplier/${id}/bid-complaints`} style={{textDecoration:'none',color:"black"}}>
+                <div className='col-6 d-flex flex-column align-items-center justify-content-center '>
+                      <Link className=' d-flex flex-column align-items-center justify-content-center' to={`/userpage/supplier/${id}/bid-complaints`} style={{textDecoration:'none',color:"black"}}>
                         <BiMessageRoundedError style={{width:'4rem',height:'4rem'}} />
                         <br/>
                         Complaints Sent
@@ -129,5 +129,7 @@ export default function SupplierDrawer() {
         ))}
       </Pane>
     </Pane>
+    <Footer />
+    </>
   )
 }

@@ -42,21 +42,7 @@ function SupplierPage() {
    }
 
   return (
-    
-    <Container fluid style={{backgroundImage:{img}}}>
         <SupplierDrawer/>
-      <Row>
-        <Col md={9}>
-          <Paper className={classes.root}>
-            <Typography variant="h5"></Typography>
-            
-          </Paper>
-          <Paper style={{}}>
-            
-          </Paper>
-        </Col>
-      </Row>
-    </Container>
   );
 }
 

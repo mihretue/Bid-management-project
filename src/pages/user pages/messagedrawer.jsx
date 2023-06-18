@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'
 import TextField from '@mui/material/TextField';
 import { useEffect } from 'react'
-
+import { validator } from '../../services/validator'
 export default function SidebarTabsExample() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['New Message','Inbox', 'Sent'], [])
@@ -48,9 +48,14 @@ export default function SidebarTabsExample() {
   }
 
   const handleSubmit=(e)=>{
-  setIsSending(true)
-  document.getElementById('subbtn').disabled=true
   e.preventDefault()
+  document.getElementById('subbtn').disabled=true
+  if(validator(newMsg,"new_message")=="em"){
+     setNewMsg({...newMsg,toError:true,toErrorM:"Invalid Email Format"})
+     document.getElementById('subbtn').disabled=false
+  }else{
+    setNewMsg({...newMsg,toError:false,toErrorM:""})
+   setIsSending(true)
   if(file) {setNewMsg({...newMsg,file:file})}
   fetch('http://localhost:3001/savemsg',{
     method:'post',
@@ -67,11 +72,10 @@ export default function SidebarTabsExample() {
          },3000)
     }else{
         setResult({value:"Error Sending Message, Please Try again."})
-        document.getElementById('subbtn').disabled=false
     }
   })
   .catch((err)=>{console.log(err)})
-  }
+  }}
   const [file,setFile]=useState(null)
 
   const handleFileChange=(event)=>{
@@ -81,7 +85,7 @@ export default function SidebarTabsExample() {
   useEffect(()=>{fetchInbox();fetchSent()},[])
 
   const navigate = useNavigate();
-  const  id= useParams;
+  const  {id}= useParams();
 
   return (
     <Pane className='row container-fluid pb-5 p-2' style={{height:'auto'}}>
@@ -124,7 +128,10 @@ export default function SidebarTabsExample() {
                :(inboxErrorFetching?
                 <div className='mt-2 container text-danger border rounded p-4 text-center'>
                  Error Fetching Inbox Messages...
-               </div>:
+               </div>:(inbox.length==0?
+               <div className='mt-2 container border rounded p-4 text-center'>
+                 No Inbox Messages
+             </div>:
                 <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid my-3 mx-auto' style={{minHeight:'10rem',maxHeight:'20rem'}}>
                  {inbox.map((inb)=>{
                        return(
@@ -149,7 +156,7 @@ export default function SidebarTabsExample() {
                         </div>
                        )
                  })}
-               </div>)}
+               </div>))}
             </div>
             :
             (tab=="Sent"?
@@ -164,11 +171,14 @@ export default function SidebarTabsExample() {
              </div>:(sentErrorFetching?
              <div className='mt-2 container text-danger border rounded p-4 text-center'>
              Error Fetching Sent Messages!
-           </div>:
+           </div>:(sent.length==0?
+           <div className='mt-2 container border rounded p-4 text-center'>
+                No Sent Messages
+             </div>:
                 <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid my-3 mx-auto' style={{minHeight:'10rem',maxHeight:'20rem'}}>
                  {sent.map((snt)=>{
                        return(
-                        <div className='row border mt-1' style={{height:'3rem',cursor:'pointer'}}>
+                        <div onClick={()=>{navigate(`/userpage/supplier/${id}/messages/${snt._id}`)}} className='row border mt-1' style={{height:'3rem',cursor:'pointer'}}>
                           <div className='col-10 row'>
                             <div className='fw-bold col-12'>{snt.to}</div>
                             <div className=' col-12 row'>
@@ -182,7 +192,7 @@ export default function SidebarTabsExample() {
                         </div>
                        )
                  })}
-               </div>)}
+               </div>))}
             </div>
             :
           (tab=="New Message"?
@@ -196,7 +206,7 @@ export default function SidebarTabsExample() {
           id="outlined-error-helper-text"
           label="To"
           name="to"
-          helperText={"Receipient's Email Address" || newMsg.toErrorM}
+          helperText={newMsg.toError?newMsg.toErrorM:"Receipient's Email Address"}
           required
           size="small"
           style={{width:'100%'}}

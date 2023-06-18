@@ -7,9 +7,12 @@ const messageSchema = new mongoose.Schema({
   from: {
      type: String,
      required: true },
-     from_name: {
+  from_name: {
       type: String,
       required: true },
+  subject: {
+        type: String,
+        required: true },
   body: { 
     type: String, 
     required: true },

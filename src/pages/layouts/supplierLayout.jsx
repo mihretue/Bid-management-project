@@ -46,7 +46,6 @@ return(
             <Nav.Link as={Link} to={"/"} >Home</Nav.Link>
             <Nav.Link className="advLink" as={Link} to={"/tenders"} >Tenders</Nav.Link>
             <Nav.Link as={Link} to={`./messages`} >Messages</Nav.Link>
-            <Nav.Link className="advLink" as={Link} to={"/tenders"} >Notifications</Nav.Link>
           </Nav> 
           <Nav className="me-3">
             <Nav.Link as={Link} to={"/about"} >About</Nav.Link>

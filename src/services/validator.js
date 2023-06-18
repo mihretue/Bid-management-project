@@ -48,12 +48,18 @@ if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)==false){
         return 'pl'
 }
 }
-    else{
+else if(type=="tender"){
     if(input.id.length<15)
     return 'idl'
     else {
         ;
     }
+}else if(type=="new_message"){
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.to)==false){
+      return "em";
+}  
+}else{
+
 }
 
 

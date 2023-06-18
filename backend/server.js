@@ -369,6 +369,15 @@ app.get('/checkbidder', (request, response) => {
   })
 });
 
+app.get('/getbidding/:id',(req,res)=>{
+  const id = req.params.id;
+  biddingModel.findOne({bidderId:id})
+  .then((docs)=>{
+    res.json(docs)
+  })
+  .catch(err=>res.json(err))
+})
+
 app.get('/makepayment',(request,response)=>{
   const {tid,uid}=request.query
   const tidm=new mongoose.Types.ObjectId(tid)
@@ -458,6 +467,27 @@ app.post('/savemsg', (request, response) => {
   }
     }
 )
+
+app.get('/getmessage/:id', (request, response) => {
+  const mid=request.params.id;
+  const midm=new mongoose.Types.ObjectId(mid)
+  messageModel.findOne({_id:midm})
+  .then((docs)=>{
+    response.json(docs)
+  })
+  .catch(err=>response.json(err))
+})
+
+app.get('/deletemessage/:id', (request, response) => {
+  const mid=request.params.id;
+  const midm=new mongoose.Types.ObjectId(mid)
+  messageModel.findOneAndDelete({_id:midm})
+  .then((docs)=>{
+    response.json({res:"ok"})
+  })
+  .catch(err=>response.json(err))
+})
+
 
 
 
