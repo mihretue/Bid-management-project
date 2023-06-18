@@ -35,13 +35,15 @@ import ManageBannedAccount from "./pages/user action pages/admin/managebannedacc
 import ManageApproval from "./pages/user action pages/admin/manageapproval";
 import ManageActiveAccounts from "./pages/user action pages/admin/activeaccounts";
 import ManageActiveUser from "./pages/user action pages/admin/manageactiveuser";
-import BidComplaints from './pages/user action pages/bidder/bidcomplaints'
+import BidderAllBids from './pages/user action pages/bidder/allbids'
+import BidderAllBidsDetail from './pages/user action pages/bidder/allbidsdetail'
 import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
 import BidsInProgressDetail from './pages/user action pages/bidder/bidsinprogressdetail'
 import CancelledBidsDetail from './pages/user action pages/bidder/cancelledbidsdetail'
 import CancelledBids from './pages/user action pages/phead/cancelledbids'
 import BidderCancelled from './pages/user action pages/bidder/cancelledbids'
-import ClarifyRequests from './pages/user action pages/bidder/clarifyrequests'
+import ClosedBids from './pages/user action pages/bidder/closedbids'
+import ClosedBidsDetail from './pages/user action pages/bidder/closedbidsdetail'
 import AllBids from './pages/user action pages/phead/allbids'
 import SpecificBid from "./pages/user action pages/phead/specificBid";
 import NewBid from "./pages/user action pages/phead/newBid"
@@ -94,12 +96,14 @@ function App() {
         </Route>
         <Route path="/userpage/supplier/:id" element={<SupplierLayout />}>
           <Route index element={<SupplierPage />} />
-          <Route path="/userpage/supplier/:id/bid-complaints" element={<BidComplaints />} />
+          <Route path="/userpage/supplier/:id/all-bids" element={<BidderAllBids />} />
+          <Route path="/userpage/supplier/:id/all-bids/:bid" element={<BidderAllBidsDetail />} />
           <Route path="/userpage/supplier/:id/bids-in-progress" element={<BidsInProgress />} />
           <Route path="/userpage/supplier/:id/bids-in-progress/:bid" element={<BidsInProgressDetail />} />
           <Route path="/userpage/supplier/:id/cancelled-bids" element={<BidderCancelled />} />
           <Route path="/userpage/supplier/:id/cancelled-bids/:bid" element={<CancelledBidsDetail />} />
-          <Route path="/userpage/supplier/:id/clarification-requests" element={<ClarifyRequests />} />
+          <Route path="/userpage/supplier/:id/closed-bids" element={<ClosedBids />} />
+          <Route path="/userpage/supplier/:id/closed-bids/:bid" element={<ClosedBidsDetail />} />
           <Route path="/userpage/supplier/:id/messages" element={<Messages />} />
           <Route path="/userpage/supplier/:id/messages/:mid" element={<Message />} />
         </Route>

@@ -1,7 +1,9 @@
 import { useState } from "react";
-const {v4:uuidv4}=require('uuid')
-
+import { useNavigate ,useParams} from "react-router-dom";
 function Payment(){
+  const {tid}=useParams()
+  const {v4:uuidv4}=require('uuid')
+  const navigate=useNavigate()
     const [item,setItem]=useState({
         name:"tesla model 00",
         supplier : "dema amano",
@@ -37,7 +39,7 @@ function Payment(){
      
       return (
         <div className="App">
-          <div className="book_container">
+          {/* <div className="book_container">
                     <img src={item.img} alt="book_img" className="book_img" />
                     <p className="book_name">{item.name}</p>
                     <p className="book_author">By {item.supplier}</p>
@@ -49,7 +51,8 @@ function Payment(){
                     </button>
             {checkoutUrl && <a href={checkoutUrl}>Proceed to Payment</a>}
     
-                </div>
+                </div> */}
+                <button onClick={()=>{navigate(`/tenders/${tid}/apply/bid-proposal`)}}>Pay</button>
               </div>
       );
 

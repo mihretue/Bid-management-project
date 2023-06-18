@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import {BsArrowLeft} from 'react-icons/bs'
-const BidComplaints=()=>{
+import StickyHeadTable from '../../../components/BidderAllBidsTable'
+const BidderAllBids=()=>{
     const {id,uid}=useParams();
 
     return(
@@ -12,8 +13,9 @@ const BidComplaints=()=>{
             <Link className="text-decoration-none" to={`/userpage/supplier/${id}`}>Back to Manage Bids</Link>
            </a>
         </div>
+        <StickyHeadTable />
         
     </div>)
 }
 
-export default BidComplaints;
+export default BidderAllBids;

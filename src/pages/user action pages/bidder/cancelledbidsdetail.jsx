@@ -3,6 +3,8 @@ import Footer from '../../../components/footer'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Pane, Dialog} from 'evergreen-ui'
+import {BsArrowLeft} from 'react-icons/bs'
+import { Link } from 'react-router-dom'
 
 const CancelledBidsDetail=()=>{
     const {bid,id}=useParams()
@@ -54,7 +56,11 @@ const CancelledBidsDetail=()=>{
        .catch((err)=>{console.log(err)})
     }
     
-return(<>
+return(<><div className='container mb-4'>
+          <a className="icon-link text-decoration-none text-black">
+            <BsArrowLeft className='me-2' />
+            <Link className="text-decoration-none" to={`/userpage/supplier/${id}/cancelled-bids`}>Back to Cancelled Bids</Link>
+           </a></div>
 <div className='container border rounded d-flex flex-column align-items-center justify-content-center mx-auto mb-5' style={{minHeight:'5rem',height:'auto'}}>
     <h5 className='text-center'>Tender Details</h5>
     <div className='d-flex flex-column align-items-center justify-content-center'>{isFetching?"Fetching...":(errorFetching?"Error Fetching!":
@@ -72,7 +78,6 @@ return(<>
     <h5 className='text-center'>Your Status</h5>
     <div className='d-flex flex-column align-items-center justify-content-center'>{bIsFetching?"Fetching...":(errorBFetching?"Error Fetching!":
     <><ul className=''>
-        <li>Applied : <p className='m-0 d-inline fw-bold'>Yes</p></li>
         <li>Applied On: <p className='m-0 d-inline fw-bold'>{bidding.appTime}</p></li>
         <li>Bid Document Payment : <p className='m-0 d-inline fw-bold'>{bidding.bidDocPayment}</p></li>
         <li>Bid Security Payment : <p className='m-0 d-inline fw-bold'>{bidding.bidSecPayment}</p></li>
@@ -81,20 +86,8 @@ return(<>
                 View Bid Proposal Document
             </a></li>
     </ul>
-    <Pane className="mx-auto mt-2 d-flex justify-content-center">
-      <Dialog
-        isShown={isShown}
-        title="Confirm Action"
-        onCloseComplete={() => setIsShown(false)}
-        confirmLabel="Confirm"
-        onCancel={() => {setIsShown(false)}}
-        onConfirm={() => {setIsShown(false);withdrawTender()}}
-      >
-        <p className='m-0 fw-bold'>Are You Sure You Want To Withdraw From This Tender?</p>
-        <p className='mx-0 mt-2' style={{fontSize:'0.8rem'}}>Regarding Bid Security Payment, Bid Security Payments aren't to be returned for withdrawing bidders.</p>
-      </Dialog>
-      <button id="del_btn" className="btn btn-danger " onClick={()=>{setIsShown(true)}}>Withdraw Tender</button>
-    </Pane></>)}
+    <h4 className='text-danger mt-3'>You Have Withdrawn From This Tender!</h4>
+    </>)}
     </div>
 </div>
 <Footer />

@@ -369,11 +369,11 @@ app.get('/checkbidder', (request, response) => {
   })
 });
 
-app.get('/getbidding/:id',(req,res)=>{
-  const id = req.params.id;
+app.get('/getbidding',(req,res)=>{
+  const id = req.query.id;
   biddingModel.find({bidderId:id})
   .then((docs)=>{
-    res.json({id})
+    res.json(docs)
   })
   .catch(err=>res.json(err))
 })

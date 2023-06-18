@@ -18,11 +18,16 @@ export default function SupplierDrawer() {
   const [user,setUser]=useState({})
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
-
-
+  const [bids,setBids]=useState([]);
+  const [activeBids,setactiveBids]=useState([]);
+  const [cancelledBids,setcancelledBids]=useState([]);
+  const [closedBids,setclosedBids]=useState([]);
+  const [bidding,setBidding]=useState([]);
+  const [BisFetching,setBIsFetching]=useState(true)
+  const [BerrorFetching,setErrorBFetching]=useState(false)
 
   useEffect(()=>{
-    fetchUserData()
+    fetchUserData();fetchBids()
  },[])
  const fetchUserData=()=>{
      setIsFetching(true)
@@ -30,11 +35,69 @@ export default function SupplierDrawer() {
      .then((res)=>res.json())
      .then((res)=>{
        setUser(res)
-       console.log(res)
        setIsFetching(false)
      })
      .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
    }
+
+    var b=[]//all tenders in the database
+    var a=[]//all tenders of the bidder
+    var c=[]//active
+    var d=[]//cancelled
+    var e=[]//closed
+
+    const fetchBidding=()=>{
+      a=[]
+      c=[]
+      d=[]
+      e=[]
+      let q={id:id}
+      q=new URLSearchParams(q)
+      fetch(`http://localhost:3001/getbidding/?${q}`)
+      .then((res)=>res.json())
+      .then((res)=>{
+        for(let i=0;i<res.length;i++){
+          for(let j=0;j<b.length;j++){
+            if(res[i].bidId==b[j]._id){
+                a.push(b[j])
+                if(res[i].bidderStatus=="cancelled")
+                 d.push(b[j])
+                else if(res[i].bidderStatus=="bidding")
+                 c.push(b[j])
+                else if(res[i].bidStatus=="closed")
+                 e.push(b[j])
+                else ;
+            }
+          }
+          setBidding(a)
+          setactiveBids(c)
+        setcancelledBids(d)
+        setclosedBids(e)
+        }
+        setBids(bidding)
+        setBIsFetching(false)
+      })
+        }
+    const fetchBids=()=>{
+      b=[]
+      fetch('http://localhost:3001/getbids',{
+        method:'post',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({ent:JSON.parse(localStorage.getItem('user')).pBody})
+      })
+      .then(res=>res.json())
+      .then((res)=>{
+        setBids(res)
+        b=res;
+        fetchBidding()
+      })
+      .catch((err)=>{
+        setBids([])
+        setErrorBFetching(true)
+      })
+    }
 
   return (<>
     <Pane className='row mb-5 container mx-auto border rounded pb-5' style={{height:'auto'}}>
@@ -86,6 +149,13 @@ export default function SupplierDrawer() {
             <div className='w-100' style={{minHeight:'10rem',height:"auto",backgroundImage:{img}}}>
                <h3 className='m-0 text-center fs-6 mt-1'>Manage Bids</h3>
                <div className='row g-3 justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
+               <div className='col-6 d-flex flex-column align-items-center justify-content-center '>
+                      <Link className=' d-flex flex-column align-items-center justify-content-center' to={`/userpage/supplier/${id}/all-bids`} style={{textDecoration:'none',color:"black"}}>
+                        <BiMessageRoundedError style={{width:'4rem',height:'4rem'}} />
+                        <br/>
+                        All Tenders You Involved In
+                      </Link>
+                </div>
                  <div className='col-6' >
                     <Link className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/bids-in-progress`}>
                     <GrInProgress style={{width:'2.5rem',height:'3rem'}} />
@@ -102,25 +172,31 @@ export default function SupplierDrawer() {
                   
                 </div>
                 <div className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
-                    
-                    <Link className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/clarification-requests`} >
+                    <Link className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/closed-bids`} >
                     <MdQuestionAnswer style={{width:'4rem',height:'4rem'}} /><br/> 
-                    Bid Clarification Requests
+                    Closed Bids
                     </Link>
                     
-                </div>
-                <div className='col-6 d-flex flex-column align-items-center justify-content-center '>
-                      <Link className=' d-flex flex-column align-items-center justify-content-center' to={`/userpage/supplier/${id}/bid-complaints`} style={{textDecoration:'none',color:"black"}}>
-                        <BiMessageRoundedError style={{width:'4rem',height:'4rem'}} />
-                        <br/>
-                        Complaints Sent
-                      </Link>
                 </div>
               </div>
             </div>
             :
             (tab=="Me"?
-            <p>dfd</p>:
+            <div className='w-100' style={{minHeight:'10rem',height:"auto",backgroundImage:{img}}}>
+               <h3 className='m-0 text-center fs-6 mt-1'>Me</h3>
+               <div className='mx-auto d-flex flex-column justify-content-center align-items-center' style={{minHeight:'10rem',height:'auto'}}>
+                 <ul className='list-unstyled mt-3 w-100'>
+                   <li>Your Total Tenders : <p className='m-0 fw-bold d-inline'>{bids.length}</p></li>
+                   <li>Your Active Tenders : <p className='m-0 fw-bold d-inline'>{activeBids.length}</p></li>
+                   <li>Tenders You Cancelled : <p className='m-0 fw-bold d-inline'>{cancelledBids.length}</p></li>
+                   <li>Closed Tenders : <p className='m-0 fw-bold d-inline'>{closedBids.length}</p></li>
+                   <li></li>
+                 </ul><hr className='w-100' />
+                 <h5 className='mt-4'>Account Status : 
+                 <p className={user.status=="active"?'m-0 ms-2 d-inline text-success':'m-0 ms-2 d-inline text-danger'}>{user.status}</p>
+                 </h5>
+               </div>
+            </div>:
             (tab=="Other"?
             <p>heh</p>:
             <p>hi</p>))}
