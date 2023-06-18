@@ -28,7 +28,6 @@ const SupplierLayout=()=>{
      .then((res)=>res.json())
      .then((res)=>{
        setUser(res)
-       console.log(res)
        setIsFetching(false)
      })
      .catch((err)=>{

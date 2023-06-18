@@ -371,9 +371,27 @@ app.get('/checkbidder', (request, response) => {
 
 app.get('/getbidding/:id',(req,res)=>{
   const id = req.params.id;
-  biddingModel.findOne({bidderId:id})
+  biddingModel.find({bidderId:id})
+  .then((docs)=>{
+    res.json({id})
+  })
+  .catch(err=>res.json(err))
+})
+
+app.get('/getbiddingb',(req,res)=>{
+  const {bid,id} = req.query;
+  biddingModel.findOne({bidId:bid,bidderId:id})
   .then((docs)=>{
     res.json(docs)
+  })
+  .catch(err=>res.json(err))
+})
+
+app.get('/withdrawtender',(req,res)=>{
+  const {bid,id} = req.query;
+  biddingModel.findOneAndUpdate({bidId:bid,bidderId:id}, {$set:{ bidderStatus:"cancelled"}},{new:true})
+  .then(()=>{
+    res.json({res:"ok"})
   })
   .catch(err=>res.json(err))
 })

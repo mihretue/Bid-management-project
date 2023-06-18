@@ -37,6 +37,8 @@ import ManageActiveAccounts from "./pages/user action pages/admin/activeaccounts
 import ManageActiveUser from "./pages/user action pages/admin/manageactiveuser";
 import BidComplaints from './pages/user action pages/bidder/bidcomplaints'
 import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
+import BidsInProgressDetail from './pages/user action pages/bidder/bidsinprogressdetail'
+import CancelledBidsDetail from './pages/user action pages/bidder/cancelledbidsdetail'
 import CancelledBids from './pages/user action pages/phead/cancelledbids'
 import BidderCancelled from './pages/user action pages/bidder/cancelledbids'
 import ClarifyRequests from './pages/user action pages/bidder/clarifyrequests'
@@ -94,7 +96,9 @@ function App() {
           <Route index element={<SupplierPage />} />
           <Route path="/userpage/supplier/:id/bid-complaints" element={<BidComplaints />} />
           <Route path="/userpage/supplier/:id/bids-in-progress" element={<BidsInProgress />} />
+          <Route path="/userpage/supplier/:id/bids-in-progress/:bid" element={<BidsInProgressDetail />} />
           <Route path="/userpage/supplier/:id/cancelled-bids" element={<BidderCancelled />} />
+          <Route path="/userpage/supplier/:id/cancelled-bids/:bid" element={<CancelledBidsDetail />} />
           <Route path="/userpage/supplier/:id/clarification-requests" element={<ClarifyRequests />} />
           <Route path="/userpage/supplier/:id/messages" element={<Messages />} />
           <Route path="/userpage/supplier/:id/messages/:mid" element={<Message />} />

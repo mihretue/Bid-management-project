@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import {BsArrowLeft} from 'react-icons/bs'
+import StickyHeadTable from '../../../components/BidsCancelledTable'
 const CancelledBids=()=>{
     const {id,uid}=useParams();
 
@@ -9,9 +10,10 @@ const CancelledBids=()=>{
         <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
            <a className="icon-link text-decoration-none text-black" href="/#">
             <BsArrowLeft className='me-2' />
-            <Link className="text-decoration-none" to={`/userpage/supplier/${id}`}>Back to Bids</Link>
+            <Link className="text-decoration-none" to={`/userpage/supplier/${id}`}>Back to Manage Bids</Link>
            </a>
         </div>
+        <StickyHeadTable />
     </div>)
 }
 

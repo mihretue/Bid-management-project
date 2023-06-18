@@ -66,11 +66,10 @@ import {GrRefresh} from 'react-icons/gr'
       fetch(`http://localhost:3001/getbidding/${id}`)
       .then((res)=>res.json())
       .then((res)=>{
-        console.log(res)
         for(let i=0;i<res.length;i++){
           for(let j=0;j<b.length;j++){
             if(res[i].bidId==b[j]._id){
-              if(res[i].bidderStatus=="bidding")
+              if(res[i].bidderStatus=="cancelled")
                 a.push(b[j])
             }
           }

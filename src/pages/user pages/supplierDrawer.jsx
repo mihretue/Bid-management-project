@@ -9,7 +9,7 @@ import {GrInProgress} from 'react-icons/gr'
 import {MdOutlineCancelPresentation} from 'react-icons/md'
 import {MdQuestionAnswer} from 'react-icons/md'
 import {BiMessageRoundedError} from 'react-icons/bi'
-import img from '../../resources/userbackground.png'
+import img from '../../resources/backuser.jpg'
 import Footer from '../../components/footer'
 export default function SupplierDrawer() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
