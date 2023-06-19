@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useEffect } from "react";
-import {useNavigate,useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
 import Button from '@mui/material/Button';
@@ -51,16 +51,40 @@ import {GrRefresh} from 'react-icons/gr'
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [bids,setBids]=useState([]);
+    const [bidding,setBidding]=useState([]);
     const [isFetching,setIsFetching]=useState(true)
     const [errorFetching,setErrorFetching]=useState(false)
     const navigate=useNavigate();
     const {id}=useParams()
+    
     useEffect(()=>{
       fetchBids();
     },[])
-  
+    var b=[]
+    var a=[]
+    const fetchBidding=()=>{
+      a=[]
+      let q={id:id}
+      q=new URLSearchParams(q)
+      fetch(`http://localhost:3001/getbidding/?${q}`)
+      .then((res)=>res.json())
+      .then((res)=>{
+        for(let i=0;i<res.length;i++){
+          for(let j=0;j<b.length;j++){
+            if(res[i].bidId==b[j]._id){
+              if(res[i].bidderStatus=="closed")
+                a.push(b[j])
+            }
+          }
+          setBidding(a)
+        }
+        setBids(bidding)
+        setIsFetching(false)
+      })
+        }
     const fetchBids=()=>{
-      fetch('http://localhost:3001/getbids/closed',{
+      b=[]
+      fetch('http://localhost:3001/getbids',{
         method:'post',
         headers:{
           'Content-Type':'application/json'
@@ -70,8 +94,8 @@ import {GrRefresh} from 'react-icons/gr'
       .then(res=>res.json())
       .then((res)=>{
         setBids(res)
-        console.log(res)
-        setIsFetching(false)
+        b=res;
+        fetchBidding()
       })
       .catch((err)=>{
         setBids([])
@@ -79,9 +103,7 @@ import {GrRefresh} from 'react-icons/gr'
       })
     }
 
- 
-    
-    const handleChangePage = (event, newPage) => {
+    const handleChangePage = (newPage) => {
       setPage(newPage);
     };
   
@@ -105,14 +127,15 @@ import {GrRefresh} from 'react-icons/gr'
               <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center'}}>Fetching Bids...</p>
            </div>
     }</div>
-        :(bids.length==0?<>
-          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
+        :(bids.length==0?
+          <>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
             <Button variant="outlined" className="ms-auto" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchBids();setIsFetching(true)}}>Refresh</Button>
          </div> 
-         <div className="container border rounded">
+          <div className="container border rounded">
             <p className="text-center m-0 p-3">Empty!</p>
-          </div></>
-        :<>
+          </div></>:
+      <>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'0.1rem solid green',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
         <Button variant="outlined" className="ms-auto" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchBids();setIsFetching(true)}}>Refresh</Button>
       </div>  
@@ -137,7 +160,7 @@ import {GrRefresh} from 'react-icons/gr'
               {
               bids.map((bid) => {
                 return (
-                  <TableRow onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids/${bid._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={bid.id}  hover role="checkbox" tabIndex={-1}>
+                  <TableRow onClick={()=>{navigate(`./${bid._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={bid.id}  hover role="checkbox" tabIndex={-1}>
                         <TableCell style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
             {bid.id}
                         </TableCell>

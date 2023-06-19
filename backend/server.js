@@ -363,6 +363,7 @@ app.post('/registerbidder',(request,response)=>{
       const newBidding=new biddingModel({
         bidId:input.bidId,
         bidderId:input.bidderId,
+        bidderName:input.bidderName,
         bidderStatus:input.bidderStatus,
         bidDocPayment:input.bidDocPayment,
         bidPropFile:input.bidPropFile,
@@ -400,6 +401,23 @@ app.get('/getbidding',(req,res)=>{
 app.get('/getbiddingb',(req,res)=>{
   const {bid,id} = req.query;
   biddingModel.findOne({bidId:bid,bidderId:id})
+  .then((docs)=>{
+    res.json(docs)
+  })
+  .catch(err=>res.json(err))
+})
+
+app.get('/getbiddingall',(req,res)=>{
+  biddingModel.find()
+  .then((docs)=>{
+    res.json(docs)
+  })
+  .catch(err=>res.json(err))
+})
+
+app.get('/getbiddingo',(req,res)=>{
+  const id = req.params.id;
+  biddingModel.findOne({_id:id})
   .then((docs)=>{
     res.json(docs)
   })

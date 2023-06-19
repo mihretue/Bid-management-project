@@ -105,7 +105,15 @@ import {GrRefresh} from 'react-icons/gr'
               <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center'}}>Fetching Bids...</p>
            </div>
     }</div>
-        :<>
+        :(bids.length==0?
+          <>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
+            <Button variant="outlined" className="ms-auto" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchBids();setIsFetching(true)}}>Refresh</Button>
+         </div> 
+         <div className="container border rounded">
+            <p className="text-center m-0 p-3">Empty!</p>
+          </div></>:
+      <>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'0.1rem solid green',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
         <Button variant="outlined" className="ms-auto" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchBids();setIsFetching(true)}}>Refresh</Button>
       </div>  
@@ -165,7 +173,7 @@ import {GrRefresh} from 'react-icons/gr'
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      </>
+      </>)
     );
  
 };

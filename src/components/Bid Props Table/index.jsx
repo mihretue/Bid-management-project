@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useEffect } from "react";
-import {useNavigate,useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
 import Button from '@mui/material/Button';
@@ -17,71 +17,68 @@ import {BsArrowCounterclockwise} from 'react-icons/bs'
 import {GrRefresh} from 'react-icons/gr'
   const columns = [
     { 
-      id: 'id', 
-      label: 'Procurement ID.',
+      id: 'nane', 
+      label: 'Applicant Name',
        align: 'center'
     },
-    { id: 'title',
-     label: 'Procurement Title',
+    { id: 'payment',
+     label: 'Bid Security Payment',
       align: 'center'
   },
     {
-      id: 'category',
-      label: 'Procurement Category',
-      align: 'center',
-    },
-    {
-      id: 'market',
-      label: 'Market Approach',
-      align: 'center',
-    },
-    {
-      id: 'deadline',
-      label: 'Submission Deadline',
+      id: 'time',
+      label: 'Application Time ',
       align: 'center',
     },
     {
       id: 'status',
-      label: 'Status',
+      label: 'Bidder Status',
       align: 'center',
-    },
+    }
   ];
   
   export default function StickyHeadTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [bids,setBids]=useState([]);
-    const [isFetching,setIsFetching]=useState(true)
+    const [bidding,setBidding]=useState([]);
+    const [isFetching,setIsFetching]=useState(false)
     const [errorFetching,setErrorFetching]=useState(false)
     const navigate=useNavigate();
     const {id}=useParams()
     useEffect(()=>{
       fetchBids();
     },[])
-  
-    const fetchBids=()=>{
-      fetch('http://localhost:3001/getbids/closed',{
-        method:'post',
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify({ent:JSON.parse(localStorage.getItem('user')).pBody})
-      })
-      .then(res=>res.json())
+    const fetchBidding=()=>{
+      fetch('http://localhost:3001/getbiddingall')
+      .then((res)=>res.json())
       .then((res)=>{
-        setBids(res)
-        console.log(res)
+        setBidding(res.filter((r)=>{return bids.some(bidItem=>bidItem._id==r.bidId)}))
         setIsFetching(false)
       })
-      .catch((err)=>{
-        setBids([])
-        setErrorFetching(true)
-      })
-    }
+      .catch((err)=>{console.log(err);setErrorFetching(true)})
+        }
+      const fetchBids=()=>{
+          setIsFetching(true)
+          fetch('http://localhost:3001/getbids',{
+            method:'post',
+            headers:{
+              'Content-Type':'application/json'
+            },
+            body:JSON.stringify({ent:JSON.parse(localStorage.getItem('user')).pBody})
+          })
+          .then(res=>res.json())
+          .then((res)=>{
+            setBids(res)
+            fetchBidding()
+          })
+          .catch((err)=>{
+            setBids([])
+            setErrorFetching(true)
+          })
+        }
 
- 
-    
-    const handleChangePage = (event, newPage) => {
+    const handleChangePage = (newPage) => {
       setPage(newPage);
     };
   
@@ -105,14 +102,17 @@ import {GrRefresh} from 'react-icons/gr'
               <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center'}}>Fetching Bids...</p>
            </div>
     }</div>
-        :(bids.length==0?<>
+        :(bidding.length==0?
+          <>
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
             <Button variant="outlined" className="ms-auto" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchBids();setIsFetching(true)}}>Refresh</Button>
          </div> 
-         <div className="container border rounded">
+          <div className="container border rounded">
             <p className="text-center m-0 p-3">Empty!</p>
-          </div></>
-        :<>
+          </div>
+          </>
+          :
+      <>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'0.1rem solid green',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
         <Button variant="outlined" className="ms-auto" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchBids();setIsFetching(true)}}>Refresh</Button>
       </div>  
@@ -135,26 +135,20 @@ import {GrRefresh} from 'react-icons/gr'
             </TableHead>
              <TableBody>
               {
-              bids.map((bid) => {
+              bidding.map((bid) => {
                 return (
-                  <TableRow onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids/${bid._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={bid.id}  hover role="checkbox" tabIndex={-1}>
+                  <TableRow onClick={()=>{navigate(`./${bid._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={bid.id}  hover role="checkbox" tabIndex={-1}>
                         <TableCell style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
-            {bid.id}
+            {bid.bidderName}
                         </TableCell>
                         <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
-            {bid.title}
+            {bid.bidSecPayment}
                         </TableCell>
                         <TableCell style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
-            {bid.cat}
+            {bid.appTime}
                         </TableCell>
                         <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
-            {bid.app}
-                        </TableCell>
-                        <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
-            {bid.dead}
-                        </TableCell>
-                        <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
-            {bid.status=="active"?<p className="m-0"><BsFillCircleFill className="me-1" color="green" />{bid.status}</p>:<p className="m-0 text-red">{bid.status}</p>}
+            {bid.bidderStatus}
                         </TableCell>
                   </TableRow>
                 );

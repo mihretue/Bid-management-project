@@ -9,6 +9,10 @@ const biddingSchema = new mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId,
     ref:'userModel'
    },
+   bidderName:{
+    type:"String",
+    required:true
+  },
    bidderStatus:{
     type:"String",
     required:true,
@@ -26,7 +30,8 @@ const biddingSchema = new mongoose.Schema({
     bidPropFile:{
       type:String,
       default:"not-provided"
-    },appTime:{
+    },
+    appTime:{
       type:String,
       default:Date.now()
     }

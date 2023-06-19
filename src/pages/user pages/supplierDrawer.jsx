@@ -170,7 +170,7 @@ export default function SupplierDrawer() {
                  </div>
                  <div className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
                     <Link id='pro' className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"darkslateblue"}} to={`/userpage/supplier/${id}/cancelled-bids`}>
-                      <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem',color:"darkslateblue"}} />
+                      <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem',color:"red"}} />
                       <br/>
                       Cancelled Bids
                     </Link>

@@ -41,15 +41,20 @@ import BidsInProgress from './pages/user action pages/bidder/bidsinprogress'
 import BidsInProgressDetail from './pages/user action pages/bidder/bidsinprogressdetail'
 import CancelledBidsDetail from './pages/user action pages/bidder/cancelledbidsdetail'
 import CancelledBids from './pages/user action pages/phead/cancelledbids'
+import ClosedBids from './pages/user action pages/phead/closedbids'
 import BidderCancelled from './pages/user action pages/bidder/cancelledbids'
-import ClosedBids from './pages/user action pages/bidder/closedbids'
+import BidderClosedBids from './pages/user action pages/bidder/closedbids'
 import ClosedBidsDetail from './pages/user action pages/bidder/closedbidsdetail'
 import AllBids from './pages/user action pages/phead/allbids'
 import SpecificBid from "./pages/user action pages/phead/specificBid";
 import NewBid from "./pages/user action pages/phead/newBid"
 import ActiveBids from "./pages/user action pages/phead/activebids";
 import ManageCancelledBid from './pages/user action pages/phead/managecancelledbid'
+import ManageActiveBid from './pages/user action pages/phead/manageactivebid'
+import ManageClosedBid from './pages/user action pages/phead/manageclosedbid'
 import BidProposal from "./pages/action pages/bidproposalform";
+import BidProps from "./pages/user action pages/phead/bidprops";
+import BidProp from "./pages/user action pages/phead/bidprop";
 import { BiMessageSquareDots } from "react-icons/bi";
 import Messages from "./pages/messages";
 import Message from "./pages/message";
@@ -102,7 +107,7 @@ function App() {
           <Route path="/userpage/supplier/:id/bids-in-progress/:bid" element={<BidsInProgressDetail />} />
           <Route path="/userpage/supplier/:id/cancelled-bids" element={<BidderCancelled />} />
           <Route path="/userpage/supplier/:id/cancelled-bids/:bid" element={<CancelledBidsDetail />} />
-          <Route path="/userpage/supplier/:id/closed-bids" element={<ClosedBids />} />
+          <Route path="/userpage/supplier/:id/closed-bids" element={<BidderClosedBids />} />
           <Route path="/userpage/supplier/:id/closed-bids/:bid" element={<ClosedBidsDetail />} />
           <Route path="/userpage/supplier/:id/messages" element={<Messages />} />
           <Route path="/userpage/supplier/:id/messages/:mid" element={<Message />} />
@@ -110,11 +115,16 @@ function App() {
         <Route path="/userpage/phead/:id" element={<PheadLayout />}>
           <Route index element={<PheadPage />} />
           <Route path="/userpage/phead/:id/manage-bids/all-bids" element={<AllBids/>}/>
-          <Route path="/userpage/phead/:id/manage-bids/active-bids" element={<ActiveBids/>}/>
           <Route path="/userpage/phead/:id/manage-bids/all-bids/:bid" element={<SpecificBid/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/active-bids" element={<ActiveBids/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/active-bids/:bid" element={<ManageActiveBid />}/>
           <Route path="/userpage/phead/:id/manage-bids/post-bid" element={<NewBid/>}/>
           <Route path="/userpage/phead/:id/manage-bids/cancelled-bids" element={<CancelledBids/>}/>
-          <Route path="/userpage/phead/:id/manage-bids/all-bids/cancelled-bid/:bid" element={<ManageCancelledBid/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/cancelled-bid/:bid" element={<ManageCancelledBid/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/closed-bids" element={<ClosedBids/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/closed-bids" element={<ManageClosedBid/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/:bid/bid-props" element={<BidProps/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/:bid/bid-props/:bidp" element={<BidProp/>}/>
 
         </Route>
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>

@@ -25,7 +25,7 @@ const BidProposal=()=>{
             setErrorUploading(true)
           }else{
             setUploaded(true)
-            setInput({...input,bidId:tid,bidderId:JSON.parse(localStorage.getItem('user')).id,bidderStatus:"bidding",bidDocPayment:"payed",bidPropFile:res.res,appTime:Date.now()})
+            setInput({...input,bidId:tid,bidderId:JSON.parse(localStorage.getItem('user')).id,bidderName:JSON.parse(localStorage.getItem('user')).name,bidderStatus:"bidding",bidDocPayment:"payed",bidPropFile:res.res,appTime:Date.now()})
             registerBidder()
           }
          })
