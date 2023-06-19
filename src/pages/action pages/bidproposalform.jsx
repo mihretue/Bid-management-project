@@ -25,7 +25,8 @@ const BidProposal=()=>{
             setErrorUploading(true)
           }else{
             setUploaded(true)
-            setInput({...input,bidPropFile:res.res,appTime:Date.now()})
+            setInput({...input,bidId:tid,bidderId:JSON.parse(localStorage.getItem('user')).id,bidderStatus:"bidding",bidDocPayment:"payed",bidPropFile:res.res,appTime:Date.now()})
+            registerBidder()
           }
          })
          .catch((err)=>{
@@ -35,34 +36,20 @@ const BidProposal=()=>{
     }
 
     const registerBidder=()=>{
-      let q={tid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
-      fetch(`http://localhost:3001/registerbidder?${q}`)
+      fetch(`http://localhost:3001/registerbidder`,{
+        method:'post',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(input)
+      })
         .then((res)=>res.json())
         .then((res)=>{
             if(res.res=="ok"){
-                navigate(`/tenders/${tid}/apply/success`)
+                document.getElementById('fin_btn').hidden=false
             }
         })
         .catch((err)=>{console.log(err)})
     }
 
-    const saveBidProposal=()=>{
-        let q={tid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
-        q=new URLSearchParams(q).toString()
-        fetch(`http://localhost:3001/savebidproposal?${q}`,{
-            method:'post',
-            body:JSON.stringify(input),
-            headers:{'Content-Type':'application/json'}
-        })
-        .then((res)=>res.json())
-        .then((res)=>{
-            if(res.res=="ok"){
-                registerBidder()
-                setInput([])
-            }
-        })
-        .catch((err)=>{console.log(err)})
-    }
      const [file,setFile]=useState(null)
      const [uploading,setUploading]=useState(false)
      const [errorUploading,setErrorUploading]=useState(false)
@@ -79,10 +66,10 @@ const BidProposal=()=>{
           </label>
           </button>
           <p className="m-0">{file&&"File Attached."}</p>
-          <button disabled={uploaded?true:false} type="submit" className="mt-2 btn btn-secondary">Upload</button>
+          <button disabled={(!file || uploaded )?true:false} type="submit" className="mt-2 btn btn-secondary">Upload</button>
           <p className="m-0">{uploading?"Uploading File":(errorUploading?"Error Uploading File":uploaded&&"Successfully Uploaded!")}</p>
         </form>   
-        <button onClick={saveBidProposal} hidden={uploaded?false:true} className='btn mt-2 btn-success'>Continue</button>
+        <button id="fin_btn" onClick={()=>{navigate(`/tenders/${tid}/apply/success`)}} hidden className='btn mt-2 btn-success'>Continue</button>
     </div>
     <Footer />
     </>)

@@ -16,6 +16,8 @@ import {BiError} from 'react-icons/bi'
 import {BiLinkExternal} from 'react-icons/bi'
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 import Footer from "../components/footer";
+import { BsArrowLeft } from "react-icons/bs";
+
 const columns = [
     { 
         id: 'id', 
@@ -35,13 +37,10 @@ const [rows3,setRows3]=useState([])
 const [tc,setTc]=useState("")
 const [isFetching,setIsFetching]=useState(true)
 const [errorFetching,setErrorFetching]=useState(false)
-
 const fetchTenderDetails=()=>{
-const a=window.location.href.split('/')[4]
-  fetch(`http://localhost:3001/gettender/?id=${a}`)
+  fetch(`http://localhost:3001/gettender?id=${tid}`)
   .then(res=>res.json())
   .then((res)=>{
-   console.log(res)
     setTender(res)
     setRows([
   {title:'Invitation Date', Information:res.inv},
@@ -68,7 +67,14 @@ const a=window.location.href.split('/')[4]
   {title:'Government Owned Entity', Information:res.gow}
 ])
   setTc(res.tc)
-  fetchBidderStatus()
+  if(res.status=="closed" || res.status=="cancelled"){
+    if(res.status=="closed")
+      setStatus('closed-bid')
+    else
+      setStatus('cancelled-bid')
+  }else{
+    fetchBidderStatus()
+  }
   setIsFetching(false)
   })
   .catch((err)=>{
@@ -79,33 +85,36 @@ const a=window.location.href.split('/')[4]
  const [isChecking,setIsChecking]=useState(false)
  const [errorChecking,setErrorChecking]=useState(false)
  const [status,setStatus]=useState("")
- 
+
  const fetchBidderStatus=()=>{
   let q={bid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
+  q=new URLSearchParams(q)
   setIsChecking(true)
-  fetch(`http://localhost:3001/checkbidder?${q}}`)
-  .then((res)=>res.json())
-  .then((res)=>{
+  fetch(`http://localhost:3001/checkbidder?${q}`)
+   .then((res)=>res.json())
+   .then((res)=>{
      if(Object.keys(res).length==0){//bidder doesn't exist
          setStatus("not-bidding")
      }else{//bidder exists
       if(res.bidderStatus=="bidding")
-         setStatus("bidding")
-      else
-         setStatus("not-bidding")
+         setStatus("bidding") 
+      else if(res.bidderStatus=="cancelled")
+         setStatus("cancelled")
      }
      setIsChecking(false)
- })
-  .catch((err)=>{
+   })
+   .catch((err)=>{
      setErrorChecking(true)
-  })
- }
+   })
+  }
 
 return (<>
-  <Link to={'/tenders'} style={{textDecoration:'none'}}>
-     <button style={{margin:'0 0 1rem 10%'}} type="button" className="btn btn-primary">
-     Back To Tenders List</button>
-  </Link>
+             <div className="container mb-3">
+               <a className="icon-link text-decoration-none text-black">
+                <BsArrowLeft className='me-2' />
+                <Link className="text-decoration-none" to={`/tenders`}>Back To Tenders List</Link>
+               </a>
+              </div>
     {isFetching?<>
       <div className="container mb-5" style={{border:'1px solid black',borderRadius:'0.5rem',maxWidth:"90%",height:'auto',backgroundColor:'white',margin:'2rem auto'}}>
            {errorFetching?<>
@@ -113,13 +122,13 @@ return (<>
              <BiError size="1.5rem" />
              <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center',color:'red'}}>An Error Occurred!</p>
             <Button onClick={()=>{fetchTenderDetails();setIsFetching(true);setErrorFetching(false)}} style={{textTransform:'none'}} color="secondary" className="mt-3" variant="outlined" size="small" endIcon={<BsArrowCounterclockwise />}>Try Again</Button>
-           </div><Footer /></>
+           </div></>
            :
            <div style={{minHeight:'10rem',display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
               <CircularProgress size="1.5rem" color="secondary"/>
               <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center'}}>Fetching Tender Information...</p>
            </div>
-    }</div><Footer /></>
+    }</div></>
        :<>
       <div className="container mb-5" style={{padding:'0rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
         <Paper sx={{ width: '90%',margin:'auto', overflow: 'hidden',border:'0.1rem solid gray' }}>
@@ -251,12 +260,13 @@ return (<>
         </TableContainer>
         
       </Paper>
-      <Link to={status=="not-bidding"?`./apply/bid-document/`:'#'} target="about"> 
-      <Button disabled={isChecking?true:(errorChecking?true:(status=="bidding"?true:false))} endIcon={status=="not-bidding"&&<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
-      {isChecking?"Checking Status...":(errorChecking?"Some Error Occurred":(status=="bidding"?"You have applied for this bid":"Apply For This Bid"))}
+      <Link to={(status=="not-bidding" || status=="cancelled")?`./apply/payment`:'#'} target="about"> 
+      <Button disabled={isChecking?true:(errorChecking?true:(status=="bidding"?true:((status=="closed-bid" || status=="cancelled-bid")?true:false)))} endIcon={(status=="not-bidding" || status=="cancelled")&&<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
+      {isChecking?"Checking Status...":(errorChecking?"Some Error Occurred":(status=="bidding"?"You have already applied for this bid":(status=="closed-bid"?"This Tender Is Closed!":(status=="cancelled-bid"?"This Tender Is Cancelled!":"Apply For This Bid"))))}
     </Button></Link> 
       </div>
-      <Footer /></>}
+      </>}
+      <Footer />
       </>)
 }                           
 export default Tender;

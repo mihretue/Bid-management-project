@@ -68,7 +68,7 @@ app.post('/gettenders', (request, response) => {
   .then((err,docs)=>{
    if(err) response.send(err)
    else
-    response.json({docs})
+    response.json(docs)
   })
 });
 
@@ -349,24 +349,43 @@ app.post('/savebidproposal',(request,response)=>{
   });
   })
 //register after bid prop is filled successfully
-app.get('/registerbidder',(request,response)=>{
-    biddingModel.findOneAndUpdate({bidId: request.query.tid,bidderId:request.query.uid}, {$set:{ bidderStatus:"bidding"}},{new:true,useFindAndModify:false})
-    .then(updatedUser => {
+app.post('/registerbidder',(request,response)=>{
+  const input=request.body;
+  const uidm=new mongoose.Types.ObjectId(input.bidderId)
+  const tidm=new mongoose.Types.ObjectId(input.bidId)
+  biddingModel.findOne({bidderId:uidm,bidId:tidm})
+  .then((docs)=>{
+    if(docs){
+      biddingModel.findOneAndUpdate({bidId:input.bidId,bidderId:input.bidderId}, {$set:{ bidderStatus:"bidding",bidPropFile:input.bidPropFile,appTime:input.appTime}},{new:true})
+      .then((res)=>{response.json({res:"ok"})})
+      .catch((err)=>{console.log(err)})
+    }else{
+      const newBidding=new biddingModel({
+        bidId:input.bidId,
+        bidderId:input.bidderId,
+        bidderStatus:input.bidderStatus,
+        bidDocPayment:input.bidDocPayment,
+        bidPropFile:input.bidPropFile,
+        appTime:input.appTime
+      });
+      newBidding.save()
+      .then((res)=>{
         response.json({res:"ok"})
-    })
-    .catch((err)=>{
-      console.log(err)
-    });
+      })
+      .catch((err)=>{response.json(err)})
+    }
+  })
+    
   })
 
 app.get('/checkbidder', (request, response) => {
   const {bid,uid}=request.query;
-  biddingModel.findOne({bidderId:uid,bidId:bid})
-  .then((err,docs)=>{
-   if(err) response.send(err)
-   else
-    response.json({uid:uid,bid:bid})
+  const uidm=new mongoose.Types.ObjectId(uid)
+  biddingModel.findOne({bidderId:uidm,bidId:bid})
+  .then((docs)=>{
+    response.json(docs)
   })
+  .catch((err)=>response.json(err))
 });
 
 app.get('/getbidding',(req,res)=>{

@@ -1,0 +1,23 @@
+#pro {
+    font-family: 'Adamina', serif;
+    font-weight: bold;
+    text-shadow: chartreuse;
+    color: indigo;
+    
+/* font-family: 'Bitter', serif; */
+/* font-family: 'Josefin Sans', sans-serif; */
+/* font-family: 'Kanit', sans-serif; */
+/* font-family: 'Playfair Display', serif; */
+/* font-family: 'Titillium Web', sans-serif; */
+}
+.effic{
+    font-family: 'Adamina',serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color:navy;
+    text-rendering: optimizeLegibility;
+
+}
+.twodiv{
+        margin-left: 30%;
+        
+}

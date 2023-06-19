@@ -53,7 +53,7 @@ import BidProposal from "./pages/action pages/bidproposalform";
 import { BiMessageSquareDots } from "react-icons/bi";
 import Messages from "./pages/messages";
 import Message from "./pages/message";
-
+import BackImage from "../src/resources/backg.jpg"
 function App() {
   // fetch('http://localhost:3001/sendemail')
   // .then((res)=>res.json())
@@ -62,7 +62,7 @@ function App() {
 
   return (
     <div>
-      <div>
+      <div >
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -76,7 +76,7 @@ function App() {
           <Route path="tenders/:tid/apply/bid-proposal" element={<BidProposal />} />
           <Route path="tenders/:tid/apply/success" element={<ApplicationSuccess />} />
           <Route path="waitforapproval" element={<WaitForApproval />} />
-          <Route path="tenders/:id" element={<Tender />} />
+          <Route path="tenders/:tid" element={<Tender />} />
           <Route path="*" element={<Nopage />} />
           {/* <Route path="userpage" element={<Userpage/>}></Route>
           <Route path="manageuseraccount" element={<ManageUserAcc />} /> */}

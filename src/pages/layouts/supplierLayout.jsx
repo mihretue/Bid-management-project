@@ -50,8 +50,8 @@ return(
             <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
             <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
           </Nav>
-          <Nav >
-              <DropdownButton id="dropdown-basic-button "  title={isFetching?
+          <Nav className="btn-success">
+              <DropdownButton id="dropdown-basic-button"  title={isFetching?
                   <p className="m-0 d-inline ps-2">User</p>
                   :(errorFetching?
                   <p className="m-0 d-inline ps-2">User</p>

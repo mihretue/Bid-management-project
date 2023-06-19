@@ -56,6 +56,7 @@ import {GrRefresh} from 'react-icons/gr'
     const [errorFetching,setErrorFetching]=useState(false)
     const navigate=useNavigate();
     const {id}=useParams()
+    
     useEffect(()=>{
       fetchBids();
     },[])

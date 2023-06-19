@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate ,useParams} from "react-router-dom";
+import { Link,useParams,useNavigate } from "react-router-dom"
+import Footer from '../../components/footer'
 function Payment(){
   const {tid}=useParams()
   const {v4:uuidv4}=require('uuid')
@@ -37,24 +38,23 @@ function Payment(){
   .catch(error => console.error(error));
       };
      
-      return (
-        <div className="App">
-          {/* <div className="book_container">
-                    <img src={item.img} alt="book_img" className="book_img" />
-                    <p className="book_name">{item.name}</p>
-                    <p className="book_author">By {item.supplier}</p>
-                    <p className="book_price">
-                        Price : <span>&#x20B9; {item.amount}</span>
-                    </p>
-                    <button onClick={handlePayment} className="buy_btn">
-                        buy now
-                    </button>
-            {checkoutUrl && <a href={checkoutUrl}>Proceed to Payment</a>}
-    
-                </div> */}
-                <button onClick={()=>{navigate(`/tenders/${tid}/apply/bid-proposal`)}}>Pay</button>
-              </div>
-      );
-
+      return (<>{
+              localStorage.getItem('user')?
+              <div className="container mb-5 d-flex justify-content-center align-items-center mx-auto">
+                 <button className="btn btn-primary" onClick={()=>{navigate(`/tenders/${tid}/apply/bid-document`)}}>Pay</button>
+              </div>:
+              <div className="container border rounded mb-5" style={{minHeight:'15rem',height:'auto'}}>
+    <h4 className="text-center pt-4 word-break mx-auto" style={{maxWidth:"20rem"}}>To apply for bids, you need to log in. </h4>
+   <Link to="/login" className="mx-auto d-flex align-items-center flex-column mt-3 justify-content-center">
+    <button className="btn btn-primary" style={{maxWidth:'10rem'}}>Log in</button>
+    </Link>
+    <p className="text-center mt-2">Or, if you don't have an account, </p>
+    <Link to='/signup' className="mx-auto d-flex align-items-center flex-column mt-3 justify-content-center">
+    <button className="btn btn-secondary" style={{maxWidth:'10rem'}}>Sign Up</button>
+   </Link>
+               </div>
+              }
+              <Footer />
+      </>)
 }
 export default Payment;

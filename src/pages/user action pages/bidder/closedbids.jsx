@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
 import StickyHeadTable from '../../../components/Closed Bids Table'
+import Footer from '../../../components/footer'
 const ClosedBids=()=>{
     const {id,uid}=useParams();
     const [user,setUser]=useState({})
@@ -24,7 +25,7 @@ const ClosedBids=()=>{
         .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
       }
     return(<>
-        <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
+        <div className="mb-5 container border rounded" style={{minHeight:'20rem',height:"auto"}} >
         <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
            <a className="icon-link text-decoration-none text-black" href="/#">
             <BsArrowLeft className='me-2' />
@@ -32,7 +33,8 @@ const ClosedBids=()=>{
            </a>
         </div>
         <StickyHeadTable />
-    </div></>)
+    </div>
+    <Footer /></>)
 }
 
 export default ClosedBids;

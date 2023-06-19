@@ -20,7 +20,7 @@ return(<>
       <h1>Application Successful!</h1>
       <p className="m-0">Details : </p>
       <ul>
-        <li>Tender : <p className="fw-bold m-0 d-inline-flex">{`${tender.title} - ${ tender.ent}`}</p></li>
+        <li>Tender Title : <p className="fw-bold m-0 d-inline-flex">{`${tender.title} - ${ tender.ent}`}</p></li>
         <li>Tender Opening Schedule : <p className="fw-bold m-0 d-inline-flex">{tender.open}</p></li>
         <li>Applicant Name : <p className="fw-bold m-0 d-inline-flex">{JSON.parse(localStorage.getItem('user')).name}</p></li>
       </ul>

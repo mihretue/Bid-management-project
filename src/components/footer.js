@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 const Footer = () => {
 
 return(
-<footer className="text-white bg-dark pt-4 footer">
+<footer className="text-black  pt-4 footer rounded" style={{backgroundColor:'#abebbb'}}>
     <div className="container-fluid text-center text-md-left ">
         <div className="row">
             <div className="col-md-4 mt-md-0 mt-3">
@@ -12,10 +12,10 @@ return(
             </div>
             <div className="col-md-2 mb-md-0 mb-3">
                 <h5>Links</h5>
-                <ul className="list-unstyled">
-                    <li><Link className="text-white" to="/">Home</Link></li>
-                    <li><Link className="text-white" to="/about">About</Link></li>
-                    <li><Link className="text-white" to="/advert">Advert</Link></li>
+                <ul className="list-unstyled ">
+                    <li><Link className="text-black fw-bold text-decoration-none" to="/">Home</Link></li>
+                    <li><Link className="text-black fw-bold text-decoration-none" to="/about">About</Link></li>
+                    <li><Link className="text-black fw-bold text-decoration-none" to="/advert">Advert</Link></li>
                 </ul>
             </div>
             <div className="col-md-4 mb-md-0 mb-3">
@@ -30,9 +30,9 @@ return(
             <div className="col-md-2 mb-md-0 mb-3">
                 <h5>Important Links</h5>
                 <ul className="list-unstyled">
-                    <li><Link className="text-white" to="http://www.ppa.gov.et/" target='_blank'>www.ppa.gov.et</Link></li>
-                    <li><Link className="text-white" to="https://www.mint.gov.et/" target='_blank'>www.mint.gov.et</Link></li>
-                    <li><Link className="text-white" to="https://www.pmo.gov.et/" target='_blank'>www.pmo.gov.et</Link></li>
+                    <li><Link className="text-black fw-bold " to="http://www.ppa.gov.et/" target='_blank'>www.ppa.gov.et</Link></li>
+                    <li><Link className="text-black fw-bold text-docaration-none" to="https://www.mint.gov.et/" target='_blank'>www.mint.gov.et</Link></li>
+                    <li><Link className="text-black fw-bold text-docaration-none" to="https://www.pmo.gov.et/" target='_blank'>www.pmo.gov.et</Link></li>
                 </ul>
             </div>
         </div>

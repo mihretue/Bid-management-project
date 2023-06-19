@@ -1,5 +1,6 @@
 import {Navbar,Nav} from "react-bootstrap";
 import React, { useState,useEffect } from 'react';
+import './style.css'
 import {Link,Outlet,useParams,useNavigate } from "react-router-dom";
 import BackImage from "../../resources/backuser.jpg";
 import logo6 from "../../resources/logo6.png";
@@ -7,6 +8,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import {IoIosLogOut} from "react-icons/io";
 import {BsGear} from "react-icons/bs"
+import { colors } from "@material-ui/core";
+
 
 // import FontAwesomeIcon from "@fortawesome/fontawesome-free";
 const PheadLayout=()=>{
@@ -31,21 +34,22 @@ const PheadLayout=()=>{
       setIsFetching(false);
       setErrorFetching(true)})
    }
+   
 return(
     <div >
         <Navbar expand="lg"className="container fluid" >
         <Navbar.Brand href="#home"><img src={logo6} style={{width:'10rem',height:'2rem'}} alt="message"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="align-items-end">
-          <Nav className="me-auto nav_item fw-bold" >
-            <Nav.Link as={Link} to={"/"} >Home</Nav.Link>
+        <Navbar.Collapse id="basic-navbar-nav" className="align-items-end" style={{fontFamily:'Adamina, serif'}}>
+          <Nav className="me-auto nav_item " >
+            <Nav.Link as={Link} to={"/"} className="pheadlay">Home</Nav.Link>
             <Nav.Link className="advLink" as={Link} to={"/tenders"} >Tenders</Nav.Link>
             <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
             <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
 
           </Nav>
-          <Nav style={{ fontWeight: 'bold' }}>
-          <DropdownButton id="dropdown-basic-button "  title={JSON.parse(localStorage.getItem('user')).fName} >
+          <Nav  style={{ fontWeight: 'bold' }}>
+          <DropdownButton id="dropdown-basic-button  "  title={JSON.parse(localStorage.getItem('user')).fName} >
                 <Dropdown.Item >
                   <Nav.Link as={Link} to={"/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
                     <BsGear className='mx-1' />

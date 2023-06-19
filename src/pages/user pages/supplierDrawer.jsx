@@ -11,6 +11,11 @@ import {MdQuestionAnswer} from 'react-icons/md'
 import {BiMessageRoundedError} from 'react-icons/bi'
 import img from '../../resources/backuser.jpg'
 import Footer from '../../components/footer'
+import BidImage from "../../resources/bidimg2.webp"
+import BookImage from "../../resources/megazine1.png"
+import './style.css'
+
+
 export default function SupplierDrawer() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['Manage Bids', 'Me'], [])
@@ -100,8 +105,8 @@ export default function SupplierDrawer() {
     }
 
   return (<>
-    <Pane className='row mb-5 container mx-auto border rounded pb-5' style={{height:'auto'}}>
-      <Tablist className="col-md-3 col-12 " style={{height:'auto'}}>
+    <Pane className='row mb-5 container mx-auto  pb-5' style={{height:'auto'}}>
+      <Tablist className="col-md-3 col-12 mt-1" style={{height:'auto'}}>
         {tabs.map((tab, index) => {
           return (
             <Tab
@@ -110,7 +115,7 @@ export default function SupplierDrawer() {
               isSelected={index === selectedIndex}
               key={tab}
               onSelect={() => setSelectedIndex(index)}
-             className='mt-1'
+             className='mt-3'
             >
                {tab}
             </Tab>
@@ -122,7 +127,7 @@ export default function SupplierDrawer() {
          </div>
         :
         (errorFetching?'error':
-          <div className='d-none d-md-flex flex-column justify-content-center align-items-center mb-2' style={{marginTop:'15rem',height:'5rem'}}>
+          <div className='d-none d-md-flex flex-column justify-content-center align-items-center ' style={{marginTop:'29rem',height:'5rem'}}>
           <Avatar
            src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
            name="Alan Turing"
@@ -146,37 +151,43 @@ export default function SupplierDrawer() {
             className='container-fluid'
           >
             {tab=="Manage Bids"?
-            <div className='w-100' style={{minHeight:'10rem',height:"auto",backgroundImage:{img}}}>
-               <h3 className='m-0 text-center fs-6 mt-1'>Manage Bids</h3>
+            <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
+               <h3 id='pro' className='m-0 text-center fs-6 mt-1'>Manage Bids</h3>
                <div className='row g-3 justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
                <div className='col-6 d-flex flex-column align-items-center justify-content-center '>
-                      <Link className=' d-flex flex-column align-items-center justify-content-center' to={`/userpage/supplier/${id}/all-bids`} style={{textDecoration:'none',color:"black"}}>
-                        <BiMessageRoundedError style={{width:'4rem',height:'4rem'}} />
+                      <Link id='pro' className=' d-flex flex-column align-items-center justify-content-center' to={`/userpage/supplier/${id}/all-bids`} style={{textDecoration:'none',color:"Blue"}}>
+                        <BiMessageRoundedError style={{width:'4rem',height:'4rem',color:"blue"}} />
                         <br/>
                         All Tenders You Involved In
                       </Link>
                 </div>
                  <div className='col-6' >
-                    <Link className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/bids-in-progress`}>
-                    <GrInProgress style={{width:'2.5rem',height:'3rem'}} />
+                    <Link className=' d-flex flex-column align-items-center justify-content-center ' id='pro' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/bids-in-progress`}>
+                    <GrInProgress style={{width:'2.5rem',height:'3rem',color:"yellowgreen"}} />
                       <br/>
                       <p>Bids in Progress</p>
                     </Link>
                  </div>
                  <div className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
-                    <Link className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/cancelled-bids`}>
-                      <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem'}} />
+                    <Link id='pro' className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"darkslateblue"}} to={`/userpage/supplier/${id}/cancelled-bids`}>
+                      <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem',color:"darkslateblue"}} />
                       <br/>
                       Cancelled Bids
                     </Link>
                   
                 </div>
                 <div className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
-                    <Link className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"black"}} to={`/userpage/supplier/${id}/closed-bids`} >
-                    <MdQuestionAnswer style={{width:'4rem',height:'4rem'}} /><br/> 
+                    <Link id='pro' className=' d-flex flex-column align-items-center justify-content-center' style={{textDecoration:'none',color:"darkslategray"}} to={`/userpage/supplier/${id}/closed-bids`} >
+                    <MdQuestionAnswer style={{width:'4rem',height:'4rem',color:"darkslategray"}} /><br/> 
                     Closed Bids
                     </Link>
                     
+                </div>
+                <div className='thediv' >
+                  <img className='col-12 mt-3 twodiv col-xxl-12 ' style={{maxWidth:"10rem",height:"14rem"}} src={BookImage}  alt='bid image'/>
+                  <p className='effic'>
+                    <strong>"Efficiency is not just about doing things right; it's about doing the right things at the right time. A Bid Management System empowers businesses to navigate the bidding landscape with precision, unlocking opportunities and maximizing success."</strong>
+                  </p>
                 </div>
               </div>
             </div>
