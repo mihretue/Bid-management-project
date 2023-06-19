@@ -3,9 +3,9 @@ import {BsArrowLeft} from 'react-icons/bs'
 import { Link,useNavigate,useParams } from "react-router-dom";
 
 const BidProp=()=>{
-    const {id,bid}=useParams()
+    const {id,bid,bidp}=useParams()
     const fetchBidProp=()=>{
-        fetch(`http://localhost:3001/getbiddingo/${})
+        fetch(`http://localhost:3001/getbiddingo/${bidp}`)
         .then((res)=>res.json())
         .then((res)=>{
             console.log(res)
