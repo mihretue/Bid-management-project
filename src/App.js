@@ -59,6 +59,9 @@ import { BiMessageSquareDots } from "react-icons/bi";
 import Messages from "./pages/messages";
 import Message from "./pages/message";
 import BackImage from "../src/resources/backg.jpg"
+import PostBidAward from "./pages/user action pages/phead/postbidaward";
+import ApproveRequiest from './pages/user action pages/pendch/approveRequiest'
+import ApprovedTenders from './pages/user action pages/pendch/approvedTenders'
 function App() {
   // fetch('http://localhost:3001/sendemail')
   // .then((res)=>res.json())
@@ -122,13 +125,17 @@ function App() {
           <Route path="/userpage/phead/:id/manage-bids/cancelled-bids" element={<CancelledBids/>}/>
           <Route path="/userpage/phead/:id/manage-bids/cancelled-bid/:bid" element={<ManageCancelledBid/>}/>
           <Route path="/userpage/phead/:id/manage-bids/closed-bids" element={<ClosedBids/>}/>
-          <Route path="/userpage/phead/:id/manage-bids/closed-bids" element={<ManageClosedBid/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/closed-bids/:bid" element={<ManageClosedBid/>}/>
           <Route path="/userpage/phead/:id/manage-bids/:bid/bid-props" element={<BidProps/>}/>
           <Route path="/userpage/phead/:id/manage-bids/:bid/bid-props/:bidp" element={<BidProp/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/:bid/post-bid-award" element={<PostBidAward/>}/>
+
 
         </Route>
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
           <Route index element={<PendchPage />} />
+          <Route path="/userpage/pendch/:id/requiest-bids" element={<ApproveRequiest/>}/>
+          <Route path="/userpage/pendch/:id/approved-tenders" element={<ApprovedTenders/>}/>
         </Route>
       </Routes>
        <div title="Go to the top of the page" className="bg-dark d-flex justify-content-center align-items-center" style={{width:'4rem',height:'4rem',position:'fixed',bottom:'1.5rem',right:'1rem',borderRadius:'0.5rem'}}>

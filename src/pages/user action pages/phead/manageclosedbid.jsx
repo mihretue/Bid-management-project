@@ -12,7 +12,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 import {BsArrowLeft} from 'react-icons/bs'
-import { Button} from 'evergreen-ui'
+import { Pane, Dialog} from 'evergreen-ui'
+import { Button,EditIcon,TrashIcon,TickIcon,ManualIcon,PersonIcon,ArchiveIcon } from 'evergreen-ui'
+
 import Footer from '../../../components/footer'
 const columns = [
     { 
@@ -227,8 +229,29 @@ return (<>
             
           </Table>
         </TableContainer>
-        
       </Paper>
+      <hr className=" w-100" />
+      <div className="container d-flex flex-column justify-content-center align-items-center rounded mt-3 " style={{width:'90%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
+        <h6 className="text-center ">Actions</h6>
+        <div className="justify-content-center align-items-center row g-2 mb-2 container-fluid " >
+          <Button style={{fontFamily:"'Adamina', serif'"}} className="col-12"  iconBefore={TickIcon} intent="success">
+            View Bid Award Information
+          </Button>
+          <Button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/bid-props`)}}  className="col-12"  iconBefore={ManualIcon}>
+            View Bid Proposals 
+          </Button>
+        </div>
+      </div>
+      <hr className="w-100 " style={{width:'10px'}} />
+      <div className="container  mt-3 mb-3 d-flex justify-content-center align-items-center flex-column  rounded mt-3" style={{width:'80%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
+      <h6 className="text-center" >Actions Related to Applicants</h6>
+      <div className="w-100 hstack gap-2 container-fluid g-2 mb-2 justify-content-center align-items-center">
+                <Button  className="col-lg-6 d-flex justify-content-center align-items-center "  iconBefore={PersonIcon}>
+                View Applicants
+                </Button>
+                
+            </div>
+         </div>
       </div>}
       <Footer />
       </>)

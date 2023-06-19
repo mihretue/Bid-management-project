@@ -1,9 +1,15 @@
 import {Navbar,Nav} from "react-bootstrap";
 import React from 'react';
-import {Link,Outlet } from "react-router-dom";
+import {Link,Outlet,useNavigate } from "react-router-dom";
 import Profile from "../../resources/profile.jpg";
 import logo6 from "../../resources/logo6.png";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import {IoIosLogOut} from "react-icons/io";
+import {BsGear} from "react-icons/bs"
+
 const PendchLayout=()=>{
+  const navigate = useNavigate();
 return(
     <div>
         <Navbar expand="lg"className="container fluid" >
@@ -18,9 +24,21 @@ return(
 
           </Nav>
           <Nav style={{ fontWeight: 'bold' }}>
-          <Nav.Link as={Link} to={"/manageuseraccount"} ><button className="btn btn-outline-secondary">Manage User Account</button></Nav.Link>
-          <Nav.Link as={Link} to={"/profile"} ><button className="btn btn-outline-secondary"><img src={Profile} style={{height:"1.5rem",width:"1.5rem"}} alt="profiel image"/></button></Nav.Link>
-
+          <DropdownButton id="dropdown-basic-button  "  title={JSON.parse(localStorage.getItem('user')).fName} >
+                <Dropdown.Item style={{marginRight:'38px'}}>
+                  <Nav.Link as={Link} to={"/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
+                    <BsGear className='mx-1 mr-2' />
+                      Settings
+                  </Nav.Link>
+                </Dropdown.Item>
+                <Dropdown.Item >
+                    <Nav.Link  onClick={()=>{localStorage.removeItem("user"); navigate("/")}}  className="justify-content-center text-black ">
+                      <IoIosLogOut  className='mx-1'/>
+                        Log Out
+                    </Nav.Link>
+                </Dropdown.Item>
+       
+        </DropdownButton>
           
             {/* {!localStorage.getItem('user')&&
             <Nav.Link as={Link} to={"/login"} ><button className="btn btn-primary">Login</button></Nav.Link>}

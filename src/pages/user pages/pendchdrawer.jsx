@@ -11,6 +11,7 @@ import {MdOutlineCancelPresentation} from 'react-icons/md'
 import {MdQuestionAnswer} from 'react-icons/md'
 import {BiMessageRoundedError} from 'react-icons/bi'
 import {MdAssignmentAdd} from "react-icons/md"
+import {AiOutlineFileDone} from'react-icons/ai'
 
 export default function PendchDrawer() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -31,6 +32,7 @@ export default function PendchDrawer() {
   const [errorAcBidsFetching,setErrorAcBidsFetching]=useState(false)
   
   const fetchBids=()=>{
+
     setBidsIsFetching(true)
     fetch('http://localhost:3001/getbids',{
       method:'post',
@@ -110,7 +112,7 @@ export default function PendchDrawer() {
 
   return (
     <Pane className='row container-fluid pb-5' style={{height:'auto'}}>
-      <Tablist className="col-md-3 col-12" style={{height:'auto'}}>
+      <Tablist className="col-md-3 col-12" style={{height:'auto',backgroundColor:"#e1f5e8"}}>
         {tabs.map((tab, index) => {
           return (
             <Tab
@@ -139,7 +141,7 @@ export default function PendchDrawer() {
           />
           <h6 className='text-center'>{JSON.parse(localStorage.getItem('user')).name}</h6>
           <p className='fs-9 m-0 text-break text-center'>{JSON.parse(localStorage.getItem('user')).email}</p>
-          <p className='fs-9 m-0 text-break text-center'>Procurement Department Head at : </p>
+          <p className='fs-9 m-0 text-break text-center'>Procurement Endorsing Committee Head at : </p>
           <p className='fs-9 m-0 text-break text-center fw-bold'>{JSON.parse(localStorage.getItem('user')).pBody}</p>
          </div>
         )}
@@ -157,43 +159,17 @@ export default function PendchDrawer() {
           >
             {tab=="Manage Tenders"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
-               <h3 className='m-0 text-center fs-6'>Manage Bids</h3>
-               <div className='row g-3 justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
-               <div onClick={() => {navigate(`/userpage/phead/${id}/manage-bids/post-bid`)}} style={{cursor:"pointer"}}  className='cursor-pointer col-6 border rounded col-md-4 d-flex flex-column align-items-center justify-content-center'>
-                    <MdAssignmentAdd style={{width:'3rem',height:'3rem'}} />
-                    <p className='m-0 fs-5 text-center'>Post Tender</p>
-
-                 </div>
-                 <div onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids`)}} style={{cursor:"pointer"}} className='col-6 border rounded col-md-4 d-flex flex-column align-items-center justify-content-center'>
-                    <FaListAlt style={{width:'3rem',height:'3rem'}} />
-                    <p className='m-0 fs-5 text-center'>All Tenders</p>
-                    <p className='m-0 fs-6'>{BidsisFetching?"Fetching":(errorBidsFetching?"Error":bids.length)}</p>
-
-                 </div>
-                 <div onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/active-bids`)}} style={{cursor:"pointer"}} className='col-6 border rounded col-md-4 d-flex flex-column align-items-center justify-content-center'>
-                    <GrInProgress style={{width:'3rem',height:'3rem'}} />
-                    <p className='m-0 fs-5 text-center'>Active Tenders</p>
-                    <p className='m-0 fs-6'>{AcBidsisFetching?"Fetching":(errorAcBidsFetching?"Error":ACbids.length)}</p>
-
-                 </div>
-                 <div onClick={()=>{navigate (`/userpage/phead/${id}/manage-bids/cancelled-bids`)}} style={{cursor:"pointer"}} className='col-6 ms-auto ms-md-0 col-md-4 border rounded   d-flex flex-column align-items-center justify-content-center'>
-                    <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem'}} />
-                    <p className='m-0 fs-5 text-center'>Cancelled Tenders</p>
-                    <p className='m-0 fs-6'>{CBidsisFetching?"Fetching":(errorCBidsFetching?"Error":Cbids.length)}</p>
-
-                 </div>
-                 <div  onClick={()=>{ navigate (`/userpage/supplier/${id}/clarification-requests`)}} style={{cursor:"pointer"}} className='col-6  ms-md-0 col-md-4 border rounded   d-flex flex-column align-items-center justify-content-center'>
-                    <MdQuestionAnswer style={{width:'4rem',height:'4rem'}} />
-                    <p className='m-0 fs-5 text-center'>Bid Clarification Requests</p>
-                    <p className='m-0 fs-6'>23</p>
-                 </div>
-                 <div onClick={()=> {navigate (`/userpage/supplier/${id}/bid-complaints`)}} style={{cursor:"pointer"}} className='col-6 ms-md-0 border col-md-4 mx-auto rounded   d-flex flex-column align-items-center justify-content-center'>
-                    <BiMessageRoundedError style={{width:'4rem',height:'4rem'}} />
-                    <p className='m-0 fs-5 text-center'>Complaints Sent</p>
-                    <p className='m-0 fs-6'>13</p>
-
-                 </div>
-               </div>
+              <h3 className='m-0 text-center fs-6'>Manage Bids</h3>
+              <div className='row g-3 justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
+              <div id='pro' onClick={() => {navigate(`/userpage/pendch/${id}/requiest-bids`)}} style={{cursor:"pointer"}}  className='cursor-pointer col-6  col-md-4 col-sm-12 d-flex flex-column align-items-center justify-content-center'>
+                    <MdAssignmentAdd style={{width:'3rem',height:'3rem',color:'#aaf507'}} />
+                    <p className='m-0 fs-6 text-center'>Approve Requiest Bids</p>
+                </div>
+                <div id='pro' onClick={()=>{navigate(`/userpage/pendch/${id}/approved-tenders`)}} style={{cursor:"pointer"}} className='col-6  col-md-4 col-sm-12 d-flex flex-column align-items-center justify-content-center'>
+                    <AiOutlineFileDone  style={{width:'4rem',height:'4rem',color:'#e04d0d'}} />
+                    <p className='m-0 fs-6 text-center'>Approved Tenders</p>
+                </div>
+              </div>
             </div>
             :
             (tab=="Me"?

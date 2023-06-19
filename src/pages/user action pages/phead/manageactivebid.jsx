@@ -12,8 +12,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 import {BsArrowLeft} from 'react-icons/bs'
-import { Button} from 'evergreen-ui'
 import Footer from '../../../components/footer'
+import { Pane, Dialog} from 'evergreen-ui'
+import { Button,EditIcon,TrashIcon,TickIcon,ManualIcon,PersonIcon,ArchiveIcon } from 'evergreen-ui'
+
 const columns = [
     { 
         id: 'id', 
@@ -71,6 +73,23 @@ const fetchTenderDetails=()=>{
   })
   .catch((err)=>{
     setErrorFetching(true)
+  })
+}
+
+const cancelTender=()=>{
+  setIsCancelling(true)
+  fetch(`http://localhost:3001/canceltender/${bid}`)
+  .then(res=>res.json())
+  .then((res)=>{
+    setIsCancelling(false)
+    if(res.res=="ok"){
+       navigate(`/userpage/phead/${id}/manage-bids/all-bids`)
+    }else{
+      setErrorCancelling(true)
+    }
+  })
+  .catch((err)=>{
+    setErrorCancelling(true)
   })
 }
 
@@ -229,6 +248,42 @@ return (<>
         </TableContainer>
         
       </Paper>
+      <hr className=" w-100" />
+      <div className="container d-flex flex-column justify-content-center align-items-center rounded mt-3 " style={{width:'90%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
+        <h6 className="text-center ">Actions</h6>
+        <div className=" justify-content-center align-items-center row g-2 mb-2 container-fluid " >
+          <Button style={{fontFamily:"'Adamina', serif'"}} className="col-12"  iconBefore={TickIcon} intent="success">
+            Post Bid Award
+          </Button>
+          <Pane className="mx-auto col-6 mt-2 d-flex justify-content-center">
+      <Dialog
+        isShown={isShown}
+        title="Confirm Action"
+        onCloseComplete={() => setIsShown(false)}
+        confirmLabel="Yes"
+        onCancel={() => {setIsShown(false)}}
+        onConfirm={() => {setIsShown(false);cancelTender()}}
+      >
+        <p>Are You Sure You Want To Cancel This Bid?</p>
+        <p className="mt-3" style={{fontSize:'0.8rem'}}>Note that this can't be undone.</p>
+      </Dialog>
+      <Button className="col-12"   iconBefore={TrashIcon} intent="danger" onClick={() => setIsShown(true)}>Cancel Tender</Button>
+          </Pane>
+          <Button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/bid-props`)}}  className="col-6 "  iconBefore={ManualIcon}>
+            View Bid Proposals 
+          </Button>
+        </div>
+      </div>
+      <hr className="w-100 " style={{width:'10px'}} />
+      <div className="container  mt-3 mb-3 d-flex justify-content-center align-items-center flex-column  rounded mt-3" style={{width:'80%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
+      <h6 className="text-center" >Actions Related to Applicants</h6>
+      <div className="w-100 hstack gap-2 container-fluid g-2 mb-2 justify-content-center align-items-center">
+                <Button  className="col-lg-6 d-flex justify-content-center align-items-center "  iconBefore={PersonIcon}>
+                View Applicants
+                </Button>
+                
+            </div>
+         </div>
       </div>}
       <Footer />
       </>)

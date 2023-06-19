@@ -5,6 +5,16 @@ const advertSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    approved:{
+      type:Boolean,
+      required:true,
+      default:false
+    },
+    approvalRequested:{
+      type:Boolean,
+      required:true,
+      default:false
+    },
     title: {
       type: String,
       required: true,

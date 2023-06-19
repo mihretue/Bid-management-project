@@ -50,9 +50,9 @@ return(
           </Nav>
           <Nav  style={{ fontWeight: 'bold' }}>
           <DropdownButton id="dropdown-basic-button  "  title={JSON.parse(localStorage.getItem('user')).fName} >
-                <Dropdown.Item >
+                <Dropdown.Item style={{marginRight:'38px'}}>
                   <Nav.Link as={Link} to={"/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
-                    <BsGear className='mx-1' />
+                    <BsGear className='mx-1 mr-2' />
                       Settings
                   </Nav.Link>
                 </Dropdown.Item>

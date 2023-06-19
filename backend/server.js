@@ -415,7 +415,7 @@ app.get('/getbiddingall',(req,res)=>{
   .catch(err=>res.json(err))
 })
 
-app.get('/getbiddingo',(req,res)=>{
+app.get('/getbiddingo/:id',(req,res)=>{
   const id = req.params.id;
   biddingModel.findOne({_id:id})
   .then((docs)=>{

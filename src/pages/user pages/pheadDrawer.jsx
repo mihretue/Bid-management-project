@@ -132,7 +132,7 @@ export default function PheadDrawer() {
    }
 
   return (
-    <Pane className='row container mb-5 mx-auto border rounded pb-5' style={{height:'auto'}}>
+    <Pane className='row p-2 container mb-5 mx-auto border rounded pb-5' style={{height:'auto'}}>
       <Tablist className="col-md-3 col-12" style={{height:'auto',backgroundColor:"#e1f5e8"}}>
         {tabs.map((tab, index) => {
           return (
@@ -210,7 +210,9 @@ export default function PheadDrawer() {
                <h3 className='m-0 text-center fs-6 mt-1'>Me</h3>
                <div className='mx-auto d-flex flex-column justify-content-center align-items-center' style={{minHeight:'10rem',height:'auto'}}>
                  <ul className='list-unstyled mt-3 w-100'>
-                   <li>Your Total Tenders : <p className='m-0 fw-bold d-inline'>{BidsisFetching?"fetching":(errorBidsFetching?"error fetching":bids.length)}</p></li>
+                   <div className='card' >
+                   <li className='card-body'>Total Tenders  <br/><p className='m-0 fw-bold card-text d-inline'>{BidsisFetching?"fetching":(errorBidsFetching?"error fetching":bids.length)}</p></li>
+                   </div>
                    <li>Your Active Tenders : <p className='m-0 fw-bold d-inline'>{AcBidsisFetching?"fetching":(errorAcBidsFetching?"error fetching":ACbids.length)}</p></li>
                    <li>Cancelled Tenders : <p className='m-0 fw-bold d-inline'>{CBidsisFetching?"fetching":(errorCBidsFetching?"error fetching":Cbids.length)}</p></li>
                    <li>Closed Tenders : <p className='m-0 fw-bold d-inline'>{ClBidsisFetching?"fetching":(errorClBidsFetching?"error fetching":Clbids.length)}</p></li>
