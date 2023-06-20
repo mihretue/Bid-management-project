@@ -250,23 +250,6 @@ return (<>
       <div className="container d-flex flex-column justify-content-center align-items-center rounded mt-3 " style={{width:'90%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
         <h6 className="text-center ">Actions</h6>
         <div className=" justify-content-center align-items-center row g-2 mb-2 container-fluid " >
-          <Button style={{fontFamily:"'Adamina', serif'"}} className="col-12"  iconBefore={TickIcon} intent="success">
-            Post Bid Award
-          </Button>
-          <Pane className="mx-auto col-6 mt-2 d-flex justify-content-center">
-      <Dialog
-        isShown={isShown}
-        title="Confirm Action"
-        onCloseComplete={() => setIsShown(false)}
-        confirmLabel="Yes"
-        onCancel={() => {setIsShown(false)}}
-        onConfirm={() => {setIsShown(false);cancelTender()}}
-      >
-        <p>Are You Sure You Want To Cancel This Bid?</p>
-        <p className="mt-3" style={{fontSize:'0.8rem'}}>Note that this can't be undone.</p>
-      </Dialog>
-      <Button className="col-12"   iconBefore={TrashIcon} intent="danger" onClick={() => setIsShown(true)}>Cancel Tender</Button>
-          </Pane>
           <Button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/bid-props`)}}  className="col-6 "  iconBefore={ManualIcon}>
             View Bid Proposals 
           </Button>

@@ -250,12 +250,18 @@ return (<>
         
       </Paper>
       <hr className=" w-100" />
-      <div className="container d-flex flex-column justify-content-center align-items-center rounded mt-3 " style={{width:'90%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
-        <h6 className="text-center ">Actions</h6>
+      <div className="container d-flex flex-column justify-content-center align-items-center rounded mt-1 " style={{width:'90%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
+        <h5 className="mt-0">Tender Status : 
+          {tender.status=="active"&&<p className="m-0 d-inline text-success"> {tender.status}</p>}
+          {tender.status=="cancelled"&&<p className="m-0 d-inline text-danger"> {tender.status}</p>}
+          {tender.status=="closed"&&<p className="m-0 d-inline text-primary"> {tender.status}</p>}
+        </h5>
+        <h6 className="text-center mt-1 ">Actions</h6>
         <div className=" justify-content-center align-items-center row g-2 mb-2 container-fluid " >
-          <Button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/post-bid-award`)}} style={{fontFamily:"'Adamina', serif'"}} className="col-12"  iconBefore={TickIcon} intent="success">
+          {tender.status=="active"&&<Button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/post-bid-award`)}} style={{fontFamily:"'Adamina', serif'"}} className="col-12"  iconBefore={TickIcon} intent="success">
             Post Bid Award
-          </Button>
+          </Button>}
+          {tender.status=="active"&&
           <Pane className="mx-auto col-6 mt-2 d-flex justify-content-center">
       <Dialog
         isShown={isShown}
@@ -269,7 +275,10 @@ return (<>
         <p className="mt-3" style={{fontSize:'0.8rem'}}>Note that this can't be undone.</p>
       </Dialog>
       <Button className="col-12"   iconBefore={TrashIcon} intent="danger" onClick={() => setIsShown(true)}>Cancel Tender</Button>
-          </Pane>
+          </Pane>}
+          {tender.status=="closed"&&<Button style={{fontFamily:"'Adamina', serif'"}} className="col-6"  iconBefore={TickIcon} intent="success">
+            View Bid Award Information
+          </Button>}
           <Button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/bid-props`)}}  className="col-6 "  iconBefore={ManualIcon}>
             View Bid Proposals 
           </Button>

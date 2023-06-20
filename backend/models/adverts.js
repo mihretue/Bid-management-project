@@ -90,6 +90,16 @@ const advertSchema = new mongoose.Schema({
   bidDocFile:{
     type:String,
     required:true
+  },
+  bidAwardFile:{
+    type:String,
+    required:true,
+    default:'none'
+  },
+  bidReqFile:{
+    type:String,
+    required:true,
+    default:'none'
   }
   },{collection:'Tenders'});
   

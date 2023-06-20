@@ -252,7 +252,7 @@ return (<>
       <div className="container d-flex flex-column justify-content-center align-items-center rounded mt-3 " style={{width:'90%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
         <h6 className="text-center ">Actions</h6>
         <div className=" justify-content-center align-items-center row g-2 mb-2 container-fluid " >
-          <Button style={{fontFamily:"'Adamina', serif'"}} className="col-12"  iconBefore={TickIcon} intent="success">
+          <Button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/post-bid-award`)}} style={{fontFamily:"'Adamina', serif'"}} className="col-12"  iconBefore={TickIcon} intent="success">
             Post Bid Award
           </Button>
           <Pane className="mx-auto col-6 mt-2 d-flex justify-content-center">

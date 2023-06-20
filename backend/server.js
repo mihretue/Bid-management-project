@@ -250,6 +250,15 @@ app.get('/userbyid/:id', (request, response) => {
   .catch(err=>response.json(err))
 })
 
+app.get('/userbyprop', (request, response) => {
+  const {pBody,role}=request.query;
+  userModel.findOne({pBody:pBody,role:role})
+  .then((docs)=>{
+    response.json(docs)
+  })
+  .catch(err=>response.json(err))
+})
+
 app.get('/getusers', (request, response) => {
    userModel.find().
    then((err,docs)=>{
@@ -315,6 +324,64 @@ app.post('/uploadbiddocument' ,(req, res) => {
   
 });
 
+const BidAwardstorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/bidawards')
+  },
+  filename: function (req, file, cb) {
+    const ext = file.originalname.split('.').pop();
+    const fileName = uuidv4()
+    cb(null, `${fileName}.${ext}`);
+  }
+});
+const uploadBidAward = multer({ storage: BidAwardstorage });
+
+app.post('/uploadbidaward' ,(req, res) => {
+  uploadBidAward.single('file')(req,res,(err=>{
+    if(err){
+      res.json({res:"error"});
+    }else{
+      res.json({res:req.file.filename});
+    }
+  }))
+  
+});
+
+const BidRequeststorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/bidrequests')
+  },
+  filename: function (req, file, cb) {
+    const ext = file.originalname.split('.').pop();
+    const fileName = uuidv4()
+    cb(null, `${fileName}.${ext}`);
+  }
+});
+const uploadBidRequest = multer({ storage: BidRequeststorage });
+
+app.post('/uploadbidrequest' ,(req, res) => {
+  uploadBidRequest.single('file')(req,res,(err=>{
+    if(err){
+      res.json({res:"error"});
+    }else{
+      res.json({res:req.file.filename});
+    }
+  }))
+  
+});
+
+app.post('/requestapproval/:bid',(request,response)=>{
+  const bid=request.params.bid;
+  const input=request.body
+  advertModel.findOneAndUpdate({_id:bid}, {$set:{ bidReqFile:input.bidReqFile,approvalRequested:true}},{new:true,useFindAndModify:false})
+  .then(updatedUser => {
+      response.json({res:"ok"})
+  })
+  .catch((err)=>{
+    console.log(err)
+  });
+  })
+
 const BidPropstorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/bidprops')
@@ -348,6 +415,19 @@ app.post('/savebidproposal',(request,response)=>{
     console.log(err)
   });
   })
+
+  app.post('/savebidaward/:bid',(request,response)=>{
+    const input=request.body;
+    const bid=request.params.bid
+    advertModel.findOneAndUpdate({_id:bid}, {$set:{ bidAwardFile:input.bidAwardFile,status:"closed"}},{new:true,useFindAndModify:false})
+    .then(updatedUser => {
+        response.json({res:"ok"})
+    })
+    .catch((err)=>{
+      console.log(err)
+    });
+    })
+
 //register after bid prop is filled successfully
 app.post('/registerbidder',(request,response)=>{
   const input=request.body;

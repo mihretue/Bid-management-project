@@ -144,7 +144,7 @@ import {GrRefresh} from 'react-icons/gr'
               {
               Cbids.map((bid) => {
                 return (
-                  <TableRow onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids/cancelled-bid/${bid._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={bid.id}  hover role="checkbox" tabIndex={-1}>
+                  <TableRow onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/cancelled-bids/${bid._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={bid.id}  hover role="checkbox" tabIndex={-1}>
                         <TableCell style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
             {bid.id}
                         </TableCell>

@@ -62,6 +62,9 @@ import BackImage from "../src/resources/backg.jpg"
 import PostBidAward from "./pages/user action pages/phead/postbidaward";
 import ApproveRequiest from './pages/user action pages/pendch/approveRequiest'
 import ApprovedTenders from './pages/user action pages/pendch/approvedTenders'
+import RequestBidApproval from "./pages/user action pages/phead/requestbidapproval";
+import BidAwardSuccess from "./pages/user action pages/phead/bidawardsuccess";
+import BidRequestSuccess from "./pages/user action pages/phead/bidreqsuccess";
 function App() {
   // fetch('http://localhost:3001/sendemail')
   // .then((res)=>res.json())
@@ -123,12 +126,15 @@ function App() {
           <Route path="/userpage/phead/:id/manage-bids/active-bids/:bid" element={<ManageActiveBid />}/>
           <Route path="/userpage/phead/:id/manage-bids/post-bid" element={<NewBid/>}/>
           <Route path="/userpage/phead/:id/manage-bids/cancelled-bids" element={<CancelledBids/>}/>
-          <Route path="/userpage/phead/:id/manage-bids/cancelled-bid/:bid" element={<ManageCancelledBid/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/cancelled-bids/:bid" element={<ManageCancelledBid/>}/>
           <Route path="/userpage/phead/:id/manage-bids/closed-bids" element={<ClosedBids/>}/>
           <Route path="/userpage/phead/:id/manage-bids/closed-bids/:bid" element={<ManageClosedBid/>}/>
           <Route path="/userpage/phead/:id/manage-bids/:bid/bid-props" element={<BidProps/>}/>
           <Route path="/userpage/phead/:id/manage-bids/:bid/bid-props/:bidp" element={<BidProp/>}/>
           <Route path="/userpage/phead/:id/manage-bids/:bid/post-bid-award" element={<PostBidAward/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/:bid/post-bid-award/success" element={<BidAwardSuccess/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/:bid/request-bid-approval" element={<RequestBidApproval/>}/>
+          <Route path="/userpage/phead/:id/manage-bids/:bid/request-bid-approval/success" element={<BidRequestSuccess/>}/>
 
 
         </Route>
