@@ -259,6 +259,24 @@ app.get('/userbyprop', (request, response) => {
   .catch(err=>response.json(err))
 })
 
+app.get('/tenderbyprop', (request, response) => {
+  const {pBody,approvalRequested}=request.query;
+  advertModel.find({ent:pBody,approvalRequested:approvalRequested})
+  .then((docs)=>{
+    response.json(docs)
+  })
+  .catch(err=>response.json(err))
+})
+
+app.get('/tenderbypropp', (request, response) => {
+  const {pBody,approved}=request.query;
+  advertModel.find({ent:pBody,approved:approved})
+  .then((docs)=>{
+    response.json(docs)
+  })
+  .catch(err=>response.json(err))
+})
+
 app.get('/getusers', (request, response) => {
    userModel.find().
    then((err,docs)=>{
@@ -427,6 +445,17 @@ app.post('/savebidproposal',(request,response)=>{
       console.log(err)
     });
     })
+
+    app.get('/approvebid/:bid',(request,response)=>{
+      const bid=request.params.bid
+      advertModel.findOneAndUpdate({_id:bid}, {$set:{approvalRequested:false,approved:true}},{new:true,useFindAndModify:false})
+      .then(updatedUser => {
+          response.json({res:"ok"})
+      })
+      .catch((err)=>{
+        console.log(err)
+      });
+      })
 
 //register after bid prop is filled successfully
 app.post('/registerbidder',(request,response)=>{

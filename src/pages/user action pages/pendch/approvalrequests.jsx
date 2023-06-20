@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 import { Link,useParams } from 'react-router-dom'
 import { BsArrowLeft } from 'react-icons/bs'
 import Footer from "../../../components/footer"
-import StickyHeadTable from '../../../components/Bid Table'
+import StickyHeadTable from '../../../components/Bid Approval Requests Table'
 
 
- const ApprovedRequiest = ()=> {
+ const BidApprovalRequests = ()=> {
     useEffect(()=>{document.title='Cheretanet | Approve Requiest'})
     
   const {id,uid} = useParams();
@@ -27,4 +27,4 @@ import StickyHeadTable from '../../../components/Bid Table'
     )
   }
 
-export default ApprovedRequiest;
+export default BidApprovalRequests;

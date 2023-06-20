@@ -60,11 +60,15 @@ import Messages from "./pages/messages";
 import Message from "./pages/message";
 import BackImage from "../src/resources/backg.jpg"
 import PostBidAward from "./pages/user action pages/phead/postbidaward";
-import ApproveRequiest from './pages/user action pages/pendch/approveRequiest'
+import ApproveRequiest from './pages/user action pages/pendch/approvalrequests'
 import ApprovedTenders from './pages/user action pages/pendch/approvedTenders'
 import RequestBidApproval from "./pages/user action pages/phead/requestbidapproval";
 import BidAwardSuccess from "./pages/user action pages/phead/bidawardsuccess";
 import BidRequestSuccess from "./pages/user action pages/phead/bidreqsuccess";
+import BidApprovalRequests from "./pages/user action pages/pendch/approvalrequests";
+import ManageApprovalRequest from './pages/user action pages/pendch/manageapprovalrequest'
+import ApprovedTender from "./pages/user action pages/pendch/approvedtender";
+import ApprovalSuccess from "./pages/user action pages/pendch/approvalsuccess";
 function App() {
   // fetch('http://localhost:3001/sendemail')
   // .then((res)=>res.json())
@@ -93,7 +97,6 @@ function App() {
           <Route path="manageuseraccount" element={<ManageUserAcc />} /> */}
         </Route>
         <Route path="login" element={<Login />} />
-
         <Route path="/userpage/admin/:id" element={<AdminLayout />}>
           <Route index element={<AdminPage />} />
           <Route path="/userpage/admin/:id/manage-accounts" element={<ManageUserAccount />} />
@@ -140,8 +143,11 @@ function App() {
         </Route>
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
           <Route index element={<PendchPage />} />
-          <Route path="/userpage/pendch/:id/requiest-bids" element={<ApproveRequiest/>}/>
+          <Route path="/userpage/pendch/:id/approval-requests" element={<BidApprovalRequests/>}/>
+          <Route path="/userpage/pendch/:id/approval-requests/:bid" element={<ManageApprovalRequest/>}/>
+          <Route path="/userpage/pendch/:id/approval-requests/success" element={<ApprovalSuccess />}/>
           <Route path="/userpage/pendch/:id/approved-tenders" element={<ApprovedTenders/>}/>
+          <Route path="/userpage/pendch/:id/approved-tenders/:bid" element={<ApprovedTender/>}/>
         </Route>
       </Routes>
        <div title="Go to the top of the page" className="bg-dark d-flex justify-content-center align-items-center" style={{width:'4rem',height:'4rem',position:'fixed',bottom:'1.5rem',right:'1rem',borderRadius:'0.5rem'}}>

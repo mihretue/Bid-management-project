@@ -120,20 +120,7 @@ return(<>{isChecking?
                 <li>Name : <p className="m-0 d-inline fw-bold">{endorser.fName + ' ' +endorser.lName}</p></li>
                 <li>Email : <p className="m-0 d-inline fw-bold">{endorser.email}</p></li>
             </ul><hr className="w-100" />
-            <h6>Upload a file describing the bid award :</h6>
-              <form onSubmit={handleFileSubmit} className="d-flex flex-column justify-content-center align-items-center">
-              <input id="file_input" hidden type="file" onChange={handleFileChange} />
-              <button type="button" className="btn d-inline btn-primary">
-              <label className="text-white d-inline" htmlFor="file_input">
-                 Attach 
-               </label>
-              </button>
-              <p className="m-0 d-inline">{file&&"File Attached."}</p>
-              <button disabled={file?false:true} type="submit" className="mt-2 btn btn-secondary">Upload</button>
-              <p className="m-0">{uploading?"Uploading File":(errorUploading?"Error Uploading File":uploaded&&"Successfully Uploaded!")}</p>
-              <button onClick={saveBidAward} className="mt-3 btn btn-success" hidden={uploaded==true?false:true}>Finish</button>
-              <p>{errorSaving&&"Some Error Occurred, Please Try Again!"}</p>
-        </form>   
+            
          </div>
       </div>}
     </>
