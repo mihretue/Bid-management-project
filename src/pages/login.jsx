@@ -10,6 +10,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { BiError } from "react-icons/bi";
 import {AiOutlineLoading3Quarters} from 'react-icons/ai'
 import Footer from "../components/footer";
+import logo6 from "../resources/logo.ico";
 
 const Login=()=>{
     useEffect(()=>{document.title='Cheretanet | Log in'})
@@ -40,10 +41,8 @@ const handleChange = (event) => {
        if(res.approved==false){
           navigate('/waitforapproval')
        }else{
-        //navigate to home
-        // localStorage.setItem('user',true)
         if(res.status=="banned"){
-
+          navigate('/accountbanned')
         }else{
           if(res.status=="active"){
             switch(res.role) {
@@ -122,6 +121,11 @@ const handleChange = (event) => {
     }
 
 return(<>
+<div className="mt-2 d-flex justify-content-center align-items-center mx-auto" style={{width:'3.2rem',height:'3.2rem',borderRadius:'2rem',outline:'1px solid darkslategray'}}>
+<a href="/">
+   <img src={logo6} style={{width:'3rem',height:'3rem'}} alt="cheretanet"/>
+</a>
+</div>
     <div className="mb-5 Auth-form-container">
         <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">

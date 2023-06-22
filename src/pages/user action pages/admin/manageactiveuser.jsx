@@ -4,7 +4,8 @@ import { Avatar } from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
 import { Pane, Dialog, Button } from 'evergreen-ui'
-
+import {MdAccountCircle} from 'react-icons/md'
+import Footer from '../../../components/footer'
 
 const ManageActiveUser=()=>{
     const {id,uid}=useParams();
@@ -42,8 +43,10 @@ const ManageActiveUser=()=>{
       })
   }
 
-    return(
-        <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
+  
+
+    return(<>
+        <div className="container mb-5 border rounded" style={{minHeight:'20rem',height:"auto"}} >
         <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
            <a className="icon-link text-decoration-none text-black" href="/#">
             <BsArrowLeft className='me-2' />
@@ -53,63 +56,63 @@ const ManageActiveUser=()=>{
         <div className="container rounded my-2" style={{height:'auto'}}>
              <h4 className="text-center">User Details</h4>
              <hr />
-             <Avatar
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-              name="Alan Turing"
-              size={80}
-              className="mx-auto d-block"
-            />
-            {isFetching?'Fetching...':(errorFetching?'Error':
+             <div className="mx-auto" style={{width:'4rem',height:'4rem'}}>
+              <MdAccountCircle color="brown"  style={{width:'100%',height:'100%'}}
+            /></div>
+            {isFetching?
+            <p className="text-center mt-3">Fetching User Information...</p>
+            :(errorFetching?'Error':
 <>
 <table class="table mx-auto" style={{width:'70%'}}>
 <tbody>
 <tr className="text-center" >
   <td className="text-center border-0" colspan="2">First Name</td>
-  <td className="text-center float-end border-0">{isFetching?'Loading...':user.fName}</td>
+  <td className="text-center fw-bold float-end border-0">{isFetching?'Loading...':user.fName}</td>
 </tr>
 <tr className="text-center" >
   <td className=" border-0" colspan="2">Last Name</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.LName}</td>
+  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.lName}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">User Name</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.uName}</td>
+  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.uName}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Email Address</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.email}</td>
+  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.email}</td>
 </tr>
 <tr className="text-center" >
   <td className=" border-0" colspan="2">Role</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.role}</td>
+  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.role}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Birthday</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.bday}</td>
+  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.bday}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Account Status</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.status}</td>
+  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.status}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Registered On</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.status}</td>
+  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.status}</td>
 </tr>
 </tbody>
 </table>
 <Pane className="mb-5 mx-auto mt-2 d-flex justify-content-center">
       <Dialog
         isShown={isShown}
-        title="Confirm Banning"
+        title="Confirm Action"
         onCloseComplete={() => setIsShown(false)}
         confirmLabel="Confirm"
         onCancel={() => {setIsShown(false)}}
         onConfirm={() => {setIsShown(false);banAccount()}}
         
       >
-        Ban User Account?
+       Are you sure you want to ban this account?
+
       </Dialog>
-      <Button className="bg-primary text-white" onClick={() => setIsShown(true)}>Ban User Account</Button>
+      <Button className="bg-danger text-white" onClick={() => setIsShown(true)}>Ban Account</Button>
     </Pane>
 </>
                 
@@ -119,7 +122,9 @@ const ManageActiveUser=()=>{
             }
             
         </div>
-    </div>)
+    </div>
+    <Footer />
+    </>)
 }
 
 export default ManageActiveUser;

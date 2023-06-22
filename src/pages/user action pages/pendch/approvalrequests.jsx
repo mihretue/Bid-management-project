@@ -20,6 +20,7 @@ import StickyHeadTable from '../../../components/Bid Approval Requests Table'
             <Link className="text-decoration-none" to={`/userpage/pendch/${id}`}>Back to Manage Bids</Link>
            </a>
         </div>
+        <h2 className='text-center'>Approval Requests</h2>
         <StickyHeadTable />
     </div>
     <Footer />

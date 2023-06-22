@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {VscAccount} from 'react-icons/vsc'
 import { useNavigate } from 'react-router-dom'
 import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'
 import {FaListAlt} from 'react-icons/fa'
@@ -32,7 +33,6 @@ export default function PheadDrawer() {
   const [Clbids,setClBids]=useState([]);
   const [ClBidsisFetching,setClBidsIsFetching]=useState(false)
   const [errorClBidsFetching,setErrorClBidsFetching]=useState(false)
-  
   const fetchBids=()=>{
     setBidsIsFetching(true)
     fetch('http://localhost:3001/getbids',{
@@ -132,8 +132,8 @@ export default function PheadDrawer() {
    }
 
   return (
-    <Pane className='row p-2 container mb-5 mx-auto border rounded pb-5' style={{height:'auto'}}>
-      <Tablist className="col-md-3 col-12" style={{height:'auto',backgroundColor:"#e1f5e8"}}>
+    <Pane className='row p-3 container mb-5 mx-auto shadow border rounded pb-5' style={{height:'auto'}}>
+      <Tablist className="col-md-3 col-12" style={{height:'auto'}}>
         {tabs.map((tab, index) => {
           return (
             <Tab
@@ -148,24 +148,12 @@ export default function PheadDrawer() {
             </Tab>
           )
         })}
-        {isFetching?
-        <div className='d-none d-md-flex flex-column justify-content-center align-items-center' style={{marginTop:'15rem',height:'5rem'}}>
-           <p className='text-center text-break m-0'>Fetching Account Details...</p>
-         </div>
-        :
-        (errorFetching?'error':
-          <div className='d-none d-md-flex flex-column mb-5 justify-content-center align-items-center' style={{marginTop:'15rem',height:'5rem'}}>
-          <Avatar
-           src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-           name="Alan Turing"
-           size={40}
-          />
+          <div className='d-none d-md-flex flex-column mb-5 justify-content-center align-items-center' style={{marginTop:'17rem',height:'5rem'}}>
           <h6 className='text-center'>{JSON.parse(localStorage.getItem('user')).name}</h6>
           <p className='fs-9 m-0 text-break text-center'>{JSON.parse(localStorage.getItem('user')).email}</p>
           <p className='fs-9 m-0 text-break text-center'>Procurement Department Head at : </p>
           <p className='fs-9 m-0 text-break text-center fw-bold'>{JSON.parse(localStorage.getItem('user')).pBody}</p>
          </div>
-        )}
         
       </Tablist>
       <Pane className="col-md-9 col-12 panew" style={{height:'auto'}}>

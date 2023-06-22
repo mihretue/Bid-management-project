@@ -19,6 +19,7 @@ const BidsInProgress=()=>{
             <Link className="text-decoration-none" to={`/userpage/supplier/${id}`}>Back to Manage Bids</Link>
            </a>
         </div>
+        <h2 className="text-center">Active Tenders</h2>
         <StickyHeadTable />
         </div>
         <Footer />

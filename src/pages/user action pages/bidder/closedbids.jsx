@@ -32,6 +32,7 @@ const ClosedBids=()=>{
             <Link className="text-decoration-none" to={`/userpage/supplier/${id}`}>Back to Manage Bids</Link>
            </a>
         </div>
+        <h2 className="text-center">Closed Tenders</h2>
         <StickyHeadTable />
     </div>
     <Footer /></>)

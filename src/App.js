@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./components/footer";
 import Userpage from "./pages/user pages/userpage";
 import WaitForApproval from "./pages/action pages/waitforapproval";
+import AccountBanned from "./pages/action pages/accountbanned";
 import {TbArrowBigUpLineFilled} from 'react-icons/tb'
 import Biddocument from "./pages/action pages/biddocument";
 import Payment from "./pages/action pages/payment";
@@ -69,6 +70,13 @@ import BidApprovalRequests from "./pages/user action pages/pendch/approvalreques
 import ManageApprovalRequest from './pages/user action pages/pendch/manageapprovalrequest'
 import ApprovedTender from "./pages/user action pages/pendch/approvedtender";
 import ApprovalSuccess from "./pages/user action pages/pendch/approvalsuccess";
+import BidAwards from './pages/bidawards'
+import BidAward from './pages/bidaward'
+import Email from './pages/emailpractice'
+import SupSetting from './pages/user action pages/bidder/setting'
+
+
+
 function App() {
   // fetch('http://localhost:3001/sendemail')
   // .then((res)=>res.json())
@@ -83,34 +91,53 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="tenders" element={<Tenders />} />
+          <Route path="bid-awards" element={<BidAwards />} />
+          <Route path="bid-awards/:bid" element={<BidAward />} />
           <Route path="about" element={<About />} />
-          <Route path="signup" element={<SignUp />}/>
           <Route path="mailus" element={<Login />} />
           <Route path="tenders/:tid/apply/payment" element={<Payment />} />
           <Route path="tenders/:tid/apply/bid-document" element={<Biddocument/>} />
           <Route path="tenders/:tid/apply/bid-proposal" element={<BidProposal />} />
           <Route path="tenders/:tid/apply/success" element={<ApplicationSuccess />} />
-          <Route path="waitforapproval" element={<WaitForApproval />} />
           <Route path="tenders/:tid" element={<Tender />} />
           <Route path="*" element={<Nopage />} />
           {/* <Route path="userpage" element={<Userpage/>}></Route>
           <Route path="manageuseraccount" element={<ManageUserAcc />} /> */}
         </Route>
+        <Route path="waitforapproval" element={<WaitForApproval />} />
+        <Route path="accountbanned" element={<AccountBanned />} />
+        <Route path="emailpractice" element={<Email />} />
         <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />}/>
         <Route path="/userpage/admin/:id" element={<AdminLayout />}>
           <Route index element={<AdminPage />} />
           <Route path="/userpage/admin/:id/manage-accounts" element={<ManageUserAccount />} />
-          <Route path="/userpage/admin/:id/manage-accounts/manage-user/:uid" element={<ManageUser />} />
+          <Route path="/userpage/admin/:id/manage-accounts/:uid" element={<ManageUser />} />
           <Route path="/userpage/admin/:id/approval-requests" element={<ApprovalRequests />} />
-          <Route path="/userpage/admin/:id/approval-requests/manage-user/:uid" element={<ManageApproval />} />
+          <Route path="/userpage/admin/:id/approval-requests/:uid" element={<ManageApproval />} />
           <Route path="/userpage/admin/:id/banned-accounts" element={<BannedAccounts />} />
-          <Route path="/userpage/admin/:id/banned-accounts/manage-user/:uid" element={<ManageBannedAccount />} />
+          <Route path="/userpage/admin/:id/banned-accounts/:uid" element={<ManageBannedAccount />} />
           <Route path="/userpage/admin/:id/active-accounts" element={<ManageActiveAccounts />} />
-          <Route path="/userpage/admin/:id/active-accounts/manage-user/:uid" element={<ManageActiveUser />} />
+          <Route path="/userpage/admin/:id/active-accounts/:uid" element={<ManageActiveUser />} />
+
+          <Route path="/userpage/admin/:id/messages" element={<Messages />} />
+          <Route path="/userpage/admin/:id/messages/:mid" element={<Message />} />
         </Route>
         <Route path="/userpage/supplier/:id" element={<SupplierLayout />}>
           <Route index element={<SupplierPage />} />
+          <Route path="/userpage/supplier/:id/tenders" element={<Tenders />} />
+          <Route path="/userpage/supplier/:id/tenders/:tid" element={<Tender />} />
+          <Route path="/userpage/supplier/:id/bid-awards" element={<BidAwards />} />
+          <Route path="/userpage/supplier/:id/bid-awards/:bid" element={<BidAward />} />
+          <Route path="/userpage/supplier/:id/apply/payment" element={<Payment />} />
+          <Route path="/userpage/supplier/:id/apply/bid-document" element={<Biddocument/>} />
+          <Route path="/userpage/supplier/:id/apply/bid-proposal" element={<BidProposal />} />
+          <Route path="/userpage/supplier/:id/apply/success" element={<ApplicationSuccess />} />
+          <Route path="/userpage/supplier/:id/about" element={<About />} />
+          <Route path="/userpage/supplier/:id/contact" element={<About />} />
+          <Route path="/userpage/supplier/:id/setting" element={<SupSetting/>}/>
           <Route path="/userpage/supplier/:id/all-bids" element={<BidderAllBids />} />
+          <Route path="/userpage/supplier/:id/bid-awards" element={<BidAwards />} />
           <Route path="/userpage/supplier/:id/all-bids/:bid" element={<BidderAllBidsDetail />} />
           <Route path="/userpage/supplier/:id/bids-in-progress" element={<BidsInProgress />} />
           <Route path="/userpage/supplier/:id/bids-in-progress/:bid" element={<BidsInProgressDetail />} />
@@ -118,11 +145,17 @@ function App() {
           <Route path="/userpage/supplier/:id/cancelled-bids/:bid" element={<CancelledBidsDetail />} />
           <Route path="/userpage/supplier/:id/closed-bids" element={<BidderClosedBids />} />
           <Route path="/userpage/supplier/:id/closed-bids/:bid" element={<ClosedBidsDetail />} />
+          
           <Route path="/userpage/supplier/:id/messages" element={<Messages />} />
           <Route path="/userpage/supplier/:id/messages/:mid" element={<Message />} />
         </Route>
         <Route path="/userpage/phead/:id" element={<PheadLayout />}>
           <Route index element={<PheadPage />} />
+          <Route path="/userpage/phead/:id/tenders" element={<Tenders />} />
+          <Route path="/userpage/phead/:id/bid-awards" element={<BidAwards />} />
+          <Route path="/userpage/phead/:id/about" element={<About />} />
+          
+          <Route path="/userpage/phead/:id/contact" element={<About />} />
           <Route path="/userpage/phead/:id/manage-bids/all-bids" element={<AllBids/>}/>
           <Route path="/userpage/phead/:id/manage-bids/all-bids/:bid" element={<SpecificBid/>}/>
           <Route path="/userpage/phead/:id/manage-bids/active-bids" element={<ActiveBids/>}/>
@@ -139,15 +172,24 @@ function App() {
           <Route path="/userpage/phead/:id/manage-bids/:bid/request-bid-approval" element={<RequestBidApproval/>}/>
           <Route path="/userpage/phead/:id/manage-bids/:bid/request-bid-approval/success" element={<BidRequestSuccess/>}/>
 
+          <Route path="/userpage/phead/:id/messages" element={<Messages />} />
+          <Route path="/userpage/phead/:id/messages/:mid" element={<Message />} />
 
         </Route>
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
           <Route index element={<PendchPage />} />
+          <Route path="/userpage/pendch/:id/tenders" element={<Tenders />} />
+          <Route path="/userpage/pendch/:id/bid-awards" element={<BidAwards />} />
+          <Route path="/userpage/pendch/:id/about" element={<About />} />
+          <Route path="/userpage/pendch/:id/contact" element={<About />} />
           <Route path="/userpage/pendch/:id/approval-requests" element={<BidApprovalRequests/>}/>
           <Route path="/userpage/pendch/:id/approval-requests/:bid" element={<ManageApprovalRequest/>}/>
           <Route path="/userpage/pendch/:id/approval-requests/success" element={<ApprovalSuccess />}/>
           <Route path="/userpage/pendch/:id/approved-tenders" element={<ApprovedTenders/>}/>
           <Route path="/userpage/pendch/:id/approved-tenders/:bid" element={<ApprovedTender/>}/>
+       
+          <Route path="/userpage/pendch/:id/messages" element={<Messages />} />
+          <Route path="/userpage/pendch/:id/messages/:mid" element={<Message />} />
         </Route>
       </Routes>
        <div title="Go to the top of the page" className="bg-dark d-flex justify-content-center align-items-center" style={{width:'4rem',height:'4rem',position:'fixed',bottom:'1.5rem',right:'1rem',borderRadius:'0.5rem'}}>

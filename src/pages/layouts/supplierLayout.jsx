@@ -43,23 +43,18 @@ return(
         <Navbar.Collapse id="basic-navbar-nav" className="">
           <Nav className="me-auto nav_item">
             <Nav.Link as={Link} to={"/"} >Home</Nav.Link>
-            <Nav.Link className="advLink" as={Link} to={"/tenders"} >Tenders</Nav.Link>
+            <Nav.Link className="advLink" as={Link} to={"./tenders"} >Tenders</Nav.Link>
+            <Nav.Link className="advLink" as={Link} to={"./bid-awards"} >Bid Awards</Nav.Link>
             <Nav.Link as={Link} to={`./messages`} >Messages</Nav.Link>
           </Nav> 
           <Nav className="me-3">
-            <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
-            <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
+            <Nav.Link as={Link} to={"./about"} >About</Nav.Link>
+            <Nav.Link as={Link} to={"./contact"} >Contact Us</Nav.Link>
           </Nav>
           <Nav className="btn-success">
-              <DropdownButton id="dropdown-basic-button"  title={isFetching?
-                  <p className="m-0 d-inline ps-2">User</p>
-                  :(errorFetching?
-                  <p className="m-0 d-inline ps-2">User</p>
-                  :
-                  <p className="m-0 d-inline ps-2">{user.fName}</p>
-                  ) } >
-                <Dropdown.Item >
-                  <Nav.Link as={Link} to={"/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
+              <DropdownButton id="dropdown-basic-button" title={JSON.parse(localStorage.getItem('user')).fName}>
+                <Dropdown.Item>
+                  <Nav.Link as={Link}  to={"./pages/user action pages/bidder/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
                     <BsGear className='mx-1' />
                       Settings
                   </Nav.Link>
@@ -71,7 +66,6 @@ return(
                       
                     </Nav.Link>
                 </Dropdown.Item>
-       
         </DropdownButton>
           </Nav> 
 

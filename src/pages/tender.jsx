@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useEffect } from "react";
 import Button from '@mui/material/Button';
-import { Link,useParams } from "react-router-dom";
+import { Link,useParams,useNavigate} from "react-router-dom";
 import {IoIosArrowBack} from 'react-icons/io'
 import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
@@ -28,8 +28,10 @@ const columns = [
   ]
 
 const Tender = () => {
+
 useEffect(()=>{document.title='Cheretanet | Tender Information'},[])
 useEffect(()=>{fetchTenderDetails()},[])
+const navigate=useNavigate()
 const [tender,setTender]=useState({})
 const [rows,setRows]=useState([])
 const [rows2,setRows2]=useState([])
@@ -75,7 +77,10 @@ const fetchTenderDetails=()=>{
     else
       setStatus('cancelled-bid')
   }else{
-    fetchBidderStatus()
+    if(localStorage.getItem('user'))
+      fetchBidderStatus()
+    else
+      setStatus('not-user')
   }
   })
   .catch((err)=>{
@@ -86,11 +91,11 @@ const fetchTenderDetails=()=>{
  const [isChecking,setIsChecking]=useState(false)
  const [errorChecking,setErrorChecking]=useState(false)
  const [status,setStatus]=useState("")
-
  const fetchBidderStatus=()=>{
   setIsChecking(true)
   let q={bid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
   q=new URLSearchParams(q)
+
   fetch(`http://localhost:3001/checkbidder?${q}`)
    .then((res)=>res.json())
    .then((res)=>{
@@ -104,13 +109,14 @@ const fetchTenderDetails=()=>{
       else if(res.bidderStatus=="cancelled")
          setStatus("cancelled")
       else ;
-     }}
+     }}else{
+      setStatus("not-bidding")
+     }
    })
    .catch((err)=>{
      setErrorChecking(true)
    })
   }
-
 return (<>
              <div className="container mb-3">
                <a className="icon-link text-decoration-none text-black">
@@ -259,11 +265,16 @@ return (<>
           </Table>
         </TableContainer>
         
-      </Paper>
-      <Link to={(status=="not-bidding" || status=="cancelled")?`./apply/payment`:'#'} target="about"> 
-      <Button disabled={isChecking?true:(errorChecking?true:(status=="bidding"?true:((status=="closed-bid" || status=="cancelled-bid")?true:false)))} endIcon={(status=="not-bidding" || status=="cancelled")&&<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
-      {isChecking==true?"Checking Status...":(errorChecking==true?"Some Error Occurred":(status=="bidding"?"You have already applied for this bid":(status=="closed-bid"?"This Tender Is Closed!":(status=="cancelled-bid"?"This Tender Is Cancelled!":"Apply For This Bid"))))}
-    </Button></Link> 
+      </Paper>{
+      <Link to={(status=="not-bidding" || (status=="cancelled" || status=="not-user"))?`./apply/payment`:'#'} target="about"> 
+       <Button disabled={isChecking?true:(errorChecking?true:(status=="bidding"?true:((status=="closed-bid" || status=="cancelled-bid")?true:false)))} endIcon={(status=="not-bidding" || status=="cancelled")&&<BiLinkExternal />} variant="contained" color="primary" style={{margin:'2rem auto',maxWidth:'20rem',textTransform:'none'}}>
+        {isChecking==true?"Checking Status...":(errorChecking==true?"Some Error Occurred":(status=="bidding"?"You have already applied for this bid":(status=="closed-bid"?"This Tender Is Closed!":(status=="cancelled-bid"?"This Tender Is Cancelled!":"Apply For This Bid"))))}
+       </Button>
+     </Link> }
+     {status=="closed-bid" && 
+     <button onClick={()=>{navigate(`/bid-awards`)}} className="mt-0 btn btn-primary">
+        View Bid Award
+      </button>}
       </div>
       )}
       <Footer />

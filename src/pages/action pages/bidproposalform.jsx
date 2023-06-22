@@ -4,11 +4,11 @@ import { useParams,useNavigate } from 'react-router-dom';
 const BidProposal=()=>{
     const {tid}=useParams()
     const navigate=useNavigate()
-    const [input,setInput]=useState({tid:"",bid:"",bidPropFile:"",appTime:Date.now()})
+    var inp={}
+    const [input,setInput]=useState({tid:"",bid:"",bidPropFile:"",appTime:Date.now(),bidderName:""})
     const handleFileChange=(event)=>{
         setFile(event.target.files[0]);
     }
-
     function handleFileSubmit(event){
         event.preventDefault();
         let q={tid:tid,uid:JSON.parse(localStorage.getItem('user')).id}
@@ -25,8 +25,17 @@ const BidProposal=()=>{
             setErrorUploading(true)
           }else{
             setUploaded(true)
-            setInput({...input,bidId:tid,bidderId:JSON.parse(localStorage.getItem('user')).id,bidderName:JSON.parse(localStorage.getItem('user')).name,bidderStatus:"bidding",bidDocPayment:"payed",bidPropFile:res.res,appTime:Date.now()})
-            registerBidder()
+            const bidderName=`${JSON.parse(localStorage.getItem('user')).fName} ${JSON.parse(localStorage.getItem('user')).lName}`
+            console.log(bidderName)
+            inp={
+              bidId:tid,
+              bidderId:JSON.parse(localStorage.getItem('user')).id,
+              bidderName:`${JSON.parse(localStorage.getItem('user')).fName} ${JSON.parse(localStorage.getItem('user')).lName}`,
+              bidderStatus:"bidding",
+              bidDocPayment:"payed",
+              bidPropFile:res.res,
+              appTime:Date.now()}
+            registerBidder(inp)
           }
          })
          .catch((err)=>{
@@ -35,11 +44,11 @@ const BidProposal=()=>{
          })
     }
 
-    const registerBidder=()=>{
+    const registerBidder=(inp)=>{
       fetch(`http://localhost:3001/registerbidder`,{
         method:'post',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(input)
+        body:JSON.stringify(inp)
       })
         .then((res)=>res.json())
         .then((res)=>{

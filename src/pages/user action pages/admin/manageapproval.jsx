@@ -4,7 +4,8 @@ import { Avatar } from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
 import { Pane, Dialog, Button } from 'evergreen-ui'
-
+import {MdAccountCircle} from 'react-icons/md'
+import Footer from '../../../components/footer'
 const ManageApproval=()=>{
     const {id,uid}=useParams();
     const [user,setUser]=useState({})
@@ -12,6 +13,11 @@ const ManageApproval=()=>{
     const [errorFetching,setErrorFetching]=useState(false)
     const [isShown, setIsShown] = useState(false)
     const navigate=useNavigate()
+    const [input,setInput]=useState({
+      to:"",
+      subject:'Account Approval - Cheretanet',
+      body:'Your cheretanet account is approved, you can now access the system. Thanks.'}
+      )
 
     useEffect(()=>{
        fetchUserData()
@@ -32,13 +38,33 @@ const ManageApproval=()=>{
         .then((res)=>res.json())
         .then((res)=>{
             if(res.res=="ok"){
+              setInput({...input,to:user.email})
+                sendApprovalEmail(input)
                 navigate(`/userpage/admin/${id}/approval-requests`)
             }
         })
         .catch((err)=>{})
     }
-    return(
-        <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
+
+    const sendApprovalEmail=(input)=>{
+        fetch('http://localhost:3001/sendemail',{
+            method:'post',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(input)
+        })
+        .then((res)=>res.json())
+        .then((res)=>{
+            console.log(res)
+        })
+        .catch((err)=>{console.log(err)})
+    }
+
+
+
+
+
+    return(<>
+        <div className="container mb-5 border rounded" style={{minHeight:'20rem',height:"auto"}} >
         <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
            <a className="icon-link text-decoration-none text-black" href="/#">
             <BsArrowLeft className='me-2' />
@@ -48,13 +74,12 @@ const ManageApproval=()=>{
         <div className="container rounded my-2" style={{height:'auto'}}>
              <h4 className="text-center">User Details</h4>
              <hr />
-             <Avatar
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-              name="Alan Turing"
-              size={80}
-              className="mx-auto d-block"
-            />
-            {isFetching?'Fetching...':(errorFetching?'Error':
+             <div className="mx-auto" style={{width:'4rem',height:'4rem'}}>
+              <MdAccountCircle color="brown"  style={{width:'100%',height:'100%'}}
+            /></div>
+            {isFetching?
+            <p className="text-center mt-3">Fetching User Information...</p>
+            :(errorFetching?'Error':<>
 <table class="table mx-auto" style={{width:'70%'}}>
 <tbody>
 <tr className="text-center" >
@@ -91,28 +116,26 @@ const ManageApproval=()=>{
 </tr>
 </tbody>
 </table>
-                
-            )}
-            {
-                
-            }
-            
-        </div>
-              <Pane className="mb-5 mx-auto mt-2 d-flex justify-content-center">
+     <Pane className="mb-5 mx-auto mt-2 d-flex justify-content-center">
       <Dialog
         isShown={isShown}
-        title="Confirm Approval"
+        title="Confirm Action"
         onCloseComplete={() => setIsShown(false)}
         confirmLabel="Confirm"
         onCancel={() => {setIsShown(false)}}
         onConfirm={() => {setIsShown(false);approveAccount()}}
         
       >
-        Approve User Account?
+       Are you sure you want to approve this account?
       </Dialog>
-      <Button className="bg-primary text-white" onClick={() => setIsShown(true)}>Approve Account</Button>
-    </Pane>
-    </div>)
+      <Button className="bg-success text-white" onClick={() => setIsShown(true)}>Approve Account</Button>
+    </Pane></>          
+    )}
+    </div>
+    </div>
+    <Footer />
+    </>
+    )
 }
 
 export default ManageApproval;

@@ -18,9 +18,9 @@ return(
         <Navbar.Collapse id="basic-navbar-nav" className="align-items-end">
           <Nav className="me-auto nav_item fw-bold" >
             <Nav.Link as={Link} to={"/"} >Home</Nav.Link>
-            <Nav.Link className="advLink" as={Link} to={"/tenders"} >Tenders</Nav.Link>
-            <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
-            <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
+            <Nav.Link className="advLink" as={Link} to={"./messages"} >Messages</Nav.Link>
+            <Nav.Link as={Link} to={"./about"} >About</Nav.Link>
+            <Nav.Link as={Link} to={"./contact"} >Contact Us</Nav.Link>
 
           </Nav>
           <Nav style={{ fontWeight: 'bold' }}>

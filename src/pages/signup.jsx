@@ -1,4 +1,5 @@
 import React from "react"
+import logo6 from "../resources/logo.ico";
 import { Link } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -159,6 +160,11 @@ export default function (props) {
   }
 
   return (<>
+  <div className="mt-2 d-flex justify-content-center align-items-center mx-auto" style={{width:'3.2rem',height:'3.2rem',borderRadius:'2rem',outline:'1px solid darkslategray'}}>
+<a href="/">
+   <img src={logo6} style={{width:'3rem',height:'3rem'}} alt="cheretanet"/>
+</a>
+</div>
     <div className="mb-5 Auth-form-container" style={{width:'85%',margin:'1rem auto'}}>
       <form className="Auth-form" onSubmit={handleSubmit} >
         <div className="Auth-form-content">

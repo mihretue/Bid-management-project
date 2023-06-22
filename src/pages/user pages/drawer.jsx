@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate,useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { Pane, Tablist, Tab } from 'evergreen-ui'
 import {IoBan} from 'react-icons/io5'
@@ -9,9 +9,10 @@ import {FaUsers} from 'react-icons/fa'
 import {BsArrowRight} from 'react-icons/bs'
 import { Avatar } from 'evergreen-ui'
 import { useEffect } from 'react'
+import {RiUserStarLine} from 'react-icons/ri'
 export default function SidebarTabsExample() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
-  const tabs = React.useMemo(() => ['Manage User Accounts', 'Me'], [])
+  const tabs = React.useMemo(() => ['Manage User Accounts', 'Analytics'], [])
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
   const [ApisFetching,setApIsFetching]=useState(false)
@@ -24,6 +25,7 @@ export default function SidebarTabsExample() {
   const [Blength,setBLength]=useState(0)
   const [length,setLength]=useState(0)
   const [Alength,setALength]=useState(0)
+  const navigate=useNavigate()
   const fetchAccounts=()=>{
     setIsFetching(true)
     fetch('http://localhost:3001/getusers')
@@ -77,7 +79,7 @@ export default function SidebarTabsExample() {
 
   useEffect(()=>{fetchAccounts();fetchActiveAccounts();fetchBannedAccounts();fetchApprovedAccounts()},[])
   return (
-    <Pane className='row container-fluid pb-5' style={{height:'auto'}}>
+    <Pane className='row rounded border container mb-5 mx-auto shadow p-3 pb-5' style={{height:'auto'}}>
       <Tablist className="col-md-3 col-12" style={{height:'auto'}}>
         {tabs.map((tab, index) => {
           return (
@@ -94,11 +96,6 @@ export default function SidebarTabsExample() {
           )
         })}
         <div className='d-none d-md-flex flex-column justify-content-center align-items-center' style={{marginTop:'15rem',height:'5rem'}}>
-        <Avatar
-         src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-         name="Alan Turing"
-         size={40}
-        />
         <h6 className='text-center'>{JSON.parse(localStorage.getItem('user')).name}</h6>
         <p className='fs-9 m-0 text-break text-center'>{JSON.parse(localStorage.getItem('user')).email}</p>
         <p className='fs-9 m-0 text-break text-center fw-bold'>PPA IT Officer</p>
@@ -116,49 +113,38 @@ export default function SidebarTabsExample() {
           >
             {tab=="Manage User Accounts"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
-               <h3 className='m-0 text-center pt-3 fs-6'>Manage User Accounts</h3>
-               <div className='row justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
-                 <div className='col-6 border rounded d-flex flex-column align-items-center justify-content-center'>
-                    <FaUsers style={{width:'4rem',height:'4rem'}} />
+               <h3 className='m-0 text-center gx-2 pt-3 fs-6'>Manage User Accounts</h3>
+               <div className='row container-fluid my-3 mx-auto' style={{cursor:'pointer'}}>
+                 <div onClick={()=>{navigate(`./manage-accounts`)}} className='col-6 d-flex flex-column align-items-center justify-content-center'>
+                    <FaUsers color='green' style={{width:'4rem',height:'4rem'}} />
                     <p className='m-0 fs-5 text-center'>All users</p>
-                    <p className='m-0 fs-6'>{isFetching?"Fetching":(errorFetching?"Error Fetching":length)}</p>
-                    <a className="icon-link text-decoration-underline text-black">
-                     <Link to='./manage-accounts'>Manage</Link>
-                     <BsArrowRight className='ms-2' />
-                    </a>
                  </div>
-                 <div className='col-6 border rounded d-flex flex-column align-items-center justify-content-center'>
-                    <FaUsers style={{width:'4rem',height:'4rem'}} />
+                 <div onClick={()=>{navigate(`./active-accounts`)}} style={{cursor:'pointer'}}  className='col-6 d-flex flex-column align-items-center justify-content-center'>
+                    <RiUserStarLine color='brown' style={{width:'4rem',height:'4rem'}} />
                     <p className='m-0 fs-5 text-center'>Active users</p>
-                    <p className='m-0 fs-6'>{AisFetching?"Fetching":(AerrorFetching?"Error Fetching":Alength)}</p>
-                    <a className="icon-link text-decoration-underline text-black">
-                     <Link to='./active-accounts'>Manage</Link>
-                     <BsArrowRight className='ms-2' />
-                    </a>
                  </div>
-                 <div className='col-6 ms-auto ms-md-0 border rounded  d-flex flex-column align-items-center justify-content-center'>
-                    <RiLoaderLine style={{width:'4rem',height:'4rem'}} />
+                 <div onClick={()=>{navigate(`./approval-requests`)}} style={{cursor:'pointer'}}  className='col-6 ms-auto mt-3 ms-md-0 d-flex flex-column align-items-center justify-content-center'>
+                    <RiLoaderLine color='darkslategray' style={{width:'4rem',height:'4rem'}} />
                     <p className='m-0 fs-5 text-center'>Waiting For Approval</p>
-                    <p className='m-0 fs-6'>{ApisFetching?"Fetching":(AperrorFetching?"Error Fetching":Aplength)}</p>
-                    <a className="icon-link text-decoration-underline text-black">
-                     <Link to='./approval-requests'>Manage</Link>
-                     <BsArrowRight className='ms-2' />
-                    </a>
                  </div>
-                 <div className='col-6 my-md-0 border rounded  d-flex flex-column align-items-center justify-content-center'>
-                    <IoBan style={{width:'4rem',height:'4rem'}} />
+                 <div onClick={()=>{navigate(`./banned-accounts`)}} style={{cursor:'pointer'}}  className='col-6 my-md-0 mt-3 d-flex flex-column align-items-center justify-content-center'>
+                    <IoBan color='red' style={{width:'4rem',height:'4rem'}} />
                     <p className='m-0 fs-5 text-center'>Banned users</p>
-                    <p className='m-0 fs-6'>{BisFetching?"Fetching":(BerrorFetching?"Error Fetching":Blength)}</p>
-                    <a className="icon-link text-decoration-underline text-black">
-                      <Link to='./banned-accounts'>Manage</Link>
-                     <BsArrowRight className='ms-2' />
-                    </a>
                  </div>
                </div>
             </div>
             :
-            (tab=="Me"?
-            <p>dfd</p>:
+            (tab=="Analytics"?
+            <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
+               <h3 className='m-0 text-center fs-6 mt-1'>Analytics</h3>
+               <div className='mx-auto d-flex flex-column justify-content-center align-items-center' style={{minHeight:'10rem',height:'auto'}}>
+                 <ul className='list-unstyled mt-3 w-100'>
+                   <li>Active Users : <p className='m-0 fw-bold d-inline'>{AisFetching?"fetching":(AerrorFetching?"error fetching":Alength)}</p></li>
+                   <li>Users Waiting For Approval : <p className='m-0 fw-bold d-inline'>{ApisFetching?"fetching":(AperrorFetching?"error fetching":Aplength)}</p></li>
+                   <li>Banned Users : <p className='m-0 fw-bold d-inline'>{BisFetching?"fetching":(BerrorFetching?"error fetching":Blength)}</p></li>
+                 </ul>
+               </div>
+            </div>:
             (tab=="Other"?
             <p>heh</p>:
             <p>hi</p>))}

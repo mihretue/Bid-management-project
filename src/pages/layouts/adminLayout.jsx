@@ -42,6 +42,7 @@ return(
         <Navbar.Collapse id="basic-navbar-nav" className="align-items-end">
           <Nav className="me-auto nav_item fw-bold" >
             <Nav.Link as={Link} to={"./"} >Home</Nav.Link>
+            <Nav.Link as={Link} to={"./messages"} >Messages</Nav.Link>
           </Nav>
           <Nav >
               <DropdownButton id="dropdown-basic-button "  title={JSON.parse(localStorage.getItem('user')).fName} >

@@ -52,48 +52,40 @@ import {GrRefresh} from 'react-icons/gr'
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [bids,setBids]=useState([]);
     const [bidding,setBidding]=useState([]);
-    const [isFetching,setIsFetching]=useState(true)
+    const [isFetching,setIsFetching]=useState(false)
     const [errorFetching,setErrorFetching]=useState(false)
     const navigate=useNavigate();
     const {id}=useParams()
     useEffect(()=>{
       fetchBids();
     },[])
-    var b=[]
-    var a=[]
-    const fetchBidding=()=>{
-      a=[]
+    var bs=[]
+    const fetchBidding=(bs)=>{
       let q={id:id}
       q=new URLSearchParams(q)
       fetch(`http://localhost:3001/getbidding/?${q}`)
       .then((res)=>res.json())
       .then((res)=>{
-        for(let i=0;i<res.length;i++){
-          for(let j=0;j<b.length;j++){
-            if(res[i].bidId==b[j]._id){
-                a.push(b[j])
-            }
-          }
-          setBidding(a)
-        }
-        setBids(bidding)
+        console.log(res)
+        setBids(bs.filter(bid=>{return res.some(biddingItem=>biddingItem.bidId==bid._id)}))
         setIsFetching(false)
       })
+      .catch(err=>{console.log(err);setErrorFetching(true)})
         }
     const fetchBids=()=>{
-      b=[]
-      fetch('http://localhost:3001/getbids',{
+      setIsFetching(true)
+      fetch('http://localhost:3001/gettenders',{
         method:'post',
         headers:{
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ent:JSON.parse(localStorage.getItem('user')).pBody})
+        body:JSON.stringify({sortBy:"Title"})
       })
       .then(res=>res.json())
       .then((res)=>{
-        setBids(res)
-        b=res;
-        fetchBidding()
+        bs=res
+        fetchBidding(bs)
+        console.log(res)
       })
       .catch((err)=>{
         setBids([])

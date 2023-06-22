@@ -13,6 +13,7 @@ const cors=require("cors");
 const socketIo=require('socket.io')
 const server=http.createServer(app)
 const io=socketIo(server)
+const {google}=require('googleapis')
 const { RestorePageRounded } = require('@mui/icons-material');
 app.use(cors());
 app.use(express.json());
@@ -99,6 +100,16 @@ app.post('/getbids/:id', (request, response) => {
   const status = request.params.id
   const pbody = request.body.ent
   advertModel.find({ent:pbody,status:status})
+  .then((err,docs)=>{
+   if(err) response.send(err)
+   else
+    response.json({docs})
+  })
+});
+
+app.get('/getbidsPU/:id', (request, response) => {
+  const status = request.params.id
+  advertModel.find({status:status})
   .then((err,docs)=>{
    if(err) response.send(err)
    else
@@ -288,35 +299,28 @@ app.get('/getusers', (request, response) => {
     )
 });
 
-app.get('/sendemail',(request,response)=>{
-// create reusable transporter object using the default SMTP transport
-let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // true for 465, false for other ports
+app.post('/sendemail',(req,res)=>{
+   const input=req.body
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
     auth: {
-        user: 'fanuelamare0925@gmail.com', // replace with your email address
-        pass: '' // replace with your password
-    }
-});
-
-// setup email data with unicode symbols
-let mailOptions = {
-    from: 'fanuelamare0925@@gmail.com', // sender address
-    to: 'fanuelamare7765@example.com', // list of receivers
-    subject: 'Test Email', // Subject line
-    text: 'Hello World!', // plain text body
-    html: '<b>Hello World!</b>' // html body
-};
-
-// send mail with defined transport object
-transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        response.json({res:"error"});
-    } else {
-        response.json({res:info.response});
-    }
-});
+      user: "mihretuendeshaw84@gmail.com",
+      pass: "aewyfmdmdivakofm",
+    },
+  });
+    const mailOptions = {
+      from: "mihretuendeshaw84@gmail.com",
+      to:input.to,
+      subject: input.subject,
+      text: input.body,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        res.json({res:error});
+      } else {
+        res.json({res:"ok"});
+      }
+    });
 })
 const uuid=uuidv4()
 const BidDocstorage = multer.diskStorage({

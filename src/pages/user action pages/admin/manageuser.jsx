@@ -3,13 +3,19 @@ import { Link } from 'react-router-dom'
 import { Avatar } from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
-
+import {MdAccountCircle} from 'react-icons/md'
+import Footer from '../../../components/footer'
+import { Pane, Dialog, Button } from 'evergreen-ui'
 
 const ManageActiveUser=()=>{
     const {id,uid}=useParams();
     const [user,setUser]=useState({})
     const [isFetching,setIsFetching]=useState(false)
     const [errorFetching,setErrorFetching]=useState(false)
+    const [isShown, setIsShown] = useState(false)
+    const navigate=useNavigate()
+
+
     useEffect(()=>{
        fetchUserData()
     },[])
@@ -24,8 +30,54 @@ const ManageActiveUser=()=>{
       .catch((err)=>{setIsFetching(false);setErrorFetching(true);console.log(err)})
     }
 
-    return(
-        <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
+    const banAccount=()=>{
+      fetch(`http://localhost:3001/ban/${uid}`)
+      .then((res)=>res.json())
+      .then((res)=>{
+          if(res.res=="ok"){
+              navigate(`/userpage/admin/${id}/active-accounts`)
+          }else{
+            document.getElementById('actn_result').innerHTML="Some Error Occurred!"
+          }
+      })
+      .catch((err)=>{
+         document.getElementById('actn_result').innerHTML="Some Error Occurred!"
+      })
+  }
+
+    const approveAccount=()=>{
+    fetch(`http://localhost:3001/approve/${uid}`)
+    .then((res)=>res.json())
+    .then((res)=>{
+        if(res.res=="ok"){
+            navigate(`/userpage/admin/${id}/approval-requests`)
+        }else{
+          document.getElementById('actn_result').innerHTML="Some Error Occurred!"
+        }
+    })
+    .catch((err)=>{
+      document.getElementById('actn_result').innerHTML="Some Error Occurred!"
+
+    })
+  }
+
+  const releaseAccount=()=>{
+    fetch(`http://localhost:3001/release/${uid}`)
+    .then((res)=>res.json())
+    .then((res)=>{
+        if(res.res=="ok"){
+            navigate(`/userpage/admin/${id}/banned-accounts`)
+        }else{
+          document.getElementById('actn_result').innerHTML="Some Error Occurred!"
+        }
+      })
+    .catch((err)=>{
+      document.getElementById('actn_result').innerHTML="Some Error Occurred!"
+    })
+}
+
+    return(<>
+        <div className="container mb-5 border rounded" style={{minHeight:'20rem',height:"auto"}} >
         <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
            <a className="icon-link text-decoration-none text-black" href="/#">
             <BsArrowLeft className='me-2' />
@@ -35,59 +87,106 @@ const ManageActiveUser=()=>{
         <div className="container rounded my-2" style={{height:'auto'}}>
              <h4 className="text-center">User Details</h4>
              <hr />
-             <Avatar
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-              name="Alan Turing"
-              size={80}
-              className="mx-auto d-block"
-            />
-            {isFetching?'Fetching...':(errorFetching?'Error':
+             <div className="mx-auto" style={{width:'4rem',height:'4rem'}}>
+              <MdAccountCircle color="brown"  style={{width:'100%',height:'100%'}}
+            /></div>
+            {isFetching?
+            <p className="text-center mt-3">Fetching User Information...</p>:(errorFetching?'Error':
 <>
 <table class="table mx-auto" style={{width:'70%'}}>
 <tbody>
 <tr className="text-center" >
   <td className="text-center border-0" colspan="2">First Name</td>
-  <td className="text-center float-end border-0">{isFetching?'Loading...':user.fName}</td>
+  <td className="text-center fw-bold float-end border-0">{user.fName}</td>
 </tr>
 <tr className="text-center" >
   <td className=" border-0" colspan="2">Last Name</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.LName}</td>
+  <td className="float-end fw-bold border-0">{user.lName}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">User Name</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.uName}</td>
+  <td className="float-end fw-bold border-0">{user.uName}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Email Address</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.email}</td>
+  <td className="float-end fw-bold border-0">{user.email}</td>
 </tr>
 <tr className="text-center" >
   <td className=" border-0" colspan="2">Role</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.role}</td>
+  <td className="float-end fw-bold border-0">{user.role}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Birthday</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.bday}</td>
+  <td className="float-end fw-bold border-0">{user.bday}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Account Status</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.status}</td>
+  <td className="float-end fw-bold border-0">{user.status}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Registered On</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.status}</td>
+  <td className="float-end fw-bold border-0">{user.status}</td>
 </tr>
 </tbody>
-</table>
+</table><hr />
+<div>
+  {user.status=="active"&&<p className="text-center">Account Status : <p className="m-0 fw-bold d-inline text-success">Active</p></p>}
+  {user.status=="banned"&&<p className="text-center">Account Status : <p className="m-0 fw-bold d-inline text-danger">Banned</p></p>}
+  {user.status=="not-approved"&&<p className="text-center">Account Status : <p className="m-0 fw-bold d-inline text-primary">Waiting For Approval</p></p>}
+  {user.status=="active"&&
+    <Pane className="mb-1 mx-auto mt-2 d-flex justify-content-center">
+      <Dialog
+        isShown={isShown}
+        title="Confirm Action"
+        onCloseComplete={() => setIsShown(false)}
+        confirmLabel="Confirm"
+        onCancel={() => {setIsShown(false)}}
+        onConfirm={() => {setIsShown(false);banAccount()}}
+        
+      >
+        Are you sure you want to ban this account?
+      </Dialog>
+      <Button className="bg-danger text-white" onClick={() => setIsShown(true)}>Ban User Account</Button>
+    </Pane>}
+  {user.status=="banned"&&
+    <Pane className="mb-1 mx-auto mt-2 d-flex justify-content-center">
+    <Dialog
+      isShown={isShown}
+      title="Confirm Action"
+      onCloseComplete={() => setIsShown(false)}
+      confirmLabel="Confirm"
+      onCancel={() => {setIsShown(false)}}
+      onConfirm={() => {setIsShown(false);releaseAccount()}}
+      
+    >
+      Are you sure you want to release this account?
+    </Dialog>
+    <Button className="bg-primary text-white" onClick={() => setIsShown(true)}>Release Account</Button>
+  </Pane>}
+  {user.status=="not-approved"&&
+  <Pane className="mb-1 mx-auto mt-2 d-flex justify-content-center">
+    <Dialog
+      isShown={isShown}
+      title="Confirm Action"
+      onCloseComplete={() => setIsShown(false)}
+      confirmLabel="Confirm"
+      onCancel={() => {setIsShown(false)}}
+      onConfirm={() => {setIsShown(false);approveAccount()}}
+      
+    >
+      Are you sure you want to approve this account?
+    </Dialog>
+    <Button className="bg-primary text-white" onClick={() => setIsShown(true)}>Approve Account</Button>
+  </Pane>}
+  <p className="text-center mx-0 mt-0 mb-3 text-danger" id="actn_result"></p>
+</div>
 </>
                 
             )}
-            {
-                
-            }
-            
         </div>
-    </div>)
+    </div>
+    <Footer />
+    </>)
 }
 
 export default ManageActiveUser;

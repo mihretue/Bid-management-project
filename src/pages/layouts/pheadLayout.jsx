@@ -34,6 +34,12 @@ const PheadLayout=()=>{
       setIsFetching(false);
       setErrorFetching(true)})
    }
+
+  // const Logout= () =>{
+  //   return(
+      
+  //   )
+  // }
    
 return(
     <div >
@@ -43,9 +49,9 @@ return(
         <Navbar.Collapse id="basic-navbar-nav" className="align-items-end" style={{fontFamily:'Adamina, serif'}}>
           <Nav className="me-auto nav_item " >
             <Nav.Link as={Link} to={"/"} className="pheadlay">Home</Nav.Link>
-            <Nav.Link className="advLink" as={Link} to={"/tenders"} >Tenders</Nav.Link>
-            <Nav.Link as={Link} to={"/about"} >About</Nav.Link>
-            <Nav.Link as={Link} to={"contact"} >Contact Us</Nav.Link>
+            <Nav.Link className="advLink" as={Link} to={"./messages"} >Messages</Nav.Link>
+            <Nav.Link as={Link} to={"./about"} >About</Nav.Link>
+            <Nav.Link as={Link} to={"./contact"} >Contact Us</Nav.Link>
 
           </Nav>
           <Nav  style={{ fontWeight: 'bold' }}>

@@ -40,8 +40,8 @@ const fetchBids=()=>{
 }
 
   return (
-    <Pane className='row mx-auto container pb-5' style={{height:'auto'}}>
-      <Tablist className="col-md-3 col-12" style={{height:'auto',backgroundColor:"#e1f5e8"}}>
+    <Pane className='row mx-auto p-3 mb-5 border shadow rounded container pb-5' style={{height:'auto'}}>
+      <Tablist className="col-md-3 col-12" style={{height:'auto'}}>
         {tabs.map((tab, index) => {
           return (
             <Tab
@@ -56,25 +56,12 @@ const fetchBids=()=>{
             </Tab>
           )
         })}
-        {isFetching?
-        <div className='d-none d-md-flex flex-column justify-content-center align-items-center' style={{height:'5rem'}}>
-           <p className='text-center text-break m-0'>Fetching Account Details...</p>
-         </div>
-        :
-        (errorFetching?'error':
           <div className='d-none d-md-flex flex-column justify-content-center align-items-center' style={{marginTop:'10rem',minHeight:'5rem'}}>
-          <Avatar
-           src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-           name="Alan Turing"
-           size={40}
-          />
           <h6 className='text-center'>{JSON.parse(localStorage.getItem('user')).name}</h6>
           <p className='fs-9 m-0 text-break text-center'>{JSON.parse(localStorage.getItem('user')).email}</p>
           <p className='fs-9 m-0 text-break text-center'>Procurement Endorsing Committee Head at : </p>
           <p className='fs-9 m-0 text-break text-center fw-bold'>{JSON.parse(localStorage.getItem('user')).pBody}</p>
          </div>
-        )}
-        
       </Tablist>
       <Pane className="col-md-9 col-12 " style={{height:'auto'}}>
         {tabs.map((tab, index) => (

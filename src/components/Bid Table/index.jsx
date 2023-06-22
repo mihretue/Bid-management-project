@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TableContainer from '@mui/material/TableContainer';
+import {BsFillCircleFill} from 'react-icons/bs'
 import Table from '@mui/material/Table';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -45,6 +46,10 @@ import {GrRefresh} from 'react-icons/gr'
       id: 'deadline',
       label: 'Submission Deadline',
       align: 'center',
+    },{
+      id: 'status',
+      label: 'Status',
+      align: 'center',
     },
   ];
   
@@ -61,6 +66,7 @@ import {GrRefresh} from 'react-icons/gr'
     },[])
 
     const fetchTenders=()=>{
+      setIsFetching(true)
       fetch('http://localhost:3001/gettenders',{
         method:'post',
         headers:{
@@ -71,19 +77,26 @@ import {GrRefresh} from 'react-icons/gr'
       .then(res=>res.json())
       .then((res)=>{
         setRows(res)
+        console.log(res)
         setIsFetching(false)
       })
       .catch((err)=>{
         setRows([])
         setErrorFetching(true)
+        console.log(err)
+
       })
     }
 
     const sortTenders=(e)=>{
       setSortBy(e.target.value)
-      if(e.target.value=="Alphabet"){
-        //
-      }
+      if(e.target.value=="Title"){
+        setSortBy("Title")
+      }else if(e.target.value=="Invitation Date"){
+        setSortBy("Invitation Date")
+      }else if(e.target.value=="Deadline"){
+        setSortBy("Deadline")
+      }else ;
     }
     
     const handleChangePage = (event, newPage) => {
@@ -102,7 +115,7 @@ import {GrRefresh} from 'react-icons/gr'
            <div style={{display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
              <BiError size="1.5rem" />
              <p style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',margin:"0",textAlign:'center',color:'red'}}>An Error Occurred!</p>
-            <Button onClick={()=>{fetchTenders();setIsFetching(true);setErrorFetching(false)}} style={{textTransform:'none'}} color="secondary" className="mt-3" variant="outlined" size="small" endIcon={<BsArrowCounterclockwise />}>Refresh</Button>
+            <Button onClick={fetchTenders} style={{textTransform:'none'}} color="secondary" className="mt-3" variant="outlined" size="small" endIcon={<BsArrowCounterclockwise />}>Refresh</Button>
            </div>
            :
            <div style={{display:'flex',flexDirection:"column",justifyContent:'center',alignItems:'center'}}>
@@ -152,7 +165,7 @@ import {GrRefresh} from 'react-icons/gr'
               {
               rows.map((row) => {
                 return (
-                  <TableRow onClick={()=>{navigate(`/tenders/${row._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={row.id}  hover role="checkbox" tabIndex={-1}>
+                  <TableRow key={row._id} onClick={()=>{navigate(`./${row._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={row.id}  hover role="checkbox" tabIndex={-1}>
                         <TableCell style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
             {row.id}
                         </TableCell>
@@ -170,6 +183,9 @@ import {GrRefresh} from 'react-icons/gr'
                         </TableCell>
                         <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
             {row.dead}
+                        </TableCell>
+                        <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
+            {row.status=="active"?<p className="m-0"><BsFillCircleFill className="me-1" color="green" />{row.status}</p>:<p className="m-0 text-danger">{row.status}</p>}
                         </TableCell>
                   </TableRow>
                 );
