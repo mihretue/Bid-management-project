@@ -1,8 +1,6 @@
-import React, { useEffect } from "react"
+import React, { useEffect,useState } from "react"
 import { Link,useParams,useNavigate } from "react-router-dom"
 import Footer from "../../components/footer"
-import { useState } from "react";
-// import Download from "./download"
 const Biddocument = () => {
    const {tid}=useParams();
    const navigate=useNavigate()

@@ -1,5 +1,5 @@
 import Footer from "../components/footer"
-import { useParams,useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useEffect ,useState} from "react"
 const BidAward=()=>{
 const {bid}=useParams()

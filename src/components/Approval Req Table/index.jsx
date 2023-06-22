@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +7,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-import { useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
@@ -103,7 +102,7 @@ import {GrRefresh} from 'react-icons/gr'
     }</div>
         :
         (rows.length>0?<>
-        <button className="ms-auto m-1 d-block btn float-right btn-secondary" variant="outlined" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchAccounts();setIsFetching(true)}}>Refresh List</button>0
+        <button className="ms-auto m-1 d-block btn float-right btn-secondary" variant="outlined" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchAccounts();setIsFetching(true)}}>Refresh List</button>
          <Paper sx={{maxWidth: '100%', overflow: 'hidden' }}>
          <TableContainer sx={{height:'auto'}}>
           <Table stickyHeader aria-label="sticky table">
@@ -136,7 +135,7 @@ import {GrRefresh} from 'react-icons/gr'
             {row.uName}
                         </TableCell>
                         <TableCell style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
-            {row.bday}
+            {row.bDay}
                         </TableCell>
                         <TableCell className="text-capitalize" style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
             {row.role}

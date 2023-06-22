@@ -1,6 +1,5 @@
 import { useParams,useNavigate  } from "react-router-dom";
 import { Link } from 'react-router-dom'
-import { Avatar } from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
 import { Pane, Dialog, Button } from 'evergreen-ui'
@@ -28,13 +27,27 @@ const ManageActiveUser=()=>{
       .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
     }
 
-    const banAccount=()=>{
+    const banAccount=(uemail)=>{
       setIsFetching(true)
       fetch(`http://localhost:3001/ban/${uid}`)
       .then((res)=>res.json())
       .then((res)=>{
           if(res.res=="ok"){
               setIsFetching(false)
+              fetch('http://localhost:3001/sendemail',{
+                method:'post',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                  to:uemail,
+                  subject:'Account Banned - Cheretanet',
+                  body:"Your cheretanet account is BANNED, you can not access the system for a while, you will receive an email if your email is released. Thanks."
+                })
+            })
+            .then((res)=>res.json())
+            .then((res)=>{
+                ;
+            })
+            .catch((err)=>{console.log(err)})
               navigate(`/userpage/admin/${id}/active-accounts`)
           }
       })
@@ -87,7 +100,7 @@ const ManageActiveUser=()=>{
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Birthday</td>
-  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.bday}</td>
+  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.bDay}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Account Status</td>
@@ -106,7 +119,7 @@ const ManageActiveUser=()=>{
         onCloseComplete={() => setIsShown(false)}
         confirmLabel="Confirm"
         onCancel={() => {setIsShown(false)}}
-        onConfirm={() => {setIsShown(false);banAccount()}}
+        onConfirm={() => {setIsShown(false);banAccount(user.email)}}
         
       >
        Are you sure you want to ban this account?

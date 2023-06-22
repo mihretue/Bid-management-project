@@ -1,16 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import {VscAccount} from 'react-icons/vsc'
 import { useNavigate } from 'react-router-dom'
 import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'
 import {FaListAlt} from 'react-icons/fa'
-import { Avatar } from 'evergreen-ui'
 import { useParams } from 'react-router-dom';
 import {useState,useEffect} from 'react'
 import {GrInProgress} from 'react-icons/gr'
 import {MdOutlineCancelPresentation} from 'react-icons/md'
-import {MdQuestionAnswer} from 'react-icons/md'
-import {BiMessageRoundedError} from 'react-icons/bi'
 import {MdAssignmentAdd} from "react-icons/md"
 import {AiOutlineFileDone} from 'react-icons/ai'
 export default function PheadDrawer() {

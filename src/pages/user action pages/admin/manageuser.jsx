@@ -30,11 +30,25 @@ const ManageActiveUser=()=>{
       .catch((err)=>{setIsFetching(false);setErrorFetching(true);console.log(err)})
     }
 
-    const banAccount=()=>{
+    const banAccount=(uemail)=>{
       fetch(`http://localhost:3001/ban/${uid}`)
       .then((res)=>res.json())
       .then((res)=>{
           if(res.res=="ok"){
+            fetch('http://localhost:3001/sendemail',{
+                method:'post',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                  to:uemail,
+                  subject:'Account Banned - Cheretanet',
+                  body:"Your cheretanet account is BANNED, you can not access the system for a while, you will receive an email if your email is released. Thanks."
+                })
+            })
+            .then((res)=>res.json())
+            .then((res)=>{
+                ;
+            })
+            .catch((err)=>{console.log(err)})
               navigate(`/userpage/admin/${id}/active-accounts`)
           }else{
             document.getElementById('actn_result').innerHTML="Some Error Occurred!"
@@ -45,11 +59,25 @@ const ManageActiveUser=()=>{
       })
   }
 
-    const approveAccount=()=>{
+    const approveAccount=(uemail)=>{
     fetch(`http://localhost:3001/approve/${uid}`)
     .then((res)=>res.json())
     .then((res)=>{
         if(res.res=="ok"){
+          fetch('http://localhost:3001/sendemail',{
+                method:'post',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                  to:uemail,
+                  subject:'Account Approval - Cheretanet',
+                  body:'Your cheretanet account is approved, you can now access the system. Thanks.'
+                })
+            })
+            .then((res)=>res.json())
+            .then((res)=>{
+                ;
+            })
+            .catch((err)=>{console.log(err)})
             navigate(`/userpage/admin/${id}/approval-requests`)
         }else{
           document.getElementById('actn_result').innerHTML="Some Error Occurred!"
@@ -61,11 +89,25 @@ const ManageActiveUser=()=>{
     })
   }
 
-  const releaseAccount=()=>{
+  const releaseAccount=(uemail)=>{
     fetch(`http://localhost:3001/release/${uid}`)
     .then((res)=>res.json())
     .then((res)=>{
         if(res.res=="ok"){
+          fetch('http://localhost:3001/sendemail',{
+                method:'post',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                  to:uemail,
+                  subject:'Account Released - Cheretanet',
+                  body:"Your cheretanet account is released from banned state, you can not access the system. Thanks."
+                })
+            })
+            .then((res)=>res.json())
+            .then((res)=>{
+                ;
+            })
+            .catch((err)=>{console.log(err)})
             navigate(`/userpage/admin/${id}/banned-accounts`)
         }else{
           document.getElementById('actn_result').innerHTML="Some Error Occurred!"
@@ -117,7 +159,7 @@ const ManageActiveUser=()=>{
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Birthday</td>
-  <td className="float-end fw-bold border-0">{user.bday}</td>
+  <td className="float-end fw-bold border-0">{user.bDay}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Account Status</td>
@@ -141,7 +183,7 @@ const ManageActiveUser=()=>{
         onCloseComplete={() => setIsShown(false)}
         confirmLabel="Confirm"
         onCancel={() => {setIsShown(false)}}
-        onConfirm={() => {setIsShown(false);banAccount()}}
+        onConfirm={() => {setIsShown(false);banAccount(user.email)}}
         
       >
         Are you sure you want to ban this account?
@@ -156,7 +198,7 @@ const ManageActiveUser=()=>{
       onCloseComplete={() => setIsShown(false)}
       confirmLabel="Confirm"
       onCancel={() => {setIsShown(false)}}
-      onConfirm={() => {setIsShown(false);releaseAccount()}}
+      onConfirm={() => {setIsShown(false);releaseAccount(user.email)}}
       
     >
       Are you sure you want to release this account?
@@ -171,7 +213,7 @@ const ManageActiveUser=()=>{
       onCloseComplete={() => setIsShown(false)}
       confirmLabel="Confirm"
       onCancel={() => {setIsShown(false)}}
-      onConfirm={() => {setIsShown(false);approveAccount()}}
+      onConfirm={() => {setIsShown(false);approveAccount(user.email)}}
       
     >
       Are you sure you want to approve this account?

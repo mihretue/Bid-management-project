@@ -1,6 +1,5 @@
 import { useParams,useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom'
-import { Avatar } from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
 import { Pane, Dialog, Button } from 'evergreen-ui'
@@ -13,12 +12,6 @@ const ManageApproval=()=>{
     const [errorFetching,setErrorFetching]=useState(false)
     const [isShown, setIsShown] = useState(false)
     const navigate=useNavigate()
-    const [input,setInput]=useState({
-      to:"",
-      subject:'Account Approval - Cheretanet',
-      body:'Your cheretanet account is approved, you can now access the system. Thanks.'}
-      )
-
     useEffect(()=>{
        fetchUserData()
     },[])
@@ -32,36 +25,30 @@ const ManageApproval=()=>{
         })
         .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
       }
-
-    const approveAccount=()=>{
+    const approveAccount=(uemail)=>{
         fetch(`http://localhost:3001/approve/${uid}`)
         .then((res)=>res.json())
         .then((res)=>{
             if(res.res=="ok"){
-              setInput({...input,to:user.email})
-                sendApprovalEmail(input)
+              fetch('http://localhost:3001/sendemail',{
+                method:'post',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                  to:uemail,
+                  subject:'Account Approval - Cheretanet',
+                  body:'Your cheretanet account is approved, you can now access the system. Thanks.'
+                })
+            })
+            .then((res)=>res.json())
+            .then((res)=>{
+                ;
+            })
+            .catch((err)=>{console.log(err)})
                 navigate(`/userpage/admin/${id}/approval-requests`)
             }
         })
         .catch((err)=>{})
     }
-
-    const sendApprovalEmail=(input)=>{
-        fetch('http://localhost:3001/sendemail',{
-            method:'post',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify(input)
-        })
-        .then((res)=>res.json())
-        .then((res)=>{
-            console.log(res)
-        })
-        .catch((err)=>{console.log(err)})
-    }
-
-
-
-
 
     return(<>
         <div className="container mb-5 border rounded" style={{minHeight:'20rem',height:"auto"}} >
@@ -88,7 +75,7 @@ const ManageApproval=()=>{
 </tr>
 <tr className="text-center" >
   <td className=" border-0" colspan="2">Last Name</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.LName}</td>
+  <td className="float-end border-0">{isFetching?'Loading...':user.lName}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">User Name</td>
@@ -104,7 +91,7 @@ const ManageApproval=()=>{
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Birthday</td>
-  <td className="float-end border-0">{isFetching?'Loading...':user.bday}</td>
+  <td className="float-end border-0">{isFetching?'Loading...':user.bDay}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Account Status</td>
@@ -123,7 +110,7 @@ const ManageApproval=()=>{
         onCloseComplete={() => setIsShown(false)}
         confirmLabel="Confirm"
         onCancel={() => {setIsShown(false)}}
-        onConfirm={() => {setIsShown(false);approveAccount()}}
+        onConfirm={() => {setIsShown(false);approveAccount(user.email)}}
         
       >
        Are you sure you want to approve this account?

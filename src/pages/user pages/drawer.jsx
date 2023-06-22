@@ -1,16 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Link,useNavigate,useParams } from 'react-router-dom'
-import { useState } from 'react'
+import {useNavigate } from 'react-router-dom'
+import { useState,useEffect  } from 'react'
 import { Pane, Tablist, Tab } from 'evergreen-ui'
 import {IoBan} from 'react-icons/io5'
 import {RiLoaderLine} from 'react-icons/ri'
 import {FaUsers} from 'react-icons/fa'
-import {BsArrowRight} from 'react-icons/bs'
-import { Avatar } from 'evergreen-ui'
-import { useEffect } from 'react'
 import {RiUserStarLine} from 'react-icons/ri'
+
 export default function SidebarTabsExample() {
+
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['Manage User Accounts', 'Analytics'], [])
   const [isFetching,setIsFetching]=useState(false)

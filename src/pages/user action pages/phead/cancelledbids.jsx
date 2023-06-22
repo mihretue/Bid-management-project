@@ -9,20 +9,7 @@ import Footer from '../../../components/footer'
 
 function CancelledBids () {
   
-  const {id,uid} =useParams();
-  const [bids,setBids]=useState([])
-  const [isFetching,setIsFetching]=useState(false)
-  const [errorFetching,setErrorFetching]=useState(false)
-  const [sortBy,setSortBy]=useState("Title")
-
-  const sortTenders=(e)=>{
-    setSortBy(e.target.value)
-    if(e.target.value=="Alphabet"){
-      //
-    }
-  }
-
-  
+  const {id,} =useParams();
     return (<>
     <div className="container p-2 w-100 fluid" style={{minHeight:'2rem'}}>
                <a className="icon-link text-decoration-none text-black">

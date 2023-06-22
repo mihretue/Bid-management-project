@@ -1,12 +1,5 @@
 import React, { Component,useState,useEffect } from 'react'
 import { useParams,Link } from 'react-router-dom';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import StickyHeadTable from "../../../components/Closed Bids Table";
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -16,21 +9,9 @@ import Footer from '../../../components/footer'
 
 function ClosedBids () {
   
-  const {id,uid} =useParams();
-  const [bids,setBids]=useState([])
-  const [isFetching,setIsFetching]=useState(false)
-  const [errorFetching,setErrorFetching]=useState(false)
-  const [sortBy,setSortBy]=useState("Title")
+  const {id} =useParams();
 
-  const sortTenders=(e)=>{
-    setSortBy(e.target.value)
-    if(e.target.value=="Alphabet"){
-      //
-    }
-  }
-
-  
-    return (<>
+return (<>
     <div className="container p-2 w-100 fluid" style={{minHeight:'2rem'}}>
                <a className="icon-link text-decoration-none text-black">
                 <BsArrowLeft className='me-2' />

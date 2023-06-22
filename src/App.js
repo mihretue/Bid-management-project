@@ -1,8 +1,6 @@
-import {BrowserRouter, Routes, Route,useParams} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Footer from "./components/footer";
-import Userpage from "./pages/user pages/userpage";
 import WaitForApproval from "./pages/action pages/waitforapproval";
 import AccountBanned from "./pages/action pages/accountbanned";
 import {TbArrowBigUpLineFilled} from 'react-icons/tb'
@@ -56,12 +54,9 @@ import ManageClosedBid from './pages/user action pages/phead/manageclosedbid'
 import BidProposal from "./pages/action pages/bidproposalform";
 import BidProps from "./pages/user action pages/phead/bidprops";
 import BidProp from "./pages/user action pages/phead/bidprop";
-import { BiMessageSquareDots } from "react-icons/bi";
 import Messages from "./pages/messages";
 import Message from "./pages/message";
-import BackImage from "../src/resources/backg.jpg"
 import PostBidAward from "./pages/user action pages/phead/postbidaward";
-import ApproveRequiest from './pages/user action pages/pendch/approvalrequests'
 import ApprovedTenders from './pages/user action pages/pendch/approvedTenders'
 import RequestBidApproval from "./pages/user action pages/phead/requestbidapproval";
 import BidAwardSuccess from "./pages/user action pages/phead/bidawardsuccess";
@@ -78,10 +73,6 @@ import SupSetting from './pages/user action pages/bidder/setting'
 
 
 function App() {
-  // fetch('http://localhost:3001/sendemail')
-  // .then((res)=>res.json())
-  // .then((res)=>{console.log(res)})
-  // .catch((err)=>{console.log(err)})
 
   return (
     <div>
@@ -101,8 +92,6 @@ function App() {
           <Route path="tenders/:tid/apply/success" element={<ApplicationSuccess />} />
           <Route path="tenders/:tid" element={<Tender />} />
           <Route path="*" element={<Nopage />} />
-          {/* <Route path="userpage" element={<Userpage/>}></Route>
-          <Route path="manageuseraccount" element={<ManageUserAcc />} /> */}
         </Route>
         <Route path="waitforapproval" element={<WaitForApproval />} />
         <Route path="accountbanned" element={<AccountBanned />} />
@@ -129,10 +118,10 @@ function App() {
           <Route path="/userpage/supplier/:id/tenders/:tid" element={<Tender />} />
           <Route path="/userpage/supplier/:id/bid-awards" element={<BidAwards />} />
           <Route path="/userpage/supplier/:id/bid-awards/:bid" element={<BidAward />} />
-          <Route path="/userpage/supplier/:id/apply/payment" element={<Payment />} />
-          <Route path="/userpage/supplier/:id/apply/bid-document" element={<Biddocument/>} />
-          <Route path="/userpage/supplier/:id/apply/bid-proposal" element={<BidProposal />} />
-          <Route path="/userpage/supplier/:id/apply/success" element={<ApplicationSuccess />} />
+          <Route path="/userpage/supplier/:id/tenders/:tid/apply/payment" element={<Payment />} />
+          <Route path="/userpage/supplier/:id/tenders/:tid/apply/bid-document" element={<Biddocument/>} />
+          <Route path="/userpage/supplier/:id/tenders/:tid/apply/bid-proposal" element={<BidProposal />} />
+          <Route path="/userpage/supplier/:id/tenders/:tid/apply/success" element={<ApplicationSuccess />} />
           <Route path="/userpage/supplier/:id/about" element={<About />} />
           <Route path="/userpage/supplier/:id/contact" element={<About />} />
           <Route path="/userpage/supplier/:id/setting" element={<SupSetting/>}/>

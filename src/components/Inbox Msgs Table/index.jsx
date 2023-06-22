@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,8 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-import { useEffect } from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
 import Button from '@mui/material/Button';
@@ -58,7 +57,6 @@ import {GrRefresh} from 'react-icons/gr'
     const [rows,setRows]=useState([]);
     const [isFetching,setIsFetching]=useState(true)
     const [errorFetching,setErrorFetching]=useState(false)
-    const [sortBy,setSortBy]=useState("Title")
     const navigate=useNavigate();
     useEffect(()=>{
       fetchAccounts();

@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { useParams,useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'

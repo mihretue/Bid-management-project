@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Footer from "../../components/footer";
 import { useParams,Link } from "react-router-dom";
-import { useEffect } from "react";
 
 const ApplicationSuccess=()=>{
     const [tender,setTender]=useState({})

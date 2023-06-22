@@ -1,6 +1,5 @@
 import { useParams,useNavigate  } from "react-router-dom";
 import { Link } from 'react-router-dom'
-import { Avatar } from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
 import { useState ,useEffect} from "react";
 import { Pane, Dialog, Button } from 'evergreen-ui'
@@ -28,11 +27,25 @@ const ManageBannedAccount=()=>{
         .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
       }
 
-      const releaseAccount=()=>{
+      const releaseAccount=(uemail)=>{
         fetch(`http://localhost:3001/release/${uid}`)
         .then((res)=>res.json())
         .then((res)=>{
             if(res.res=="ok"){
+              fetch('http://localhost:3001/sendemail',{
+                method:'post',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                  to:uemail,
+                  subject:'Account Released - Cheretanet',
+                  body:"Your cheretanet account is released from banned state, you can not access the system. Thanks."
+                })
+            })
+            .then((res)=>res.json())
+            .then((res)=>{
+                ;
+            })
+            .catch((err)=>{console.log(err)})
                 navigate(`/userpage/admin/${id}/banned-accounts`)
             }
         })
@@ -79,7 +92,7 @@ const ManageBannedAccount=()=>{
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Birthday</td>
-  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.bday}</td>
+  <td className="float-end fw-bold border-0">{isFetching?'Loading...':user.bDay}</td>
 </tr>
 <tr className="text-center" >
   <td className="border-0" colspan="2">Account Status</td>
@@ -99,7 +112,7 @@ const ManageBannedAccount=()=>{
         onCloseComplete={() => setIsShown(false)}
         confirmLabel="Confirm"
         onCancel={() => {setIsShown(false)}}
-        onConfirm={() => {setIsShown(false);releaseAccount()}}
+        onConfirm={() => {setIsShown(false);releaseAccount(user.email)}}
         
       >
        Are you sure you want to release this account?

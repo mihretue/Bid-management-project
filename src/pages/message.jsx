@@ -1,8 +1,7 @@
 import { useParams,Link,useNavigate } from "react-router-dom";
 import Footer from '../components/footer'
 import { BsArrowLeft } from "react-icons/bs";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { Pane, Dialog} from 'evergreen-ui'
 
 const Message=()=>{
@@ -92,7 +91,7 @@ return(<>
         </div>)}
     </div>
     
-<Footer />
+{JSON.parse(localStorage.getItem('user')).role!=="ppa it officer"&&<Footer />}
 </>)
 }
 

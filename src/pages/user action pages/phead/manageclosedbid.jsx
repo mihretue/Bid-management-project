@@ -12,8 +12,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {BiError} from 'react-icons/bi'
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 import {BsArrowLeft} from 'react-icons/bs'
-import { Pane, Dialog} from 'evergreen-ui'
-import { Button,EditIcon,TrashIcon,TickIcon,ManualIcon,PersonIcon,ArchiveIcon } from 'evergreen-ui'
+import { Button,TickIcon,ManualIcon,PersonIcon} from 'evergreen-ui'
 
 import Footer from '../../../components/footer'
 const columns = [
@@ -27,7 +26,6 @@ const columns = [
 const ManageClosedBid = () => {
 const navigate=useNavigate()
 const {id,uid} =useParams();
-const [isShown, setIsShown] = useState(false)
 useEffect(()=>{document.title='Cheretanet | SpecificBid Information'},[])
 useEffect(()=>{fetchTenderDetails()},[])
 const [tender,setTender]=useState({})

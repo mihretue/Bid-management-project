@@ -3,12 +3,13 @@ import React from 'react';
 import {Link,Outlet } from "react-router-dom";
 import logo6 from "../../resources/logo6.png";
 import {useState,useEffect} from 'react';
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams,useNavigate  } from "react-router-dom";
 import {BsGear} from 'react-icons/bs';
 import {IoIosLogOut} from "react-icons/io";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import { Pane, Dialog} from 'evergreen-ui'
+
 const SupplierLayout=()=>{
 
   const {id,uid} =useParams();
@@ -16,6 +17,7 @@ const SupplierLayout=()=>{
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
   const navigate = useNavigate();
+  const [isShown, setIsShown] = useState(false)
 
 
 
@@ -60,9 +62,22 @@ return(
                   </Nav.Link>
                 </Dropdown.Item>
                 <Dropdown.Item >
-                    <Nav.Link  onClick={()=>{localStorage.removeItem("user"); navigate("/")}}  className="justify-content-center text-black ">
-                      <IoIosLogOut  className='mx-1'/>
+                    <Nav.Link  className="justify-content-center text-black ">
+                    <Pane className="mx-auto col-6 mt-2 d-flex justify-content-center">
+      <Dialog
+        isShown={isShown}
+        title="Confirm Action"
+        onCloseComplete={() => setIsShown(false)}
+        confirmLabel="Yes"
+        onCancel={() => {setIsShown(false)}}
+        onConfirm={() => {setIsShown(false);localStorage.removeItem("user"); navigate("/")}}
+      >
+        <p>Are You Sure You Want To Cancel This Bid?</p>
+        <p className="mt-3" style={{fontSize:'0.8rem'}}>Note that this can't be undone.</p>
+      </Dialog>
+      <IoIosLogOut  className='mx-1'/>
                         Log Out
+          </Pane>
                       
                     </Nav.Link>
                 </Dropdown.Item>

@@ -1,8 +1,5 @@
 import React from "react";
-import Layout from "../../layouts/adminLayout";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from 'react-router-dom'
+import { Link,useParams  } from 'react-router-dom'
 import {BsArrowLeft} from 'react-icons/bs'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -13,7 +10,7 @@ const ApprovalRequests = () => {
     
     return ( 
         
-        <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
+        <div className="container mb-5 border rounded" style={{minHeight:'20rem',height:"auto"}} >
             <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
                <a className="icon-link text-decoration-none text-black">
                 <BsArrowLeft className='me-2' />

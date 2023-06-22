@@ -5,7 +5,7 @@ import Footer from '../../components/footer';
 
 function PheadPage() {
 
-  const {id,uid} =useParams();
+  const {id }=useParams();
   const [user,setUser]=useState({})
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)

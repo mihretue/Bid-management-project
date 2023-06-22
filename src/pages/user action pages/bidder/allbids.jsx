@@ -1,5 +1,4 @@
-import { useParams } from "react-router-dom";
-import { Link } from 'react-router-dom'
+import { useParams, Link } from "react-router-dom";
 import {BsArrowLeft} from 'react-icons/bs'
 import StickyHeadTable from '../../../components/BidderAllBidsTable'
 import Footer from '../../../components/footer'

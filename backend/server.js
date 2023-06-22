@@ -6,15 +6,12 @@ const mongoose = require("mongoose");
 const userModel = require("./models/user")
 const advertModel = require("./models/adverts")
 const messageModel = require('./models/message');
-const { ObjectId } = require('mongodb');
 const nodemailer=require('nodemailer')
-const axios=require('axios')
 const cors=require("cors");
 const socketIo=require('socket.io')
 const server=http.createServer(app)
 const io=socketIo(server)
 const {google}=require('googleapis')
-const { RestorePageRounded } = require('@mui/icons-material');
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
@@ -182,6 +179,15 @@ app.post('/signup', (request, response) => {
       .catch(err=>response.json(err))
 })
 
+app.get('/checkprocid/:id',(req,res)=>{
+const id=req.params.id
+advertModel.findOne({id:id})
+.then((docs)=>{
+  res.json(docs)
+})
+.catch((err)=>res.json(err))
+})
+
 app.post('/newtender', (request, response) => {
   const input=request.body;
   const newUser=new advertModel({
@@ -316,7 +322,7 @@ app.post('/sendemail',(req,res)=>{
     };
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        res.json({res:error});
+        res.json({res:"error"});
       } else {
         res.json({res:"ok"});
       }

@@ -11,7 +11,7 @@ const ManageActiveAccounts = () => {
     
     return ( 
         
-        <div className="container border rounded" style={{minHeight:'20rem',height:"auto"}} >
+        <div className="container mb-5 border rounded" style={{minHeight:'20rem',height:"auto"}} >
             <div className="p-2 w-100 fluid" style={{minHeight:'2rem'}}>
                <a className="icon-link text-decoration-none text-black">
                 <BsArrowLeft className='me-2' />

@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
-import { Link } from 'react-router-dom'
 import {BsArrowLeft} from 'react-icons/bs'
-import { useState ,useEffect} from "react";
+import { useState ,useEffect,Link} from "react";
 import StickyHeadTable from '../../../components/Bidder Closed Bids Table'
 import Footer from '../../../components/footer'
 const ClosedBids=()=>{

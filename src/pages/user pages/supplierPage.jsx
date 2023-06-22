@@ -1,23 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import { useEffect,useState } from 'react';
 import SupplierDrawer from './supplierDrawer';
-import img from "../../resources/userbackground.png"
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-  },
-}));
 
 function SupplierPage() {
-  const classes = useStyles();
-  const {id,uid} =useParams();
+  const {id} =useParams();
   const [user,setUser]=useState({})
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)

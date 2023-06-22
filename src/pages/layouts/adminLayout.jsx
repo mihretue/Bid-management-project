@@ -7,8 +7,7 @@ import {IoIosLogOut} from "react-icons/io";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import {useState,useEffect} from 'react';
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 
 const AdminLayout=()=>{
   const {id,uid} =useParams();

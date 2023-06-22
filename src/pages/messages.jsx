@@ -8,7 +8,7 @@ return(<>
 <div className='container mb-5 border rounded'>
      <SidebarTabsExample />
   </div>
-<Footer />
+{JSON.parse(localStorage.getItem('user')).role!=="ppa it officer"&&<Footer />}
 </>)
 }
 

@@ -1,12 +1,8 @@
 import {useState,useEffect} from "react"
+import { DayPicker } from 'react-day-picker';
+import { format } from 'date-fns';
+import 'react-day-picker/dist/style.css';
 import { TextField } from "@mui/material";
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -46,7 +42,6 @@ const Newbid = () => {
       pfeeErrorM:"",invD:"",ent:JSON.parse(localStorage.getItem('user')).pBody,bidDocFile:''})
     const [isSubmitting,setIsSubmitting]=useState(false)
     const [errorSubmitting,setIsErrorSubmitting]=useState(false)
-    const [agreed,setAgreed]=useState(false)
     const [uploading,setUploading]=useState(false)
     const [errorUploading,setErrorUploading]=useState(false)
     const [uploaded,setUploaded]=useState(false)
@@ -118,27 +113,41 @@ const Newbid = () => {
   } 
  const handleSubmit=()=>{
    setIsSubmitting(true)
-   fetch('http://localhost:3001/newtender',{
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(input)
-   })
-   .then((res)=>res.json())
-   .then((res)=>{
-      setIsSubmitting(false)
-       if(res.res=="ok"){
-          document.getElementById('sub_btn').style.display="none"
-          document.getElementById('res_btn').style.display="none"
-          document.getElementById('final_result').innerHTML="Tender Successfully Submitted!"
-          document.getElementById('final_result').style.fontWeight="bold"
-          setTimeout(()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids`)},5000)
-       }else{
-         setIsErrorSubmitting(true)
-       }
-   })
-   .catch((err)=>{
-    setIsErrorSubmitting(true)
-   })
+   fetch(`http://localhost:3001/checkprocid/${input.id}`)
+    .then((res)=>res.json())
+    .then((res)=>{
+      if(res!==null){
+        setIsErrorSubmitting(true)
+        input.idError=true
+        input.idErrorM="Procurement ID Exists."
+        document.getElementById('final_result').innerHTML="You have entered an existing procurement ID, please correct it and try again."
+     }else{
+        input.idError=false
+        input.idErrorM=""
+     fetch('http://localhost:3001/newtender',{
+      method:"POST",
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(input)
+     })
+     .then((res)=>res.json())
+     .then((res)=>{
+        setIsSubmitting(false)
+         if(res.res=="ok"){
+            document.getElementById('sub_btn').style.display="none"
+            document.getElementById('res_btn').style.display="none"
+            document.getElementById('final_result').innerHTML="Tender Successfully Submitted!"
+            document.getElementById('final_result').style.fontWeight="bold"
+            setTimeout(()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids`)},5000)
+         }else{
+           setIsErrorSubmitting(true)
+         }
+     })
+     .catch((err)=>{
+      setIsErrorSubmitting(true)
+     })}
+    })
+    .catch((err)=>setIsErrorSubmitting(true))
+   
  }
 
   const handleBack = () => {
@@ -171,7 +180,18 @@ const Newbid = () => {
            setErrorUploading(true)
        })
      }
+
+   const [selected, setSelected] = useState();
+
    const [file,setFile]=useState(null)
+   let footer = <p>Please pick a day.</p>;
+   if (selected) {
+     footer = <p>You picked {format(selected, 'PP')}.</p>;
+   }
+
+   const minDate=new Date()
+   const disabledDays={before:minDate,}
+
 
   const handleReset = () => {
     setActiveStep(0);
@@ -253,6 +273,13 @@ const Newbid = () => {
       </FormControl>
           </div>
             <div className="form-group mt-3">
+      <DayPicker 
+mode="single"
+selected={selected}
+onSelect={setSelected}
+footer={footer}
+disabledDays={disabledDays}
+    />
             <TextField
           error={input.deadError}
           id="outlined-error-helper-text"
@@ -263,19 +290,6 @@ const Newbid = () => {
           size="small"
           style={{width:'100%'}}
           type="date"
-          inputProps={{min:new Date().toLocaleDateString('en-US', { 
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-          }).split('/')[2]+'-'+new Date().toLocaleDateString('en-US', { 
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-          }).split('/')[2]+'-'+new Date().toLocaleDateString('en-US', { 
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-          }).split('/')[0]}}
           value={input.dead}
           onChange={handleChange}
         />

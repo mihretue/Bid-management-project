@@ -2,7 +2,6 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
@@ -53,7 +52,6 @@ checkTimeline
       { value: [0, 1], duration: 600, easing: 'easeOutQuad' }
     ]
   })
-
 
     return (<>
       <div className="mt-2 mx-auto d-flex justify-content-center align-items-center mx-auto" style={{width:'3.2rem',height:'3.2rem',borderRadius:'2rem',outline:'1px solid darkslategray'}}>

@@ -1,20 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import {FaListAlt} from 'react-icons/fa'
 import {IoCheckmarkDoneCircleOutline} from 'react-icons/io5'
 import { Pane, Tablist, Tab} from 'evergreen-ui'
-import {BsArrowRight} from 'react-icons/bs'
-import { Avatar } from 'evergreen-ui'
 import { useParams } from 'react-router-dom';
 import {useState,useEffect} from 'react'
 import {GrInProgress} from 'react-icons/gr'
 import {MdOutlineCancelPresentation} from 'react-icons/md'
-import {MdQuestionAnswer} from 'react-icons/md'
-import {BiMessageRoundedError} from 'react-icons/bi'
 import img from '../../resources/backuser.jpg'
 import Footer from '../../components/footer'
-import BidImage from "../../resources/bidimg2.webp"
-import BookImage from "../../resources/megazine1.png"
 import './style.css'
 import { useNavigate } from 'react-router-dom'
 

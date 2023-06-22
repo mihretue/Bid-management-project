@@ -1,10 +1,9 @@
-import { useParams,useNavigate } from 'react-router-dom'
+import { useParams,useNavigate,Link } from 'react-router-dom'
 import Footer from '../../../components/footer'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useEffect,useState } from 'react'
 import { Pane, Dialog} from 'evergreen-ui'
 import {BsArrowLeft} from 'react-icons/bs'
-import { Link } from 'react-router-dom'
+import {  } from 'react-router-dom'
 
 const BidsInProgressDetail=()=>{
     const {bid,id}=useParams()

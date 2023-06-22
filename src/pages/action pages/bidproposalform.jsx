@@ -1,6 +1,7 @@
 import Footer from '../../components/footer'
 import { useState } from 'react';
 import { useParams,useNavigate } from 'react-router-dom';
+import {datefinder} from '../../services/date finder.js'
 const BidProposal=()=>{
     const {tid}=useParams()
     const navigate=useNavigate()
@@ -34,7 +35,7 @@ const BidProposal=()=>{
               bidderStatus:"bidding",
               bidDocPayment:"payed",
               bidPropFile:res.res,
-              appTime:Date.now()}
+              appTime:datefinder()}
             registerBidder(inp)
           }
          })

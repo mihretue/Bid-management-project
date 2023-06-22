@@ -25,7 +25,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {BiError} from 'react-icons/bi'
 import Footer from "../components/footer";
-
+import { dateconverter } from "../services/date converter";
 export default function (props) {
     useEffect(()=>{document.title='Cheretanet | Sign Up'})
     const [ user, setUser ] = useState([]);
@@ -116,6 +116,7 @@ export default function (props) {
       setInput({...input,bdError:true,bdErrorM:"You are under 18 years old, you can't have cheretanet account"})
     }else{
       input.bdError=false;input.bd=''
+      input.bDay=dateconverter(input,"signup")
       if(validator(input,"signup")==="ul"){
       setInput({...input,uError:true,uErrorM:"Username must be at least 3 characters long"})
       }else{
