@@ -1,7 +1,7 @@
 import {useState,useEffect} from "react"
-import { DayPicker } from 'react-day-picker';
+import DatePicker from "react-datepicker";
 import { format } from 'date-fns';
-import 'react-day-picker/dist/style.css';
+import "react-datepicker/dist/react-datepicker.css";
 import { TextField } from "@mui/material";
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -10,7 +10,6 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/system';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
@@ -20,7 +19,7 @@ import {FormControl} from '@material-ui/core';
 import { useNavigate,useParams,Link } from "react-router-dom";
 import Footer from '../../../components/footer'
 import {BsArrowLeft} from 'react-icons/bs'
-
+import {dateconverter} from '../../../services/date converter'
 const steps = ['Basic Information', 'Eligibility Documents', 'Required Payments','Documents'];
 const Newbid = () => {
     const [activeStep, setActiveStep] = React.useState(0);
@@ -117,13 +116,17 @@ const Newbid = () => {
     .then((res)=>res.json())
     .then((res)=>{
       if(res!==null){
-        setIsErrorSubmitting(true)
+        setIsSubmitting(false)
         input.idError=true
         input.idErrorM="Procurement ID Exists."
         document.getElementById('final_result').innerHTML="You have entered an existing procurement ID, please correct it and try again."
      }else{
         input.idError=false
         input.idErrorM=""
+        // input.dead=dateconverter(deadline,"bidpost")
+        // input.opend=dateconverter(opSchedule,"bidpost")
+        // if(siteVisit!=='')
+        //    input.visitd=dateconverter(siteVisit,"bidpost")
      fetch('http://localhost:3001/newtender',{
       method:"POST",
       headers:{'Content-Type':'application/json'},
@@ -139,11 +142,14 @@ const Newbid = () => {
             document.getElementById('final_result').style.fontWeight="bold"
             setTimeout(()=>{navigate(`/userpage/phead/${id}/manage-bids/all-bids`)},5000)
          }else{
+          console.log(res)
            setIsErrorSubmitting(true)
          }
      })
      .catch((err)=>{
       setIsErrorSubmitting(true)
+      console.log(res)
+
      })}
     })
     .catch((err)=>setIsErrorSubmitting(true))
@@ -192,6 +198,11 @@ const Newbid = () => {
    const minDate=new Date()
    const disabledDays={before:minDate,}
 
+   const [deadline, setDeadline] = useState(new Date());
+   const [opSchedule, setOpSchedule] = useState(new Date());
+   const [invitation, setInvitation] = useState(new Date());
+
+   const [siteVisit, setSiteVisit] = useState('');
 
   const handleReset = () => {
     setActiveStep(0);
@@ -272,15 +283,48 @@ const Newbid = () => {
         </Select>
       </FormControl>
           </div>
-            <div className="form-group mt-3">
-      <DayPicker 
-mode="single"
-selected={selected}
-onSelect={setSelected}
-footer={footer}
-disabledDays={disabledDays}
-    />
-            <TextField
+            <div className="form-group mt-3 row container">
+            <FormControl style={{width:'100%'}}>
+              <InputLabel id="demo-simple-select-autowidth-label">Submission Deadline</InputLabel>
+            <DatePicker selected={deadline}
+            minDate={Date.now()} 
+            required
+            onChange={(date)=>{setDeadline(date)}}
+            id="deadline"
+            className="w-100"
+            showTimeInput
+            />
+           </FormControl>
+           </div>
+           <div className="form-group mt-3 row container">
+             <FormControl style={{width:'100%'}}>
+              <InputLabel id="demo-simple-select-autowidth-label">Opening Schedule</InputLabel>
+            <DatePicker selected={opSchedule}
+            minDate={Date.now()} 
+            required
+            onChange={(date)=>{setOpSchedule(date)}}
+            id="opensc"
+            className="w-100"
+            showTimeInput
+
+            />
+            </FormControl>
+            </div>
+            <div className="form-group mt-3 row container">
+             <FormControl style={{width:'100%'}}>
+              <InputLabel id="demo-simple-select-autowidth-label">Site Visit Schedule (If any)</InputLabel>
+            <DatePicker selected={siteVisit}
+            minDate={Date.now()} 
+            onChange={(date)=>{setSiteVisit(date)}}
+            id="sitv"
+            className="w-100"
+            showTimeInput
+
+            />
+            </FormControl>
+            </div>
+
+            {/* <TextField
           error={input.deadError}
           id="outlined-error-helper-text"
           label=""
@@ -292,7 +336,9 @@ disabledDays={disabledDays}
           type="date"
           value={input.dead}
           onChange={handleChange}
+          className="mt-2"
         />
+        
             </div>
             <div className="form-group mt-3">
             <TextField
@@ -349,7 +395,7 @@ disabledDays={disabledDays}
             day: '2-digit'
           }).split('/')[0]}}
         />
-            </div>
+            </div> */}
           </form>
         </div>
       )
@@ -508,7 +554,7 @@ disabledDays={disabledDays}
           </div>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
-            <Button id="res_btn" disabled={isSubmitting?true:(errorSubmitting?false:false)} onClick={handleReset}>Reset</Button>
+            <Button id="res_btn" disabled={isSubmitting?true:(errorSubmitting?false:false)} onClick={handleReset}>Back to First</Button>
             <Button id="sub_btn" disabled={isSubmitting?true:(errorSubmitting?false:false)}  onClick={handleSubmit}>Submit</Button>
         </Box>
         </React.Fragment>

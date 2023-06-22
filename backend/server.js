@@ -11,6 +11,7 @@ const cors=require("cors");
 const socketIo=require('socket.io')
 const server=http.createServer(app)
 const io=socketIo(server)
+const dateconverter=require('./date converter.js')
 const {google}=require('googleapis')
 app.use(cors());
 app.use(express.json());
@@ -198,9 +199,9 @@ app.post('/newtender', (request, response) => {
             app:input.app,
             dead:input.dead,
             bidSec:input.bsec,
-            inv:input.invD,
-            open:input.opend,
-            visit:input.visitd,
+            invD:dateconverter(new Date(Date.now()),"bidpost"),
+            open:dateconverter(input.opend,"tenders2"),
+            visit:input.visitd==""?"not-applicable":dateconverter(input.visitd,"tenders2"),
             vTax:input.vTax,
             coi:input.coi,
             lic:input.lic,

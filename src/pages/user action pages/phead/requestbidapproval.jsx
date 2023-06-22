@@ -49,7 +49,7 @@ useEffect(()=>{fetchEndorsingCInfo()},[])
     }
     const handleFileSubmit=(event)=>{
         event.preventDefault();
-        const formData = new FormData();
+        let formData = new FormData();
         formData.append('file', file);
         setUploading(true)
         fetch('http://localhost:3001/uploadbidrequest',{
@@ -87,9 +87,6 @@ useEffect(()=>{fetchEndorsingCInfo()},[])
     })
         .catch((err)=>{setErrorSaving(true)})
     }
-    
-
-
 
     return(
     <>
@@ -97,10 +94,12 @@ useEffect(()=>{fetchEndorsingCInfo()},[])
          <div className="text-center fs-5 mb-5">Please Wait...</div>
       :(errorIsFetching?
         <div className="text-center fs-5 mb-5 text-danger">Some Error Occurred, Please Reload This Page!</div>
-        :(Object.keys(endorser).length==0?
+        :(endorser==null?
             <div className="text-center fs-9 mb-5 w-50 mx-auto">
                 Dear Procurement Department Head, There is no account associated with a
-                procurement endorsing committee head in your public body.</div>
+                procurement endorsing committee head in your public body.
+                <button onClick={()=>{navigate('/')}} className="d-block mx-auto btn mt-3 btn-primary">Back To Dashboard</button>
+           </div>
             :(endorser.status=="banned"?
             <div className="text-center fs-9 mb-5 w-50 mx-auto">
                 Dear Procurement Department Head, There is an issue with an account associated with a

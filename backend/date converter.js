@@ -1,4 +1,4 @@
-export function dateconverter(input,type){
+function dateconverter(input,type){
     const months = [
         "January",
         "February",
@@ -33,33 +33,8 @@ export function dateconverter(input,type){
           const formattedDate = `${dayOfWeek}, ${month} ${dateOfMonth}, ${year} ${hour}:${minute}`;
         
           return formattedDate;
-      }else if(type=="tenders"){
-const now = new Date();
-const userInput = new Date(input);
-if (userInput.getTime() === now.getTime()) {
-  return "now"
-} 
-else if (userInput.getTime() < now.getTime()) {
-    return "past"
-} 
-else {
-  return "future"
-}
-    }
-        else if(type=='tenders2'){
-                const dateObj = new Date(input);
-                const year = dateObj.getFullYear();
-                const month = dateObj.toLocaleString('default', { month: 'long' });
-                const date = dateObj.getDate();
-                const day = dateObj.toLocaleString('default', { weekday: 'long' });
-                const hour = dateObj.getHours();
-                const minute = dateObj.getMinutes();
-                const second = dateObj.getSeconds();
-                const meridiem = hour >= 12 ? "PM" : "AM";
-                const hour12 = hour % 12 || 12;
-                const formattedDateTime = `${day}, ${month} ${date}, ${year} ${hour12}:${minute.toString().padStart(2, "0")}:${second.toString().padStart(2, "0")} ${meridiem}`;
-                return formattedDateTime;
-        }else{
-
-        }
+      }else{
+        ;}
     }   
+
+module.exports=dateconverter;

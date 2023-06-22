@@ -29,20 +29,21 @@ const advertSchema = new mongoose.Schema({
       type: String,
       required: true,
     },dead: {
-      type: Date,
+      type: String,
       required: true,
     },bidSec: {
       type: String,
       required: true,
     },open: {
-      type: Date,
+      type: String,
       required: true,
-    },inv: {
-      type: Date,
+    },invD: {
+      type: String,
       required: true,
     },visit:{
       type:String,
-      required:true
+      required:false,
+      default:"not-applicable"
     },status:{
       type:String,
       required:true

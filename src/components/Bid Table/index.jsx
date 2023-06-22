@@ -16,7 +16,13 @@ import {BiError} from 'react-icons/bi'
 import Button from '@mui/material/Button';
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 import {GrRefresh} from 'react-icons/gr'
+import { dateconverter } from "../../services/date converter";
   const columns = [
+    { 
+      id: 'open', 
+      label: 'Activity',
+       align: 'center'
+    },
     { 
       id: 'id', 
       label: 'Procurement ID.',
@@ -152,7 +158,7 @@ import {GrRefresh} from 'react-icons/gr'
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    className="border-bottom border-success"
+                    className="border-bottom border-left border-success"
                     style={{fontWeight:'bold',fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol'}}
                   >
                     {column.label}
@@ -164,8 +170,11 @@ import {GrRefresh} from 'react-icons/gr'
               {
               rows.map((row) => {
                 return (
-                  <TableRow key={row._id} onClick={()=>{navigate(`./${row._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} key={row.id}  hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
+                  <TableRow key={row._id} onClick={()=>{navigate(`./${row._id}`)}} style={{cursor:'pointer',fontSize:'0.8rem',minHeight:'1rem'}} hover role="checkbox" tabIndex={-1}>
+                       <TableCell className={dateconverter(row.open,"tenders")=="past"&&"text-white bg-primary"}  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
+                          {dateconverter(row.open,"tenders")=="now"?"Opened recently":(dateconverter(row.open,"tenders")=="past"?(row.status=="cancelled" || rows.status=="closed"?row.status:"Open"):"Not Open Yet")}
+                        </TableCell>
+                        <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"} >
             {row.id}
                         </TableCell>
                         <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
