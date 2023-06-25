@@ -170,6 +170,9 @@ const navigate=useNavigate()
       })
     }
 
+    const Email = JSON.parse(localStorage.getItem('user')).email;
+    const Name= JSON.parse(localStorage.getItem('user')).fName;
+    localStorage.removeItem('user');
   return (<>
     <Pane className='row mb-5 border p-3 shadow rounded container mx-auto  pb-5' style={{height:'auto'}}>
       <Tablist className="col-md-3 col-12 mt-1" style={{height:'auto'}}>
@@ -188,8 +191,8 @@ const navigate=useNavigate()
           )
         })}
           <div className='d-none d-md-flex flex-column justify-content-center align-items-center ' style={{marginTop:'10rem',height:'5rem'}}>
-          <h6 className='text-center'>{JSON.parse(localStorage.getItem('user')).fName + " "+ JSON.parse(localStorage.getItem('user')).lName}</h6>
-          <p className='fs-9 m-0 text-break text-center'>{JSON.parse(localStorage.getItem('user')).email}</p>
+          <h6 className='text-center' style={{fontFamily:"'Adamina'"}}>{Name + " "+ JSON.parse(localStorage.getItem('user')).lName}</h6>
+          <p className='fs-9 m-0 text-break text-center'>{Email}</p>
           </div>
       </Tablist>
       <Pane className="col-md-9 col-12  " style={{height:'auto',backgroundColor:'white'}}>
@@ -204,23 +207,23 @@ const navigate=useNavigate()
           >
             {tab=="Manage Bids"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
-               <h3 className='m-0 text-center fs-6 mt-1'>Manage Bids</h3>
+               <h3 className='m-0 text-center fs-6 mt-1' style={{fontFamily:"'Adamina'"}}>Manage Bids</h3>
                <div className='row g-3 justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
                <div style={{cursor:'pointer'}} i onClick={()=>{navigate(`/userpage/supplier/${id}/all-bids`)}} className='col-6 d-flex flex-column align-items-center justify-content-center'>
                         <FaListAlt style={{width:'4rem',height:'4rem',color:"blue"}} />
-                        All Tenders You Involved In
+                        <p style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>All Tenders You <br/><span className='text-center ml-2'>Involved In</span> </p>
                 </div>
-                 <div style={{cursor:'pointer'}} onClick={()=>{navigate(`/userpage/supplier/${id}/bids-in-progress`)}} className='col-6 d-flex flex-column align-items-center justify-content-center' >
+                 <div style={{cursor:'pointer'}} onClick={()=>{navigate(`/userpage/supplier/${id}/bids-in-progress`)}} className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center' >
                     <GrInProgress style={{width:'2.5rem',height:'3rem',color:"yellowgreen"}} />
-                      <p>Bids in Progress</p>
+                      <p style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>Bids in Progress</p>
                  </div>
                  <div style={{cursor:'pointer'}} onClick={()=>{navigate(`/userpage/supplier/${id}/cancelled-bids`)}} className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
                       <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem',color:"red"}} />
-                      Cancelled Bids
+                      <p style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>Cancelled Bids</p>
                 </div>
                 <div style={{cursor:'pointer'}} onClick={()=>{navigate(`/userpage/supplier/${id}/closed-bids`)}} className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
                     <IoCheckmarkDoneCircleOutline style={{width:'4rem',height:'4rem',color:"darkslategray"}} /><br/> 
-                    Closed Bids
+                    <p style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>Closed Bids</p>
                 </div>
               </div>
             </div>
@@ -228,16 +231,27 @@ const navigate=useNavigate()
             (tab=="Me"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto",backgroundImage:{img}}}>
                <h3 className='m-0 text-center fs-6 mt-1'>Me</h3>
-               <div className='mx-auto d-flex flex-column justify-content-center align-items-center' style={{minHeight:'10rem',height:'auto'}}>
-                 <ul className='list-unstyled mt-3 w-100'>
-                   <li>Your Total Tenders : <p className='m-0 fw-bold d-inline'>{bids.length}</p></li>
-                   <li>Your Active Tenders : <p className='m-0 fw-bold d-inline'>{activeBids.length}</p></li>
-                   <li>Tenders You Cancelled : <p className='m-0 fw-bold d-inline'>{cancelledBids.length}</p></li>
-                   <li>Closed Tenders : <p className='m-0 fw-bold d-inline'>{closedBids.length}</p></li>
+               <div className='container mx-auto d-flex flex-column justify-content-center align-items-center' style={{minHeight:'10rem',height:'auto'}}>
+                 <ul className='list-unstyled mt-3 w-100 row gap-3'>
+                   <div className='col col-md-6 shadow col-sm-12 border rounded border-success' style={{width:'12rem'}}>
+                   <li>Your Total Tenders <br/> <p className='m-0 fw-bold d-inline'>{bids.length}</p></li>
+                   </div>
+                   <div className='col col-md-6 shadow col-sm-12 border rounded border-success' style={{width:'12rem'}}>
+                  
+                   <li>Your Active Tenders <br/> <p className='m-0 fw-bold d-inline'>{activeBids.length}</p></li>
+                   </div>
+                   <div className='col col-md-6 shadow col-sm-12 border rounded border-danger' style={{width:'12rem'}}>
+                  
+                   <li>Tenders You Cancelled <br/> <p className='m-0 fw-bold d-inline'>{cancelledBids.length}</p></li>
+                   
+                   </div>
+                   <div className='col col-md-6 shadow col-sm-12 border rounded border-success' style={{width:'12rem'}}>
+                   <li >Closed Tenders <br/> <p className='m-0 fw-bold d-inline'>{closedBids.length}</p></li>
+                   </div>
                    <li></li>
                  </ul><hr className='w-100' />
-                 <h5 className='mt-4'>Account Status : 
-                 <p className={user.status=="active"?'m-0 ms-2 d-inline text-success':'m-0 ms-2 d-inline text-danger'}>{user.status}</p>
+                 <h5 className='mt-4' style={{fontFamily:"'Titillium Web', sans-serif"}}>Account Status : 
+                 <p className={user.status=="active"?'m-0 ms-2 d-inline text-success':'m-0 ms-2 d-inline text-danger'} style={{fontFamily: "'Playfair Display', serif"}}>{user.status}</p>
                  </h5>
                </div>
             </div>:

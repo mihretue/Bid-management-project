@@ -41,6 +41,7 @@ const Home = () => {
               }
         }
     }, []);
+
     return (
         <section>
                 <div className="welcome" style={{maxWidth:'100%',height:'33rem'}} >

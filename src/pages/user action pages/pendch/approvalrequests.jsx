@@ -21,7 +21,9 @@ import StickyHeadTable from '../../../components/Bid Approval Requests Table'
            </a>
         </div>
         <h2 className='text-center'>Approval Requests</h2>
-        <StickyHeadTable />
+        <div className= " bg-body-tertiary rounded shadow mt-3 border border-info rounded" style={{maxWidth:'100%',height:'auto',minHeight:'3rem',backgroundColor:'white'}}>
+            <StickyHeadTable />
+        </div>
     </div>
     <Footer />
     </>

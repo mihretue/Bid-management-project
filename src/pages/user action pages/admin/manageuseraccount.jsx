@@ -3,9 +3,6 @@ import Layout from "../../layouts/adminLayout";
 import { useState } from "react";
 import { useParams,Link } from "react-router-dom";
 import {BsArrowLeft} from 'react-icons/bs'
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import {AiOutlineSearch} from 'react-icons/ai'
 import StickyHeadTable from "../../../components/Accounts Table";
 const ManageUserAccount = () => {
     const { id } = useParams();
@@ -22,19 +19,7 @@ const ManageUserAccount = () => {
             <div className="container" style={{height:'auto'}}>
                  <h4 className="text-center my-2">Manage User Accounts</h4>
                  <div>
-                 <div className="mt-3 rounded border" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
-                   <TextField
-                     placeholder="Search a user"
-                     id="outlined-start-adornment"
-                     size="small"
-                     InputProps={{
-                        endAdornment: <InputAdornment position="end">
-                        <AiOutlineSearch  />
-                        </InputAdornment>,
-                     }}
-                     style={{width:'100%'}}
-              />
-              </div>
+                 
               <div className= " bg-body-tertiary rounded shadow mt-3 border border-info rounded" style={{maxWidth:'100%',height:'auto',minHeight:'3rem',backgroundColor:'white'}}>
                 <StickyHeadTable />
               </div>

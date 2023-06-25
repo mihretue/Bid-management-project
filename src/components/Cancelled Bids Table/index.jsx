@@ -14,6 +14,10 @@ import {BiError} from 'react-icons/bi'
 import Button from '@mui/material/Button';
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 import {GrRefresh} from 'react-icons/gr'
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import {AiOutlineSearch} from 'react-icons/ai'
+  
   const columns = [
     { 
       id: 'id', 
@@ -53,6 +57,7 @@ import {GrRefresh} from 'react-icons/gr'
     const [isFetching,setIsFetching]=useState(true)
     const [errorFetching,setErrorFetching]=useState(false)
     const [Cbids,setCBids]=useState([]);
+    const [init,setInit]=useState([]);
   const [CBidsisFetching,setCBidsIsFetching]=useState(false)
   const [errorCBidsFetching,setErrorCBidsFetching]=useState(false)
   
@@ -74,7 +79,7 @@ import {GrRefresh} from 'react-icons/gr'
       .then(res=>res.json())
       .then((res)=>{
         setCBids(res)
-        console.log(res)
+        setInit(res)
         setCBidsIsFetching(false)
       })
       .catch((err)=>{
@@ -111,6 +116,29 @@ import {GrRefresh} from 'react-icons/gr'
     }</div>
         :(Cbids.length==0?
           <>
+          <div className="mt-3 rounded border mx-auto" style={{width:'90%',height:'auto',minHeight:'2.5rem'}}>
+          <TextField
+            placeholder="Search tender by title"
+            id="outlined-start-adornment"
+            size="small"
+            InputProps={{
+               endAdornment: <InputAdornment position="end">
+               <AiOutlineSearch  />
+               </InputAdornment>,
+            }}
+            style={{width:'100%'}}
+            onChange={(e)=>{
+             const q=e.target.value;
+             let filt=bids;
+            if(q!=""){
+               filt=bids.filter(bid=>(bid.title).includes(q))
+               setBids(filt)
+            }
+             else 
+               setBids(init)
+           }}
+     />
+    </div>
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
             <Button variant="outlined" className="ms-auto" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchCancelledBids();setIsFetching(true)}}>Refresh</Button>
          </div> 
@@ -118,6 +146,29 @@ import {GrRefresh} from 'react-icons/gr'
             <p className="text-center m-0 p-3">Empty!</p>
           </div></>:
         <>
+        <div className="mt-3 rounded border mx-auto" style={{width:'90%',height:'auto',minHeight:'2.5rem'}}>
+          <TextField
+            placeholder="Search tender by title"
+            id="outlined-start-adornment"
+            size="small"
+            InputProps={{
+               endAdornment: <InputAdornment position="end">
+               <AiOutlineSearch  />
+               </InputAdornment>,
+            }}
+            style={{width:'100%'}}
+            onChange={(e)=>{
+             const q=e.target.value;
+             let filt=bids;
+            if(q!=""){
+               filt=bids.filter(bid=>(bid.title).includes(q))
+               setBids(filt)
+            }
+             else 
+               setBids(init)
+           }}
+     />
+    </div>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'0.1rem solid green',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
         <Button variant="outlined" className="ms-auto" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchCancelledBids();setIsFetching(true)}}>Refresh</Button>
       </div>  

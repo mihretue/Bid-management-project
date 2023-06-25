@@ -20,20 +20,6 @@ function ActiveBids () {
             </div>
       <div id="advertss" className='mb-5' >
     <h1 className='text-center fs-4 text-success '> All Tenders</h1>
-    <div className="mt-3 rounded border" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
-        <TextField
-          placeholder="Search Tender"
-          id="outlined-start-adornment"
-          size="small"
-          InputProps={{
-            endAdornment: <InputAdornment position="end">
-                <AiOutlineSearch  />
-            </InputAdornment>,
-          }}
-          style={{width:'100%'}}
-        />
-    </div>
-
     <div className= " bg-body-tertiary rounded shadow mt-3 border border-info rounded" style={{maxWidth:'100%',height:'auto',minHeight:'3rem',backgroundColor:'white'}}>
       <StickyHeadTable />
    </div>

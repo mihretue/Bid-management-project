@@ -11,16 +11,12 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import { Pane, Dialog} from 'evergreen-ui'
 
 const SupplierLayout=()=>{
-
   const {id,uid} =useParams();
   const [user,setUser]=useState({})
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
   const navigate = useNavigate();
   const [isShown, setIsShown] = useState(false)
-
-
-
   useEffect(()=>{
     fetchUserData()
  },[])

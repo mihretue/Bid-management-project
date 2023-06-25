@@ -9,6 +9,9 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import {AiOutlineSearch} from 'react-icons/ai'
 import TablePagination from '@mui/material/TablePagination';
 import { useNavigate} from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -58,13 +61,14 @@ import { dateconverter } from "../../services/date converter";
     },
   ];
   
-  export default function StickyHeadTable() {
+  export default function StickyHeadTable({search}) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows,setRows]=useState([]);
+    const [init,setInit]=useState([]);
     const [isFetching,setIsFetching]=useState(true)
     const [errorFetching,setErrorFetching]=useState(false)
-    const [sortBy,setSortBy]=useState("Title")
+    const [sortBy,setSortBy]=useState("Invitation Date")
     const navigate=useNavigate();
     useEffect(()=>{
       fetchTenders();
@@ -82,6 +86,7 @@ import { dateconverter } from "../../services/date converter";
       .then(res=>res.json())
       .then((res)=>{
         setRows(res)
+        setInit(res)
         console.log(res)
         setIsFetching(false)
       })
@@ -93,16 +98,6 @@ import { dateconverter } from "../../services/date converter";
       })
     }
 
-    const sortTenders=(e)=>{
-      setSortBy(e.target.value)
-      if(e.target.value=="Title"){
-        setSortBy("Title")
-      }else if(e.target.value=="Invitation Date"){
-        setSortBy("Invitation Date")
-      }else if(e.target.value=="Deadline"){
-        setSortBy("Deadline")
-      }else ;
-    }
     
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -129,26 +124,32 @@ import { dateconverter } from "../../services/date converter";
            </div>
     }</div>
         :<>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'0.1rem solid green',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
-         <span>
-         <p style={{margin:'0',display:'inline',marginRight:'0.5rem'}}>Sort By</p>
-         <Select
-          id="demo-simple-select-autowidth"
-          autoWidth
-          name="role"
+        <div className="mt-3 rounded border mx-auto" style={{width:'90%',height:'auto',minHeight:'2.5rem'}}>
+        <TextField
+          placeholder="Search By Title"
+          id="outlined-start-adornment"
           size="small"
-          required
-          value={sortBy}
-          onChange={sortTenders}
-          style={{marginLeft:'0',height:'1.5rem'}}
-        >
-          <MenuItem value="Title">Title</MenuItem>
-          <MenuItem value='Deadline'>Deadline</MenuItem>
-          <MenuItem value='Invitation Date'>Invitation Date</MenuItem>
-        </Select>
-        </span>
+          InputProps={{
+            endAdornment: <InputAdornment position="end">
+                <AiOutlineSearch  />
+            </InputAdornment>,
+          }}
+          style={{width:'100%',margin:'auto'}}
+          onChange={(e)=>{
+            const q=e.target.value;
+            let filt=rows;
+           if(q!=""){
+              filt=rows.filter(row=>row.title.includes(q))
+              setRows(filt)
+           }
+            else 
+              setRows(init)
+          }}
+        />
+    </div>
+      <div style={{display:'flex',justifyContent:'end',alignItems:'center',borderBottom:'0.1rem solid green',borderTopLeftRadius:'inherit',borderTopRightRadius:'inherit',backgroundColor:'white',width:'100%',height:'3rem',padding:'1rem'}}>
          <Button variant="outlined" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchTenders();setIsFetching(true)}}>Refresh</Button>
-         </div>  
+      </div>  
       <Paper sx={{maxWidth: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{height:'auto'}}>
           <Table stickyHeader aria-label="sticky table">

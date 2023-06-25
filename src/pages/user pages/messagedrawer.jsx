@@ -5,13 +5,17 @@ import { Pane, Tablist, Tab, Paragraph } from 'evergreen-ui'
 import TextField from '@mui/material/TextField';
 import { useEffect } from 'react'
 import { validator } from '../../services/validator'
+import InputAdornment from '@mui/material/InputAdornment';
+import {AiOutlineSearch} from 'react-icons/ai'
 export default function SidebarTabsExample() {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   const tabs = React.useMemo(() => ['New Message','Inbox', 'Sent'], [])
   const [inbox,setInbox]=useState([])
+  const [inInit,setInInit]=useState([])
   const [inboxIsFetching,setInboxIsFetching]=useState(false)
   const [inboxErrorFetching,setInboxErrorFetching]=useState(false)
   const [sent,setSent]=useState([])
+  const [sInit,setSInit]=useState([])
   const [isSending,setIsSending]=useState(false)
   const [sentIsFetching,setSentIsFetching]=useState(false)
   const [sentErrorFetching,setSentErrorFetching]=useState(false)
@@ -24,6 +28,7 @@ export default function SidebarTabsExample() {
     .then((res)=>{
      setInboxIsFetching(false)
         setInbox(res)
+        setInInit(res)
     }).catch((err)=>{
         setInboxErrorFetching(true)
     })
@@ -36,6 +41,7 @@ export default function SidebarTabsExample() {
     .then((res)=>{
      setSentIsFetching(false)
         setSent(res)
+        setSInit(res)
     }).catch((err)=>{
         setSentErrorFetching(true)
     })
@@ -56,7 +62,7 @@ export default function SidebarTabsExample() {
     setNewMsg({...newMsg,toError:false,toErrorM:""})
    setIsSending(true)
   if(file) {setNewMsg({...newMsg,file:file})}
-  fetch('http://localhost:3001/savemsg',{
+    fetch('http://localhost:3001/savemsg',{
     method:'post',
     headers:{'Content-Type':"application/json"},
     body:JSON.stringify(newMsg)
@@ -71,10 +77,11 @@ export default function SidebarTabsExample() {
          },3000)
     }else{
         setResult({value:"Error Sending Message, Please Try again."})
-    }
+    }})
+  .catch((err)=>{
+    setResult({value:"Error Sending Message, Please Try again."})
   })
-  .catch((err)=>{console.log(err)})
-  }}
+}}
   const [file,setFile]=useState(null)
 
   const handleFileChange=(event)=>{
@@ -127,14 +134,61 @@ export default function SidebarTabsExample() {
                :(inboxErrorFetching?
                 <div className='mt-2 container text-danger border rounded p-4 text-center'>
                  Error Fetching Inbox Messages...
-               </div>:(inbox.length==0?
+               </div>:(inbox.length==0?<>
+                <div className="mt-3 rounded border mx-auto" style={{width:'90%',height:'auto',minHeight:'2.5rem'}}>
+          <TextField
+            placeholder="Search a user by name"
+            id="outlined-start-adornment"
+            size="small"
+            InputProps={{
+               endAdornment: <InputAdornment position="end">
+               <AiOutlineSearch  />
+               </InputAdornment>,
+            }}
+            style={{width:'100%'}}
+            onChange={(e)=>{
+             const q=e.target.value;
+             let filt=inbox;
+            if(q!=""){
+               filt=inbox.filter(inb=>(inb.from_name).includes(q))
+               setInbox(filt)
+            }
+             else 
+               setInbox(inInit)
+           }}
+     />
+    </div>
                <div className='mt-2 container border rounded p-4 text-center'>
                  No Inbox Messages
-             </div>:
-                <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid my-3 mx-auto' style={{minHeight:'10rem',maxHeight:'20rem'}}>
+             </div>
+             </>:<>
+             <div className="mt-3 rounded border mx-auto" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
+          <TextField
+            placeholder="Search a message by sender's name"
+            id="outlined-start-adornment"
+            size="small"
+            InputProps={{
+               endAdornment: <InputAdornment position="end">
+               <AiOutlineSearch  />
+               </InputAdornment>,
+            }}
+            style={{width:'100%'}}
+            onChange={(e)=>{
+             const q=e.target.value;
+             let filt=inbox;
+            if(q!=""){
+               filt=inbox.filter(inb=>(inb.from_name).includes(q))
+               setInbox(filt)
+            }
+             else 
+               setInbox(inInit)
+           }}
+     />
+    </div>
+                <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid mx-auto' style={{minHeight:'5rem',maxHeight:'20rem'}}>
                  {inbox.map((inb)=>{
                        return(
-                        <div onClick={()=>{navigate(`/userpage/supplier/${id}/messages/${inb._id}`)}} className='row border mt-1' style={{height:'3rem',cursor:'pointer'}}>
+                        <div onClick={()=>{navigate(`/userpage/supplier/${id}/messages/${inb._id}`)}} className='row border' style={{height:'3rem',cursor:'pointer'}}>
                           <div className='col-2 justify-content-center align-items-center d-flex'>
                           <p className="d-inline-flex m-0 border rounded p-1" style={{backgroundColor:inb.Seen?'white':'red'}} >
                            {inb.seen==true?"Seen":"New"}
@@ -155,7 +209,8 @@ export default function SidebarTabsExample() {
                         </div>
                        )
                  })}
-               </div>))}
+               </div>
+               </>))}
             </div>
             :
             (tab=="Sent"?
@@ -171,10 +226,57 @@ export default function SidebarTabsExample() {
              <div className='mt-2 container text-danger border rounded p-4 text-center'>
              Error Fetching Sent Messages!
            </div>:(sent.length==0?
+           <>
+           <div className="mt-3 rounded border mx-auto" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
+             <TextField
+               placeholder="Search a user by recipient's name"
+               id="outlined-start-adornment"
+               size="small"
+               InputProps={{
+                  endAdornment: <InputAdornment position="end">
+                  <AiOutlineSearch  />
+                  </InputAdornment>,
+               }}
+               style={{width:'100%'}}
+               onChange={(e)=>{
+                const q=e.target.value;
+                let filt=sent;
+               if(q!=""){
+                  filt=sent.filter(snt=>(snt.to_name).includes(q))
+                  setSent(filt)
+               }
+                else 
+                  setSent(sInit)
+              }}
+        />
+       </div>
            <div className='mt-2 container border rounded p-4 text-center'>
                 No Sent Messages
-             </div>:
-                <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid my-3 mx-auto' style={{minHeight:'10rem',maxHeight:'20rem'}}>
+             </div></>:<>
+             <div className="mt-3 rounded border mx-auto" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
+             <TextField
+               placeholder="Search a user by name"
+               id="outlined-start-adornment"
+               size="small"
+               InputProps={{
+                  endAdornment: <InputAdornment position="end">
+                  <AiOutlineSearch  />
+                  </InputAdornment>,
+               }}
+               style={{width:'100%'}}
+               onChange={(e)=>{
+                const q=e.target.value;
+                let filt=sent;
+               if(q!=""){
+                  filt=sent.filter(snt=>(snt.to_name).includes(q))
+                  setSent(filt)
+               }
+                else 
+                  setSent(sInit)
+              }}
+        />
+       </div>
+                <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid my-3 mx-auto' style={{minHeight:'5rem',maxHeight:'20rem'}}>
                  {sent.map((snt)=>{
                        return(
                         <div onClick={()=>{navigate(`/userpage/supplier/${id}/messages/${snt._id}`)}} className='row border mt-1' style={{height:'3rem',cursor:'pointer'}}>
@@ -191,7 +293,7 @@ export default function SidebarTabsExample() {
                         </div>
                        )
                  })}
-               </div>))}
+               </div></>))}
             </div>
             :
           (tab=="New Message"?

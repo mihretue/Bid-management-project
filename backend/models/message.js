@@ -10,6 +10,9 @@ const messageSchema = new mongoose.Schema({
   from_name: {
       type: String,
       required: true },
+  to_name: {
+        type: String,
+        required: true },
   subject: {
         type: String,
         required: true },

@@ -60,6 +60,6 @@ else {
                 const formattedDateTime = `${day}, ${month} ${date}, ${year} ${hour12}:${minute.toString().padStart(2, "0")}:${second.toString().padStart(2, "0")} ${meridiem}`;
                 return formattedDateTime;
         }else{
-
+          ;
         }
     }   

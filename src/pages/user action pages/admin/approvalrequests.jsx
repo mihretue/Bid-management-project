@@ -20,19 +20,6 @@ const ApprovalRequests = () => {
             <div className="container" style={{height:'auto'}}>
                  <h4 className="text-center my-2">Users Waiting For Approval</h4>
                  <div>
-                 <div className="mt-3 rounded border" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
-                   <TextField
-                     placeholder="Search a user"
-                     id="outlined-start-adornment"
-                     size="small"
-                     InputProps={{
-                        endAdornment: <InputAdornment position="end">
-                        <AiOutlineSearch  />
-                        </InputAdornment>,
-                     }}
-                     style={{width:'100%'}}
-              />
-              </div>
               <div className= " bg-body-tertiary rounded shadow mt-3 border border-info rounded" style={{maxWidth:'100%',height:'auto',minHeight:'3rem',backgroundColor:'white'}}>
                 <StickyHeadTable />
               </div>

@@ -40,7 +40,7 @@ db.once("open", function () {
 app.post('/gettenders', (request, response) => {
      const {sortBy}=request.body;
      if(sortBy=="Invitation Date"){
-      advertModel.find().sort({inv:1}).
+      advertModel.find().sort({created_at:-1}).
       then((err,docs)=>{
        if(err) response.send(err)
        else response.json(docs)
@@ -199,9 +199,9 @@ app.post('/newtender', (request, response) => {
             app:input.app,
             dead:input.dead,
             bidSec:input.bsec,
-            invD:dateconverter(new Date(Date.now()),"bidpost"),
-            open:dateconverter(input.opend,"tenders2"),
-            visit:input.visitd==""?"not-applicable":dateconverter(input.visitd,"tenders2"),
+            invD:input.invD,
+            open:input.opend,
+            visit:input.visitd,
             vTax:input.vTax,
             coi:input.coi,
             lic:input.lic,
@@ -267,6 +267,7 @@ app.get('/userbyid/:id', (request, response) => {
   })
   .catch(err=>response.json(err))
 })
+
 
 app.get('/userbyprop', (request, response) => {
   const {pBody,role}=request.query;
@@ -604,41 +605,59 @@ const msgFilestorage = multer.diskStorage({
 
 const uploadMsgFile = multer({ storage: msgFilestorage });
 
+const userbyemail=(email)=>{
+    let result;
+    userModel.findOne({email:email})
+    .then((docs)=>{
+      result=docs.json()
+    })
+    .catch(err=>{
+      result=err
+    })
+  return result;
+}
+
 app.post('/savemsg', (request, response) => {
   const newMsg=request.body;
-  if(newMsg.file){
-  uploadMsgFile.single('file')(request,response,(err=>{
-    if(err){
-      res.json({res:"error"});
-    }else{
-      const msg=new messageModel({
-        to:newMsg.to,
-        from:newMsg.from,
-        from_name:newMsg.from_name,
-        subject:newMsg.subject,
-        body:newMsg.body,
-        file:newMsg.file.filename
-      });
-      msg.save()
-      .then((res)=>{
-        response.json({res:"ok"})
-      })
-      .catch((err)=>{response.json(err)})
-    }
-  }))}else{
-    const msg=new messageModel({
-      to:newMsg.to,
-      from:newMsg.from,
-      from_name:newMsg.from_name,
-      subject:newMsg.subject,
-      body:newMsg.body,
-      file:""
-    });
-    msg.save()
-    .then((res)=>{
-      response.json({res:"ok"})
-    })
-    .catch((err)=>{response.json(err)})
+  if(userbyemail(newMsg.to)==null || userbyemail(newMsg.to)=="error"){
+   response.json({res:"error"})
+  }else{
+    if(newMsg.file){
+      uploadMsgFile.single('file')(request,response,(err=>{
+        if(err){
+          res.json({res:"error"});
+        }else{
+          const msg=new messageModel({
+            to:newMsg.to,
+            from:newMsg.from,
+            from_name:newMsg.from_name,
+            to_name:newMsg.to_name,
+            subject:newMsg.subject,
+            body:newMsg.body,
+            file:newMsg.file.filename
+          });
+          msg.save()
+          .then((res)=>{
+            response.json({res:"ok"})
+          })
+          .catch((err)=>{response.json(err)})
+        }
+      }))}else{
+        const msg=new messageModel({
+          to:newMsg.to,
+          from:newMsg.from,
+          from_name:newMsg.from_name,
+          to_name:userbyemail(newMsg.to).json().fName+userbyemail(newMsg.to).json().lName,
+          subject:newMsg.subject,
+          body:newMsg.body,
+          file:""
+        });
+        msg.save()
+        .then((res)=>{
+          response.json({res:"ok"})
+        })
+        .catch((err)=>{response.json(err)})
+      }
   }
     }
 )

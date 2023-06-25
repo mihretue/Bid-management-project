@@ -69,7 +69,7 @@ const BidProposal=()=>{
     <div style={{minHeight:'10rem'}} className='d-flex flex-column justify-content-center align-items-center mb-5 p-2 container border rounded'>
         <h5 className="text-center">Attach Your Bid Proposal here.</h5>
         <form onSubmit={handleFileSubmit} className="d-flex flex-column justify-content-center align-items-center">
-          <input id="file_input" hidden type="file" onChange={handleFileChange} />
+          <input id="file_input" hidden type="file"  accept='.pdf' onChange={handleFileChange} />
           <button disabled={uploaded?true:false} type="button" className="btn btn-primary">
           <label className="text-white" htmlFor="file_input">
             Attach Bid Proposal ( pdf format )

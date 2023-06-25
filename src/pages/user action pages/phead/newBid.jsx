@@ -123,10 +123,11 @@ const Newbid = () => {
      }else{
         input.idError=false
         input.idErrorM=""
-        // input.dead=dateconverter(deadline,"bidpost")
-        // input.opend=dateconverter(opSchedule,"bidpost")
-        // if(siteVisit!=='')
-        //    input.visitd=dateconverter(siteVisit,"bidpost")
+        input.dead=dateconverter(deadline,"tenders2")
+        input.opend=dateconverter(opSchedule,"tenders2")
+        input.invD=dateconverter(Date.now(),"tenders2")
+        input.visitd=siteVisit==""?"not-applicable":dateconverter(siteVisit,"tenders2")
+        setInput({...input,dead:deadline,opend:opSchedule,visitd:siteVisit,invD:dateconverter(new Date(),"tenders2"),visitd:siteVisit==""?"not-applicable":dateconverter(siteVisit,"tenders2")})
      fetch('http://localhost:3001/newtender',{
       method:"POST",
       headers:{'Content-Type':'application/json'},
@@ -220,7 +221,7 @@ const Newbid = () => {
           label="Procurement ID"
           name="id"
           type="text"
-          helperText={input.idErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif",fontWeight:'bold'}}>Procurement ID example: 'OPE-NCB-G-0029-2015-BID'</p> }
+          helperText={input.idErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"'Raleway', sans-serif",fontWeight:'bold'}}>Procurement ID example: 'OPE-NCB-G-0029-2015-BID'</p> }
           required
           size="small"
           style={{width:'100%'}}
@@ -236,7 +237,7 @@ const Newbid = () => {
           label="Title"
           name="title"
           type="text"
-          helperText={input.titleErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif",fontWeight:'bold'}}>Procurement title, example :'TextBooks'</p> }
+          helperText={input.titleErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"'Raleway', sans-serif",fontWeight:'bold'}}>Procurement title, example :'TextBooks'</p> }
           required
           size="small"
           style={{width:'100%'}}
@@ -252,7 +253,7 @@ const Newbid = () => {
           label="Category"
           name="cat"
           type="text"
-          helperText={input.catErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif",fontWeight:'bold'}}>Procurement Category, example: Goods</p> }
+          helperText={input.catErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"'Raleway', sans-serif",fontWeight:'bold'}}>Procurement Category, example: Goods</p> }
           required
           size="small"
           style={{width:'100%'}}
@@ -275,7 +276,7 @@ const Newbid = () => {
           size="small"
           required
           error={input.appError}
-          helperText={input.appErrorM ||<p style={{margin:'0',fontSize:'1rem',fontFamily:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif",fontWeight:'bold'}}>Choose Market Approach</p> }
+          helperText={input.appErrorM ||<p style={{margin:'0',fontSize:'1rem',fontFamily:"'Raleway', sans-serif",fontWeight:'bold'}}>Choose Market Approach</p> }
 
         >
           <MenuItem value='National'>National</MenuItem>
@@ -405,73 +406,73 @@ const Newbid = () => {
         <TextareaField
          name="vTax"
          value={input.vTax} 
-        label="Valid tax clearance certificate"
+        label={<p style={{fontFamily:"'Adamina', serif",fontWeight:'6px'}}>Valid tax clearance certificate</p>}
         required
-        hint="Valid tax clearance certificate"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}} className="text-red"> Valid tax clearance certificate</p>}
         onChange={handleChange}
          />
          <TextareaField
          name="coi"
          value={input.coi} 
-        label="Conflict of Interest"
+        label={ <p style={{fontFamily:"'Adamina',serif"}}> Conflict of Interest</p>}
         required
-        hint="Conflict of Interest"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>Conflict of Interest</p>}
         onChange={handleChange}
          />
          <TextareaField
          name="lic"
          value={input.lic} 
-        label="Valid trade license or business organization registration certificate"
+      label={<p style={{fontFamily:"'Adamina', serif"}}>Valid trade license or business organization registration certificate</p>}
         required
-        hint="Valid trade license or business organization registration certificate"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>Valid trade license or business organization registration certificate</p>}
         onChange={handleChange}
          />
          <TextareaField
          name="lg"
          value={input.lg} 
-        label="Eligibility by decision of the FPPA"
+      label={<p style={{fontFamily:"'Adamina', serif"}}>Eligibility by decision of the FPPA</p>}
         required
-        hint="Eligibility by decision of the FPPA"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>Eligibility by decision of the FPPA</p>}
         onChange={handleChange}
          />
          <TextareaField
          name="vent"
          value={input.vent} 
-        label="Form Data on Joint Ventures"
+        label={<p style={{fontFamily:"'Adamina', serif"}}>Form Data on Joint Ventures</p>}
         required
-        hint="Form Data on Joint Ventures"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>Form Data on Joint Ventures</p>}
         onChange={handleChange}
          />
          <TextareaField
          name="nat"
          value={input.nat} 
-        label="Nationality"
+        label={<p style={{fontFamily:"'Adamina', serif"}}>Nationality</p>}
         required
-        hint="Nationality"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>Nationality</p>}
         onChange={handleChange}
          />
          <TextareaField
          name="vat"
          value={input.vat} 
-        label="VAT registration certificate"
+        label={<p style={{fontFamily:"'Adamina', serif"}}>VAT registration certificate</p>}
         required
-        hint="VAT registration certificate"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>VAT registration certificate</p>}
         onChange={handleChange}
          />
          <TextareaField
          name="gow"
          value={input.gow} 
-        label="Government Owned Entity"
+        label={<p style={{fontFamily:"'Adamina', serif"}}>Government Owned Entity</p>}
         required
-        hint="Government Owned Entity"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>Government Owned Entity</p>}
         onChange={handleChange}
          />
          <TextareaField
          name="tc"
          value={input.tc} 
-        label="Terms and Conditions"
+        label={<p style={{fontFamily:"'Adamina', serif"}}>Terms and Conditions</p>}
         required
-        hint="Terms and Conditions"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>Terms and Conditions</p>}
         onChange={handleChange}
          />
        </form>) 
@@ -482,17 +483,18 @@ const Newbid = () => {
           <TextareaField
          name="pfee"
          value={input.pfee} 
-        label="Participation Fee"
+        label={<p style={{fontFamily:"'Adamina', serif"}}>Participation Fee</p>}
         required
-        hint="Participation Fee"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>Participation Fee</p>}
+
         onChange={handleChange}
          />
          <TextareaField
          name="bsec"
          value={input.bsec} 
-        label="Bid Security Amount"
+        label={<p style={{fontFamily:"'Adamina', serif"}}>Bid Security Amount</p>}
         required
-        hint="Bid Security Amount"
+        hint={<p style={{fontFamily:"'Playfair Display', serif"}}>Bid Security Amount</p>}
         onChange={handleChange}
          />
         </form>
@@ -501,7 +503,7 @@ const Newbid = () => {
       return(<div style={{minHeight:'10rem'}}>
         <h5 className="text-center">Attach The Bid Document here.</h5>
         <form onSubmit={handleFileSubmit} className="d-flex flex-column justify-content-center align-items-center">
-          <input id="file_input" hidden type="file" onChange={handleFileChange} />
+          <input id="file_input" hidden type="file" accept=".pdf" onChange={handleFileChange} />
           <button type="button" className="btn btn-primary">
           <label className="text-white" htmlFor="file_input">
             Attach Bid Document ( pdf format )

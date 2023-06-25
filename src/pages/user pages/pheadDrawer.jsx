@@ -163,7 +163,7 @@ export default function PheadDrawer() {
           >
             {tab=="Manage Tenders"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
-               <h3 id='pro' className='m-0 text-center fs-6'>Manage Bids</h3>
+               <h3 id='pro' className='m-0 text-center fs-6'>Manage Tenders</h3>
                <div className='row g-3 justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
                <div id='pro' onClick={() => {navigate(`/userpage/phead/${id}/manage-bids/post-bid`)}} style={{cursor:"pointer"}}  className='cursor-pointer col-12 d-flex flex-column align-items-center justify-content-center'>
                     <MdAssignmentAdd style={{width:'3rem',height:'3rem',color:'#2fdb18'}} />
@@ -190,21 +190,26 @@ export default function PheadDrawer() {
             :
             (tab=="Me"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
-               <h3 className='m-0 text-center fs-6 mt-1'>Me</h3>
-               <div className='mx-auto d-flex flex-column justify-content-center align-items-center' style={{minHeight:'10rem',height:'auto'}}>
-                 <ul className='list-unstyled mt-3 w-100'>
-                   <div className='card' >
-                   <li className='card-body'>Total Tenders  <br/><p className='m-0 fw-bold card-text d-inline'>{BidsisFetching?"fetching":(errorBidsFetching?"error fetching":bids.length)}</p></li>
-                   </div>
-                   <li>Your Active Tenders : <p className='m-0 fw-bold d-inline'>{AcBidsisFetching?"fetching":(errorAcBidsFetching?"error fetching":ACbids.length)}</p></li>
-                   <li>Cancelled Tenders : <p className='m-0 fw-bold d-inline'>{CBidsisFetching?"fetching":(errorCBidsFetching?"error fetching":Cbids.length)}</p></li>
-                   <li>Closed Tenders : <p className='m-0 fw-bold d-inline'>{ClBidsisFetching?"fetching":(errorClBidsFetching?"error fetching":Clbids.length)}</p></li>
-                   <li></li>
-                 </ul><hr className='w-100' />
-                 <h5 className='mt-4'>Account Status : 
-                 <p className={user.status=="active"?'m-0 ms-2 d-inline text-success':'m-0 ms-2 d-inline text-danger'}>{user.status}</p>
-                 </h5>
-               </div>
+              <h3 className='m-0 text-center fs-6 mt-1'>Me</h3>
+              <div className='container mx-auto d-flex flex-column justify-content-center align-items-center' style={{minHeight:'10rem',height:'auto'}}>
+                <ul className='list-unstyled mt-3 w-100 row gap-3'>
+                  <div className='col col-md-6 shadow col-sm-12 border rounded border-success' style={{width:'12rem'}}>
+                  <li className='card-body'><span style={{fontFamily:"'Adamina',serif"}}>Total Tenders </span> <br/><p className='m-0 fw-bold card-text d-inline'>{BidsisFetching?"fetching":(errorBidsFetching?"error fetching":bids.length)}</p></li>
+                  </div>
+                  <div className='col col-md-6 col-sm-12  border rounded border-success shadow align-item-right justify-content-right' style={{width:'12rem',}}>
+                    <li className='card-body'><span style={{fontFamily:"'Adamina',serif"}}> Your Active Tenders </span> <br/><p className='m-0 fw-bold d-inline'>{AcBidsisFetching?"fetching":(errorAcBidsFetching?"error fetching":ACbids.length)}</p></li>
+                  </div>
+                  <div className='col col-md-6 col-sm-12 border rounded border-danger shadow ' style={{width:'12rem',}}>
+                    <li className='card-body'><span style={{fontFamily:"'Adamina',serif"}}>Cancelled Tenders </span>  <br/><p className='m-0 fw-bold d-inline'>{CBidsisFetching?"fetching":(errorCBidsFetching?"error fetching":Cbids.length)}</p></li>
+                  </div>
+                  <div className='col col-md-6 col-sm-12  border rounded border-success shadow' style={{width:'12rem'}} >
+                    <li className='card-body' ><span style={{fontFamily:"'Adamina',serif"}}> Closed Tenders  </span><br/><p className='m-0 fw-bold d-inline'>{ClBidsisFetching?"fetching":(errorClBidsFetching?"error fetching":Clbids.length)}</p></li>
+                  </div>
+                </ul><hr className='w-100' />
+                <h5 className='mt-4' style={{fontFamily:"'Titillium Web', sans-serif"}}>Account Status : 
+                <p className={user.status=="active"?'m-0 ms-2 d-inline text-success':'m-0 ms-2 d-inline text-danger'} style={{fontFamily: "'Playfair Display', serif"}}>{user.status}</p>
+                </h5>
+              </div>
             </div>:
             (tab=="Other"?
             <p>heh</p>:

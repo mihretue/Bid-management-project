@@ -19,12 +19,13 @@ const Login=()=>{
     const [input , setInput] = useState({email:"",pass:"",error:false,errorMessage:"",emError:false,pError:false,emErrorM:'',pErrorM:''})
 
     const [isLoggingIn,setIsLoggingIn]=useState(false)
-    const [errorLoggingIn,setErrorLoggingIn]=useState()
+    const [errorLoggingIn,setErrorLoggingIn]=useState(false)
 
     const handleClickShowPassword = (a) =>{
     setShowPassword((show) => !show);
 
   } 
+
 const handleChange = (event) => {
     const {name,value}=event.target;
     setInput({...input,[name]:value})
@@ -44,6 +45,7 @@ const handleChange = (event) => {
         if(res.status=="banned"){
           navigate('/accountbanned')
         }else{
+          // console.log(res)
           if(res.status=="active"){
             switch(res.role) {
               case 'ppa it officer':

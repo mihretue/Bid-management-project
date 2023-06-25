@@ -1,6 +1,7 @@
 import { useParams,Link,useNavigate } from 'react-router-dom'
 import Footer from '../../../components/footer'
 import { useEffect,useState } from 'react'
+
 const PostBidAward=()=>{
     const {id,bid}=useParams()
     useEffect(()=>{fetchBid()},[])
@@ -120,7 +121,17 @@ return(<>{isChecking?
                 <li>Name : <p className="m-0 d-inline fw-bold">{endorser.fName + ' ' +endorser.lName}</p></li>
                 <li>Email : <p className="m-0 d-inline fw-bold">{endorser.email}</p></li>
             </ul><hr className="w-100" />
-            
+            <form onSubmit={handleFileSubmit} className="d-flex flex-column justify-content-center align-items-center">
+          <input id="file_input" hidden type="file" accept=".pdf" onChange={handleFileChange} />
+          <button type="button" className="btn btn-primary">
+          <label className="text-white" htmlFor="file_input">
+            Attach Bid Document ( pdf format )
+          </label>
+          </button>
+          <p className="m-0">{file&&"File Attached."}</p>
+          <button type="submit" className="mt-2 btn btn-secondary">Upload</button>
+          <p className="m-0">{uploading?"Uploading File":(errorUploading?"Error Uploading File":uploaded&&"Successfully Uploaded!")}</p>
+        </form>
          </div>
       </div>}
     </>

@@ -20,7 +20,9 @@ import StickyHeadTable from '../../../components/Approved Bids Table'
             <Link className="text-decoration-none" to={`/userpage/pendch/${id}`}>Back to Manage Bids</Link>
            </a>
         </div>
-        <StickyHeadTable />
+        <div className= " bg-body-tertiary rounded shadow mt-3 border border-info rounded" style={{maxWidth:'100%',height:'auto',minHeight:'3rem',backgroundColor:'white'}}>
+            <StickyHeadTable />
+        </div>
     </div>
     <Footer />
     </>

@@ -13,6 +13,9 @@ import {BiError} from 'react-icons/bi'
 import Button from '@mui/material/Button';
 import {BsArrowCounterclockwise} from 'react-icons/bs'
 import {GrRefresh} from 'react-icons/gr'
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import {AiOutlineSearch} from 'react-icons/ai'
 
   const columns = [
     { 
@@ -55,6 +58,7 @@ import {GrRefresh} from 'react-icons/gr'
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows,setRows]=useState([]);
+    const [init,setInit]=useState([]);
     const [isFetching,setIsFetching]=useState(true)
     const [errorFetching,setErrorFetching]=useState(false)
     const navigate=useNavigate();
@@ -68,6 +72,7 @@ import {GrRefresh} from 'react-icons/gr'
       .then((res)=>{
         console.log(res)
         setRows(res)
+        setInit(res)
         setIsFetching(false)
       })
       .catch((err)=>{
@@ -102,6 +107,29 @@ import {GrRefresh} from 'react-icons/gr'
            </div>
     }</div>
         :(rows.length>0?<>
+          <div className="mt-3 rounded border mx-auto" style={{width:'90%',height:'auto',minHeight:'2.5rem'}}>
+      <TextField
+        placeholder="Search a user"
+        id="outlined-start-adornment"
+        size="small"
+        InputProps={{
+           endAdornment: <InputAdornment position="end">
+           <AiOutlineSearch  />
+           </InputAdornment>,
+        }}
+        style={{width:'100%'}}
+        onChange={(e)=>{
+         const q=e.target.value;
+         let filt=rows;
+        if(q!=""){
+           filt=rows.filter(row=>(row.fName+" "+row.lName).includes(q))
+           setRows(filt)
+        }
+         else 
+           setRows(init)
+       }}
+ />
+</div>
       <button className="ms-auto m-1 d-block btn float-right btn-secondary" variant="outlined" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchAccounts();setIsFetching(true)}}>Refresh List</button>
       <Paper sx={{maxWidth: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{height:'auto'}}>
@@ -162,11 +190,35 @@ import {GrRefresh} from 'react-icons/gr'
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      </>:
+      </>:<>
+      <div className="mt-3 rounded border mx-auto" style={{width:'90%',height:'auto',minHeight:'2.5rem'}}>
+      <TextField
+        placeholder="Search a user by name"
+        id="outlined-start-adornment"
+        size="small"
+        InputProps={{
+           endAdornment: <InputAdornment position="end">
+           <AiOutlineSearch  />
+           </InputAdornment>,
+        }}
+        style={{width:'100%'}}
+        onChange={(e)=>{
+         const q=e.target.value;
+         let filt=rows;
+        if(q!=""){
+           filt=rows.filter(row=>(row.fName+" "+row.lName).includes(q))
+           setRows(filt)
+        }
+         else 
+           setRows(init)
+       }}
+ />
+</div>
       <div>
         <button className="ms-auto m-1 d-block btn float-right btn-secondary" variant="outlined" endIcon={<GrRefresh />} style={{textTransform:"none"}} onClick={()=>{fetchAccounts();setIsFetching(true)}}>Refresh List</button>
         <p className="pb-5 m-0 text-center pt-2 fs-6">No Entry Found!</p>
       </div>
+      </>
       )
     );
  
