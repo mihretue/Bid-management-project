@@ -26,6 +26,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import {BiError} from 'react-icons/bi'
 import Footer from "../components/footer";
 import { dateconverter } from "../services/date converter";
+import { datefinder } from "../services/date finder";
 export default function (props) {
     useEffect(()=>{document.title='Cheretanet | Sign Up'})
     const [ user, setUser ] = useState([]);
@@ -52,7 +53,7 @@ export default function (props) {
     );
 
   const navigate=useNavigate()
-  const [input , setInput] = useState({fName:"" ,lName:"",email:"",pass:"",cPass:"",role:"",publicBody:"",bDay: '' ,userName:'',error:false,errorMessage:"",uError:false,emError:false,pError:false,cpError:false,bdError:false,uErrorM:'',emErrorM:'',pErrorM:'',cpErrorM:'',bdErrorM:'',agreed:false})
+  const [input , setInput] = useState({fName:"" ,lName:"",email:"",pass:"",cPass:"",role:"",pBody:"",bDay: '' ,userName:'',error:false,errorMessage:"",uError:false,emError:false,pError:false,cpError:false,bdError:false,uErrorM:'',emErrorM:'',pErrorM:'',cpErrorM:'',bdErrorM:'',agreed:false,regTime:datefinder()})
     
   const [showPassword, setShowPassword] = React.useState(false);
   const [showCPassword, setShowCPassword] = React.useState(false);
@@ -256,7 +257,6 @@ export default function (props) {
           required
         >
           <MenuItem value='Bidder'>Bidder</MenuItem>
-          <MenuItem value="PPA IT officer">PPA IT officer</MenuItem>
           <MenuItem value='Procurement Department Head'>Procurement Department Head</MenuItem>
           <MenuItem value='Procurement Endorsing Committee Head'>Procurement Endorsing Committee Head</MenuItem>
 
@@ -269,8 +269,8 @@ export default function (props) {
           error={false}
           id="outlined-error-helper-text"
           label="Public Body"
-          value={input.publicBody}
-          name="publicBody"
+          value={input.pBody}
+          name="pBody"
         //   defaultValue="Hello World"
           helperText={input.errorMessage || <p style={{margin:'0',fontSize:'1rem',fontFamily:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif",fontWeight:'bold'}}>Which Public body are you from? example: Ministry of Education</p> }
           required
@@ -354,7 +354,7 @@ helperText={input.cpErrorM || <p style={{margin:'0',fontSize:'1rem',fontFamily:"
           />
           </div> 
           <div className="form-group mt-3">
-             <FormControlLabel control={<Checkbox id="agreed" name="agreed" value={input.agreed} onChange={handleChange} />} label={<p style={{margin:'0',display:'inline',fontSize:'0.9rem'}}>Agree to the <Link to="#">Terms And Conditions</Link> Of <p style={{margin:'0',display:'inline',color:'green'}}>cheretanet</p></p>} />
+             <FormControlLabel control={<Checkbox id="agreed" name="agreed" value={input.agreed} onChange={handleChange} />} label={<p style={{margin:'0',display:'inline',fontSize:'0.9rem'}}>Agree to the Terms And Condition Of <p style={{margin:'0',display:'inline',color:'green'}}>cheretanet</p></p>} />
           </div>  
             <div className="d-grid gap-2 mt-3">
             <LoadingButton

@@ -82,7 +82,7 @@ const navigate=useNavigate()
       .then((res)=>res.json())
       .then((res)=>{
         console.log(res)
-        res.filter(bIt=>{return bIt.bidderStatus=="bidding"})
+        res=res.filter(bIt=>{return bIt.bidderStatus=="bidding"})
         setactiveBids(as.filter(bid=>{return res.some(biddingItem=>biddingItem.bidId==bid._id)}))
         fetchCancelledBids()
       })
@@ -114,7 +114,7 @@ const navigate=useNavigate()
       fetch(`http://localhost:3001/getbidding/?${q}`)
       .then((res)=>res.json())
       .then((res)=>{
-        res.filter(bIt=>{return bIt.bidderStatus=="cancelled"})
+       res=res.filter(bIt=>{return bIt.bidderStatus=="cancelled"})
         setcancelledBids(cs.filter(bid=>{return res.some(biddingItem=>biddingItem.bidId==bid._id)}))
         fetchClosedBids()
       })
@@ -172,7 +172,6 @@ const navigate=useNavigate()
 
     const Email = JSON.parse(localStorage.getItem('user')).email;
     const Name= JSON.parse(localStorage.getItem('user')).fName;
-    localStorage.removeItem('user');
   return (<>
     <Pane className='row mb-5 border p-3 shadow rounded container mx-auto  pb-5' style={{height:'auto'}}>
       <Tablist className="col-md-3 col-12 mt-1" style={{height:'auto'}}>
@@ -211,19 +210,19 @@ const navigate=useNavigate()
                <div className='row g-3 justify-between container-fluid my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
                <div style={{cursor:'pointer'}} i onClick={()=>{navigate(`/userpage/supplier/${id}/all-bids`)}} className='col-6 d-flex flex-column align-items-center justify-content-center'>
                         <FaListAlt style={{width:'4rem',height:'4rem',color:"blue"}} />
-                        <p style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>All Tenders You <br/><span className='text-center ml-2'>Involved In</span> </p>
+                        <p className='text-center' style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>All Tenders You <br/><span className='text-center ml-2'>Involved In</span> </p>
                 </div>
                  <div style={{cursor:'pointer'}} onClick={()=>{navigate(`/userpage/supplier/${id}/bids-in-progress`)}} className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center' >
                     <GrInProgress style={{width:'2.5rem',height:'3rem',color:"yellowgreen"}} />
-                      <p style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>Bids in Progress</p>
+                      <p className='text-center' style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>Bids in Progress</p>
                  </div>
                  <div style={{cursor:'pointer'}} onClick={()=>{navigate(`/userpage/supplier/${id}/cancelled-bids`)}} className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
                       <MdOutlineCancelPresentation style={{width:'4rem',height:'4rem',color:"red"}} />
-                      <p style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>Cancelled Bids</p>
+                      <p className='text-center' style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>Cancelled Bids</p>
                 </div>
                 <div style={{cursor:'pointer'}} onClick={()=>{navigate(`/userpage/supplier/${id}/closed-bids`)}} className='col-6 ms-auto ms-md-0 d-flex flex-column align-items-center justify-content-center'>
                     <IoCheckmarkDoneCircleOutline style={{width:'4rem',height:'4rem',color:"darkslategray"}} /><br/> 
-                    <p style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>Closed Bids</p>
+                    <p className='text-center' style={{fontWeight:"bold",fontFamily:"'Adamina',serif"}}>Closed Bids</p>
                 </div>
               </div>
             </div>

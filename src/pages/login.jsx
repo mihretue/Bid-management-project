@@ -8,7 +8,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { validator } from "../services/validator";
 import LoadingButton from '@mui/lab/LoadingButton';
 import { BiError } from "react-icons/bi";
-import {AiOutlineLoading3Quarters} from 'react-icons/ai'
 import Footer from "../components/footer";
 import logo6 from "../resources/logo.ico";
 
@@ -17,15 +16,12 @@ const Login=()=>{
     const navigate=useNavigate()
     const [showPassword, setShowPassword] = useState(false);
     const [input , setInput] = useState({email:"",pass:"",error:false,errorMessage:"",emError:false,pError:false,emErrorM:'',pErrorM:''})
-
     const [isLoggingIn,setIsLoggingIn]=useState(false)
     const [errorLoggingIn,setErrorLoggingIn]=useState(false)
-
     const handleClickShowPassword = (a) =>{
     setShowPassword((show) => !show);
 
   } 
-
 const handleChange = (event) => {
     const {name,value}=event.target;
     setInput({...input,[name]:value})
@@ -45,17 +41,17 @@ const handleChange = (event) => {
         if(res.status=="banned"){
           navigate('/accountbanned')
         }else{
-          // console.log(res)
+          console.log(res)
           if(res.status=="active"){
             switch(res.role) {
-              case 'ppa it officer':
+              case 'ppa it officer':{
                 localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/admin/${res._id}`)
-                break;
-              case 'bidder':
+                break;}
+              case 'bidder':{
                 localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/supplier/${res._id}`)
-                break;
+                break;}
               case 'procurement department head':
                 localStorage.setItem('user',JSON.stringify({id:res._id,fName:res.fName,lName:res.lName,name:res.fName+' '+res.lName,pBody:res.pBody,approved:res.approved,bDay:res.bDay,email:res.email,pass:res.pass,role:res.role,status:res.status,uName:res.uName}))
                 navigate(`/userpage/phead/${res._id}`)
@@ -199,9 +195,9 @@ return(<>
           
           </div>
             <div></div>
-            <p className="text-center mt-2">
+            {/* <p className="text-center mt-2">
               <a href="#" style={{color:'brown'}}>Forgot password?</a>
-            </p>
+            </p> */}
           </div>
         </form>
       </div>

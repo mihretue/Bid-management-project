@@ -105,6 +105,45 @@ app.post('/getbids/:id', (request, response) => {
   })
 });
 
+app.post('/getapprreq', (request, response) => {
+  const pbody = request.body.ent
+  advertModel.find({ent:pbody,approvalRequested:true,approved:false})
+  .then((err,docs)=>{
+   if(err) response.send(err)
+   else
+    response.json({docs})
+  })
+});
+
+app.post('editprofile',(req,res)=>{
+  const data=request.body;
+  userModel.findOneAndUpdate({_id:data._id},
+  {$set:{ fName:data.fName,lName:data.lName,email:data.email,uName:data.uName,bDay:data.bDay}},{new:true}
+  )
+  .then(upd=>{ 
+      messageModel.findOneAndUpdate(
+        {to:data.oemail},
+        {$set:{to:data.email}},{new:true} 
+        )
+        .then((up)=>{
+          messageModel.findOneAndUpdate(
+            {from:data.oemail},
+            {$set:{from:data.email,from_name:data.fName+' '+data.lName}},{new:true} 
+            ).then((r)=>{
+              biddingModel.findOneAndUpdate({bidderId:data._id},
+                {$set:{ bidderName:data.fName+""+data.lName}},{new:true}
+                )
+                .then(u=>{
+                     resjson({res:"ok"})
+                })
+                .catch(err=>res.json(err))
+            })
+        })
+        .catch((err)=>{res.json(err)})
+  })
+  .catch((err)=>{res.json(err)})
+})
+
 app.get('/getbidsPU/:id', (request, response) => {
   const status = request.params.id
   advertModel.find({status:status})
@@ -163,10 +202,12 @@ app.post('/signup', (request, response) => {
             uName:input.userName,
             role:input.role,
             bDay:input.bDay,
+            pBody:input.pBody=""?"no":input.pBody,
             email:input.email,
             pass:input.pass,
             approved:false,
-            status:'not-approved'
+            status:'not-approved',
+            regTime:input.regTime
           });
           newUser.save()
           .then((res)=>{
@@ -605,62 +646,33 @@ const msgFilestorage = multer.diskStorage({
 
 const uploadMsgFile = multer({ storage: msgFilestorage });
 
-const userbyemail=(email)=>{
-    let result;
-    userModel.findOne({email:email})
-    .then((docs)=>{
-      result=docs.json()
-    })
-    .catch(err=>{
-      result=err
-    })
-  return result;
-}
+app.post('/uploadmsgfile' ,(req, res) => {
+  uploadMsgFile.single('file')(req,res,(err=>{
+    if(err){
+      res.json({res:"error"});
+    }else{
+      res.json({res:req.file.filename})
+    }
+  }))
+  
+});
 
 app.post('/savemsg', (request, response) => {
   const newMsg=request.body;
-  if(userbyemail(newMsg.to)==null || userbyemail(newMsg.to)=="error"){
-   response.json({res:"error"})
-  }else{
-    if(newMsg.file){
-      uploadMsgFile.single('file')(request,response,(err=>{
-        if(err){
-          res.json({res:"error"});
-        }else{
-          const msg=new messageModel({
-            to:newMsg.to,
-            from:newMsg.from,
-            from_name:newMsg.from_name,
-            to_name:newMsg.to_name,
-            subject:newMsg.subject,
-            body:newMsg.body,
-            file:newMsg.file.filename
-          });
-          msg.save()
-          .then((res)=>{
-            response.json({res:"ok"})
-          })
-          .catch((err)=>{response.json(err)})
-        }
-      }))}else{
         const msg=new messageModel({
           to:newMsg.to,
           from:newMsg.from,
           from_name:newMsg.from_name,
-          to_name:userbyemail(newMsg.to).json().fName+userbyemail(newMsg.to).json().lName,
           subject:newMsg.subject,
           body:newMsg.body,
-          file:""
+          file:newMsg.fl
         });
         msg.save()
         .then((res)=>{
-          response.json({res:"ok"})
+          response.json({res:'ok'})
         })
         .catch((err)=>{response.json(err)})
-      }
-  }
-    }
-)
+  })
 
 app.get('/getmessage/:id', (request, response) => {
   const mid=request.params.id;

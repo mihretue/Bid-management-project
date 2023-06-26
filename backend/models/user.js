@@ -10,7 +10,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     lowercase:true
-
   },
   uName: {
     type: String,
@@ -48,10 +47,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     default:"not-approved"
+  },regTime:{
+    type: String,
+    required: true,
   }
 },{collection:'Users'});
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model("userModel", UserSchema);
 
 
 module.exports = User;

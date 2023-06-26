@@ -241,7 +241,6 @@ return (<>
             
           </Table>
         </TableContainer>
-        
       </Paper>
       <hr className=" w-100" />
       <div className="container d-flex flex-column justify-content-center align-items-center rounded mt-3 " style={{width:'90%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
@@ -252,16 +251,6 @@ return (<>
           </Button>
         </div>
       </div>
-      <hr className="w-100 " style={{width:'10px'}} />
-      <div className="container  mt-3 mb-3 d-flex justify-content-center align-items-center flex-column  rounded mt-3" style={{width:'80%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
-      <h6 className="text-center" >Actions Related to Applicants</h6>
-      <div className="w-100 hstack gap-2 container-fluid g-2 mb-2 justify-content-center align-items-center">
-                <Button  className="col-lg-6 d-flex justify-content-center align-items-center "  iconBefore={PersonIcon}>
-                View Applicants
-                </Button>
-                
-            </div>
-         </div>
       </div>}
       <Footer />
       </>)

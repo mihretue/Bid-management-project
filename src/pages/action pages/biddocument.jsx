@@ -25,7 +25,7 @@ const Biddocument = () => {
     {localStorage.getItem('user')?
     <div className="container d-flex flex-column justify-content-center align-items-center border rounded mb-5" style={{minHeight:'15rem',height:'auto'}}>
         <h6 className="text-center pt-4 word-break mx-auto" style={{maxWidth:"20rem"}}>To apply for this bid, you need to download and view the bid document </h6>
-        <a disabled download={(!isGetting&&!errorGetting)} href={(isGetting || errorGetting)?'/#':`backend/uploads/biddocs/${bidDocument}`} >
+        <a disabled download={(!isGetting&&!errorGetting)} href={(isGetting || errorGetting)?'/#':`/../../../backend/uploads/biddocs/${bidDocument}`} >
             <button onClick={()=>{setTimeout(()=>{document.getElementById('cont_btn').hidden=false},5000)}} className="btn btn-primary">Download Bid Document</button>
         </a>
         <p>{isGetting?"Getting Bid Document...":(errorGetting?"Error Getting Bid Document, Plese Reload This Page":"")}</p>

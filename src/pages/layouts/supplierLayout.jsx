@@ -47,19 +47,15 @@ return(
           </Nav> 
           <Nav className="me-3">
             <Nav.Link as={Link} to={"./about"} >About</Nav.Link>
-            <Nav.Link as={Link} to={"./contact"} >Contact Us</Nav.Link>
+            <Nav.Link onClick={()=>{
+              window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+            }} >Contact Us</Nav.Link>
           </Nav>
-          <Nav className="btn-success">
-              <DropdownButton id="dropdown-basic-button" title={JSON.parse(localStorage.getItem('user')).fName}>
+          <Nav style={{ fontWeight: 'bold' }}>
+          <DropdownButton id="dropdown-basic-button  "  title={JSON.parse(localStorage.getItem('user')).fName} >
                 <Dropdown.Item>
-                  <Nav.Link as={Link}  to={"./pages/user action pages/bidder/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
-                    <BsGear className='mx-1' />
-                      Settings
-                  </Nav.Link>
-                </Dropdown.Item>
-                <Dropdown.Item >
                     <Nav.Link  className="justify-content-center text-black ">
-                    <Pane className="mx-auto col-6 mt-2 d-flex justify-content-center">
+                      <Pane className="col-12 d-flex">
       <Dialog
         isShown={isShown}
         title="Confirm Action"
@@ -68,20 +64,18 @@ return(
         onCancel={() => {setIsShown(false)}}
         onConfirm={() => {setIsShown(false);localStorage.removeItem("user"); navigate("/")}}
       >
-        <p>Are You Sure You Want To Cancel This Bid?</p>
-        <p className="mt-3" style={{fontSize:'0.8rem'}}>Note that this can't be undone.</p>
+        <p>Are You Sure You Want To Log Out?</p>
       </Dialog>
+      <button className="col-12 btn btn-danger"  intent="danger" onClick={() => {setIsShown(true)}}>
       <IoIosLogOut  className='mx-1'/>
                         Log Out
+      </button>
           </Pane>
-                      
                     </Nav.Link>
                 </Dropdown.Item>
         </DropdownButton>
           </Nav> 
-
         </Navbar.Collapse>
-      
     </Navbar>
     <Outlet  />
       </div>

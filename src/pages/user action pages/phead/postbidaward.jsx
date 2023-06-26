@@ -61,10 +61,12 @@ const PostBidAward=()=>{
           }else{
             setUploaded(true)
             setAward({...award,bidAwardFile:res.res})
+            document.getElementById('asub_btn').hidden=false
             console.log(res)
           }
          })
          .catch((err)=>{
+            console.log(err)
              setErrorUploading(true)
          })
     }
@@ -101,39 +103,50 @@ return(<>{isChecking?
             Some Error Occurred, Please Reload The Page.
           </p>
         </div>:
-<>{tender.approved==false?
+<>{!tender.approvalRequested&&tender.approved&&
+    <div className='container mb-5 d-flex flex-column justify-content-center align-items-center mx-auto'>
+    <h2 className="text-center">Post Bid Award</h2>
+     <div className="w-50 mt-2 mx-auto d-flex flex-column justify-content-center align-items-center">
+        <h6>Tender Information</h6>
+        <ul className="list-unstyled">
+            <li>Tender Id : <p className="m-0 d-inline fw-bold">{tender.id}</p></li>
+            <li>Tender Title : <p className="m-0 d-inline fw-bold">{tender.title}</p></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <h6>To be approved by :</h6>
+        <ul className="list-unstyled">
+            <li>Name : <p className="m-0 d-inline fw-bold">{endorser.fName + ' ' +endorser.lName}</p></li>
+            <li>Email : <p className="m-0 d-inline fw-bold">{endorser.email}</p></li>
+        </ul><hr className="w-100" />
+        <form onSubmit={handleFileSubmit} className="d-flex flex-column justify-content-center align-items-center">
+      <input id="file_input" hidden type="file" accept=".pdf" onChange={handleFileChange} />
+      <button type="button" className="btn btn-primary">
+      <label className="text-white" htmlFor="file_input">
+        Attach Bid Document ( pdf format )
+      </label>
+      </button>
+      <p className="m-0">{file&&"File Attached."}</p>
+      <button type="submit" className="mt-2 btn btn-secondary">Upload</button>
+      <p className="m-0">{uploading?"Uploading File":(errorUploading?"Error Uploading File":uploaded&&"Successfully Uploaded!")}</p>
+    </form>
+    <button id='asub_btn' hidden onClick={saveBidAward} type="button" className="mt-2 btn btn-success">Submit</button>
+     </div>
+  </div>}
+{!tender.approvalRequested&&!tender.approved&&
     <div className='container mb-5 d-flex flex-column justify-content-center align-items-center mx-auto border rounded p-7' style={{width:'60%'}}>
         <p className='text-center'>To Post Bid Award, The Tender Should Be Approved.</p>
         <button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/request-bid-approval`)}} className='btn btn-primary mb-3'>Request Approval</button>
-    </div>:
-    <div className='container mb-5 d-flex flex-column justify-content-center align-items-center mx-auto'>
-        <h2 className="text-center">Post Bid Award</h2>
-         <div className="w-50 mt-2 mx-auto d-flex flex-column justify-content-center align-items-center">
-            <h6>Tender Information</h6>
-            <ul className="list-unstyled">
-                <li>Tender Id : <p className="m-0 d-inline fw-bold">{tender.id}</p></li>
-                <li>Tender Title : <p className="m-0 d-inline fw-bold">{tender.title}</p></li>
-                <li></li>
-                <li></li>
-            </ul>
-            <h6>To be approved by :</h6>
-            <ul className="list-unstyled">
-                <li>Name : <p className="m-0 d-inline fw-bold">{endorser.fName + ' ' +endorser.lName}</p></li>
-                <li>Email : <p className="m-0 d-inline fw-bold">{endorser.email}</p></li>
-            </ul><hr className="w-100" />
-            <form onSubmit={handleFileSubmit} className="d-flex flex-column justify-content-center align-items-center">
-          <input id="file_input" hidden type="file" accept=".pdf" onChange={handleFileChange} />
-          <button type="button" className="btn btn-primary">
-          <label className="text-white" htmlFor="file_input">
-            Attach Bid Document ( pdf format )
-          </label>
-          </button>
-          <p className="m-0">{file&&"File Attached."}</p>
-          <button type="submit" className="mt-2 btn btn-secondary">Upload</button>
-          <p className="m-0">{uploading?"Uploading File":(errorUploading?"Error Uploading File":uploaded&&"Successfully Uploaded!")}</p>
-        </form>
-         </div>
-      </div>}
+    </div>
+    }
+    {tender.approvalRequested==true&&!tender.approved&&
+    <div className='container mb-5 d-flex flex-column justify-content-center align-items-center mx-auto border rounded p-7' style={{width:'60%'}}>
+        <p className='text-center'>You have already requested for approval, please wait for the response.</p>
+        <div className='container mb-5 d-flex flex-column justify-content-center align-items-center mx-auto'>
+        <button onClick={()=>{navigate('/')}} className="d-block mx-auto btn mt-3 btn-primary">Back To Dashboard</button>
+    </div>
+    </div>
+    }
     </>
    )}
 <Footer />

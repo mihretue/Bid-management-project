@@ -18,8 +18,10 @@ const BidsInProgress=()=>{
             <Link className="text-decoration-none" to={`/userpage/supplier/${id}`}>Back to Manage Bids</Link>
            </a>
         </div>
-        <h2 className="text-center">Active Tenders</h2>
-        <StickyHeadTable />
+        <h2 className="text-center">Bids In Progress</h2>
+        <div className= " bg-body-tertiary rounded shadow mt-3 border border-info rounded" style={{maxWidth:'100%',height:'auto',minHeight:'3rem',backgroundColor:'white'}}>
+          <StickyHeadTable />
+        </div>
         </div>
         <Footer />
         </>)

@@ -51,7 +51,13 @@ const checkParticipationStatus=()=>{
     .catch((err)=>{setErrorFetching(true)})
 }
 
-return(<>{isFetching?"fryd":(errorFetching?"dgd":
+return(<>{isFetching?
+<div className="container mx-auto p-3">
+<p className="text-center">Fetching bid award information</p>
+</div>:(errorFetching?
+    <div className="container mx-auto p-3">
+<p className="text-center text-danger">Error Fetching bid award information!</p>
+</div>:
 <div className="container mb-5 mx-auto d-flex flex-column justify-content-center align-items-center">
 <h2 className="text-center">Bid Award Information</h2>
 <h6>Tender Details</h6>
@@ -65,7 +71,7 @@ return(<>{isFetching?"fryd":(errorFetching?"dgd":
     <li>Procurement Department Head Name : <p className="m-0 d-inline fw-bold">{depHead.fName+' '+depHead.lName}</p></li>
     <li>Procuring Deparement Head Email : <p className="m-0 d-inline fw-bold">{depHead.email}</p></li>
 </ul>
-{localStorage.getItem('user')&&
+{localStorage.getItem('user')&&JSON.parse(localStorage.getItem('user')).role!=="procurement department head"&&
 <div>
 <h6 className="mt-2 text-center">Participation Status</h6>
 <p className="m-0">{participated==true&&"You have participated on this tender."}</p>

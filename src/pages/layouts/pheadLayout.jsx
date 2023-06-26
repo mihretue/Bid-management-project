@@ -9,16 +9,16 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import {IoIosLogOut} from "react-icons/io";
 import {BsGear} from "react-icons/bs"
 import { colors } from "@material-ui/core";
+import { Pane, Dialog} from 'evergreen-ui'
 
-
-// import FontAwesomeIcon from "@fortawesome/fontawesome-free";
 const PheadLayout=()=>{
   const {id,uid} =useParams();
   const [user,setUser]=useState({})
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
   const navigate = useNavigate();
-
+  const [isShown, setIsShown] = useState(false)
+  // localStorage.removeItem('user')
   useEffect(()=>{
     fetchUserData()
  },[])
@@ -34,13 +34,6 @@ const PheadLayout=()=>{
       setIsFetching(false);
       setErrorFetching(true)})
    }
-
-  // const Logout= () =>{
-  //   return(
-      
-  //   )
-  // }
-   
 return(
     <div >
         <Navbar expand="lg"className="container fluid" >
@@ -51,36 +44,35 @@ return(
             <Nav.Link as={Link} to={"/"} className="pheadlay">Home</Nav.Link>
             <Nav.Link className="advLink" as={Link} to={"./messages"} >Messages</Nav.Link>
             <Nav.Link as={Link} to={"./about"} >About</Nav.Link>
-            <Nav.Link as={Link} to={"./contact"} >Contact Us</Nav.Link>
-
+            <Nav.Link onClick={()=>{
+              window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+            }} >Contact Us</Nav.Link>
           </Nav>
-          <Nav  style={{ fontWeight: 'bold' }}>
+          <Nav style={{ fontWeight: 'bold' }}>
           <DropdownButton id="dropdown-basic-button  "  title={JSON.parse(localStorage.getItem('user')).fName} >
-                <Dropdown.Item style={{marginRight:'38px'}}>
-                  <Nav.Link as={Link} to={"/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
-                    <BsGear className='mx-1 mr-2' />
-                      Settings
-                  </Nav.Link>
-                </Dropdown.Item>
-                <Dropdown.Item >
-                    <Nav.Link  onClick={()=>{localStorage.removeItem("user"); navigate("/")}}  className="justify-content-center text-black ">
-                      <IoIosLogOut  className='mx-1'/>
+                <Dropdown.Item>
+                    <Nav.Link  className="justify-content-center text-black ">
+                      <Pane className="col-12 d-flex">
+      <Dialog
+        isShown={isShown}
+        title="Confirm Action"
+        onCloseComplete={() => setIsShown(false)}
+        confirmLabel="Yes"
+        onCancel={() => {setIsShown(false)}}
+        onConfirm={() => {setIsShown(false);localStorage.removeItem("user"); navigate("/")}}
+      >
+        <p>Are You Sure You Want To Log Out?</p>
+      </Dialog>
+      <button className="col-12 btn btn-danger"  intent="danger" onClick={() => {setIsShown(true)}}>
+      <IoIosLogOut  className='mx-1'/>
                         Log Out
+      </button>
+          </Pane>
                     </Nav.Link>
                 </Dropdown.Item>
-       
         </DropdownButton>
-          
-            {/* {!localStorage.getItem('user')&&
-            <Nav.Link as={Link} to={"/login"} ><button className="btn btn-primary">Login</button></Nav.Link>}
-            {
-            !localStorage.getItem('user')&&
-            }
-            <Nav.Link as={Link} to={"/mailus"} ><TfiEmail size={30} data-toggle="tooltip" data-placement="bottom" title="Mail us" /></Nav.Link>
-          */}</Nav> 
-
+          </Nav> 
         </Navbar.Collapse>
-      
     </Navbar>
     <Outlet  />
       </div>

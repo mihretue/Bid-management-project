@@ -15,7 +15,9 @@ return(
             <Nav.Link style={{fontFamily:"'Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"}} as={Link} to={"/tenders"} >Tenders</Nav.Link>
             <Nav.Link style={{fontFamily:"'Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"}} as={Link} to={"/bid-awards"} >Bid Awards</Nav.Link>
             <Nav.Link style={{fontFamily:"'Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"}} as={Link} to={"/about"} >About</Nav.Link>
-           <Nav.Link style={{fontFamily:"'Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"}} as={Link} to={"contact"} >Contact Us</Nav.Link>
+            <Nav.Link onClick={()=>{
+              window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+            }} >Contact Us</Nav.Link>
           </Nav>
           <Nav style={{marginLeft:'0px'}}>
             <Nav.Link style={{fontFamily:"'Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"}} as={Link} to={"/login"}  ><button className="btn btn-primary border rounded">Login</button></Nav.Link>

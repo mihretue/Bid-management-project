@@ -20,7 +20,7 @@ export default function SidebarTabsExample() {
   const [sentIsFetching,setSentIsFetching]=useState(false)
   const [sentErrorFetching,setSentErrorFetching]=useState(false)
   const [result,setResult]=useState({value:"",error:false})
-  const [newMsg,setNewMsg]=useState({to:"",from_name:JSON.parse(localStorage.getItem('user')).name,from:JSON.parse(localStorage.getItem('user')).email,subject:"",body:"",file:""})
+  const [newMsg,setNewMsg]=useState({to:"",from_name:JSON.parse(localStorage.getItem('user')).name,from:JSON.parse(localStorage.getItem('user')).email,subject:"",body:"",file:''})
   const fetchInbox=()=>{
     setInboxIsFetching(true)
     fetch(`http://localhost:3001/getinbox?email=${JSON.parse(localStorage.getItem('user')).email}`)
@@ -52,20 +52,47 @@ export default function SidebarTabsExample() {
      setNewMsg({...newMsg,[name]:value})
   }
 
-  const handleSubmit=(e)=>{
-  e.preventDefault()
-  document.getElementById('subbtn').disabled=true
+  function handleFileSubmit(event){
+    event.preventDefault();
+     setIsSending(true)
+    document.getElementById('subbtn').disabled=true
+    document.getElementById('attch_file').disabled=true
+    if(file){
+      const formData = new FormData();
+    formData.append('file', file);
+    fetch('http://localhost:3001/uploadmsgfile',{
+      method:'post',
+      body:formData
+     }).then((res)=>res.json())
+     .then((res)=>{
+      if(res.res=="error"){
+        setIsSending(false)
+        console.log(res)
+        document.getElementById('subbtn').disabled=false;
+        setResult({value:"Error Sending Message, Please Try again."})
+      }else{
+        setNewMsg({...newMsg,file:res.res})
+        console.log(res)
+        handleSubmit(event,res.res)
+      }
+     })
+     .catch((err)=>{
+     })
+    }else{
+      handleSubmit()
+    }
+    
+   }
+  const handleSubmit=(e,fl)=>{
   if(validator(newMsg,"new_message")=="em"){
      setNewMsg({...newMsg,toError:true,toErrorM:"Invalid Email Format"})
      document.getElementById('subbtn').disabled=false
   }else{
-    setNewMsg({...newMsg,toError:false,toErrorM:""})
-   setIsSending(true)
-  if(file) {setNewMsg({...newMsg,file:file})}
+   setNewMsg({...newMsg,toError:false,toErrorM:""})
     fetch('http://localhost:3001/savemsg',{
     method:'post',
     headers:{'Content-Type':"application/json"},
-    body:JSON.stringify(newMsg)
+    body:JSON.stringify({...newMsg,fl})
   }).then((res)=>res.json())
   .then((res)=>{
     if(res.res=="ok"){
@@ -73,12 +100,21 @@ export default function SidebarTabsExample() {
          setIsSending(false)
          setNewMsg({to:"",from_name:JSON.parse(localStorage.getItem('user')).name,from:JSON.parse(localStorage.getItem('user')).email,subject:"",body:"",file:""})
          setTimeout(()=>{
-           setSelectedIndex(2);fetchSent();
+        setResult({value:""})
+          document.getElementById('attch_file').disabled=false
+          document.getElementById('subbtn').disabled=false;setFile(null)
+          setSelectedIndex(2);fetchSent();
          },3000)
     }else{
+        setIsSending(false)
+        console.log(res)
+        document.getElementById('subbtn').disabled=false;
         setResult({value:"Error Sending Message, Please Try again."})
     }})
   .catch((err)=>{
+    setIsSending(false)
+    document.getElementById('attch_file').disabled=false
+    document.getElementById('subbtn').disabled=false;
     setResult({value:"Error Sending Message, Please Try again."})
   })
 }}
@@ -135,9 +171,9 @@ export default function SidebarTabsExample() {
                 <div className='mt-2 container text-danger border rounded p-4 text-center'>
                  Error Fetching Inbox Messages...
                </div>:(inbox.length==0?<>
-                <div className="mt-3 rounded border mx-auto" style={{width:'90%',height:'auto',minHeight:'2.5rem'}}>
+                <div className="mt-3 rounded border mx-auto" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
           <TextField
-            placeholder="Search a user by name"
+            placeholder="Search a message by sender's name"
             id="outlined-start-adornment"
             size="small"
             InputProps={{
@@ -188,7 +224,7 @@ export default function SidebarTabsExample() {
                 <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid mx-auto' style={{minHeight:'5rem',maxHeight:'20rem'}}>
                  {inbox.map((inb)=>{
                        return(
-                        <div onClick={()=>{navigate(`/userpage/supplier/${id}/messages/${inb._id}`)}} className='row border' style={{height:'3rem',cursor:'pointer'}}>
+                        <div onClick={()=>{navigate(`./${inb._id}`)}} className='row border' style={{height:'3rem',cursor:'pointer'}}>
                           <div className='col-2 justify-content-center align-items-center d-flex'>
                           <p className="d-inline-flex m-0 border rounded p-1" style={{backgroundColor:inb.Seen?'white':'red'}} >
                            {inb.seen==true?"Seen":"New"}
@@ -242,7 +278,7 @@ export default function SidebarTabsExample() {
                 const q=e.target.value;
                 let filt=sent;
                if(q!=""){
-                  filt=sent.filter(snt=>(snt.to_name).includes(q))
+                  filt=sent.filter(snt=>(snt.to).includes(q))
                   setSent(filt)
                }
                 else 
@@ -255,7 +291,7 @@ export default function SidebarTabsExample() {
              </div></>:<>
              <div className="mt-3 rounded border mx-auto" style={{width:'100%',height:'auto',minHeight:'2.5rem'}}>
              <TextField
-               placeholder="Search a user by name"
+               placeholder="Search a message receipient's email"
                id="outlined-start-adornment"
                size="small"
                InputProps={{
@@ -268,7 +304,7 @@ export default function SidebarTabsExample() {
                 const q=e.target.value;
                 let filt=sent;
                if(q!=""){
-                  filt=sent.filter(snt=>(snt.to_name).includes(q))
+                  filt=sent.filter(snt=>(snt.to).includes(q))
                   setSent(filt)
                }
                 else 
@@ -279,7 +315,7 @@ export default function SidebarTabsExample() {
                 <div className='d-flex overflow-y-auto flex-column justify-content-center container-fluid my-3 mx-auto' style={{minHeight:'5rem',maxHeight:'20rem'}}>
                  {sent.map((snt)=>{
                        return(
-                        <div onClick={()=>{navigate(`/userpage/supplier/${id}/messages/${snt._id}`)}} className='row border mt-1' style={{height:'3rem',cursor:'pointer'}}>
+                        <div onClick={()=>{navigate(`./${snt._id}`)}} className='row border mt-1' style={{height:'3rem',cursor:'pointer'}}>
                           <div className='col-10 row'>
                             <div className='fw-bold col-12'>{snt.to}</div>
                             <div className=' col-12 row'>
@@ -296,11 +332,11 @@ export default function SidebarTabsExample() {
                </div></>))}
             </div>
             :
-          (tab=="New Message"?
+            (tab=="New Message"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
                <h3 className='m-0 text-center pt-3 fs-6'>New Message</h3>
                <div className='justify-between container my-3 mx-auto' style={{minHeight:'10rem',height:'auto'}}>
-                 <form onSubmit={handleSubmit}>
+                 <form onSubmit={handleFileSubmit}>
             <div className="form-group mt-3">
             <TextField
           error={newMsg.toError}
@@ -346,9 +382,9 @@ export default function SidebarTabsExample() {
         />
           </div> 
           <div className='form-group mt-3'>
-          <input id="file_input" hidden type="file" onChange={handleFileChange} />
+          <input accept='.pdf' id="attch_file" hidden type="file" onChange={handleFileChange} />
           <button type="button" className="btn border rounded bg-light">
-          <label htmlFor="file_input">
+          <label htmlFor="attch_file">
             Attach File (optional)
           </label>
           </button>

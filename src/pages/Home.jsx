@@ -69,46 +69,46 @@ const Home = () => {
             <h2 className='fw-bold text-center'>What Can We Do For You Today?</h2>
             <div className='container fluid px-4 '>
                 <div className='row'>
-                    <div className='col-lg-4 col-md-6 col-sm-12 ' >
+                    <div className='col-6 ' >
                         <div className='card card_it'>
-                            <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
+                            <Link to="/tenders" className=' text-center text-decoration-none txt_size fw-bold' >
                                 <img src={image2} className='card-img-left  p-2 img_size' alt='' />
                                 Advertisments
                             </Link>
                             <hr />
                             <div className='card-body'>
-                                <p className='card-text'>Access tender notices of various government agencies for the procurement of goods, services and works. </p>    
+                                <p className='card-text text-center'>Access tender notices of various government agencies for the procurement of goods, services and works. </p>    
                             </div>
                         </div>
 
                     </div>
-                    <div className='col-lg-4 col-md-6 col-sm-12'>
+                    <div className='col-6'>
                         <div className='card card_it'>
-                            <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
+                            <Link to="/tenders" className=' text-center text-decoration-none txt_size fw-bold' >
                                 <img src={image3}  className='card-img-left  p-2 img_size' alt='' />
                                 Get Bid Information
                             </Link>
                             <hr />
                             <div className='card-body'>
-                                <p className='card-text'>Provide access to tender statistics, tender opening minutes, evaluation reports, contract awards, and other procurement information.</p>    
+                                <p className='card-text text-center'>Provide access to tender statistics, tender opening minutes, evaluation reports, contract awards, and other procurement information.</p>    
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-4 col-md-6 col-sm-12'>
+                    <div className='col-6'>
                         <div className='card card_it'>
-                            <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
+                            <Link to="/signup" className=' text-center text-decoration-none txt_size fw-bold' >
                                 <img src={image6}  className='card-img-left  p-2 img_size' alt='new' />
                                 Registration Services
                             </Link>
                             <hr />
                             <div className='card-body'>
-                                <p className='card-text'>Register your company in the national suppliers list to be able to identify government procurement opportunities and participate in tenders. </p>    
+                                <p className='card-text  text-center'>Register your company in the national suppliers list to be able to identify government procurement opportunities and participate in tenders. </p>    
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-4 col-md-6 col-sm-12'>
+                    {/* <div className='col-6'>
                         <div className='card card_it'>
-                            <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
+                            <Link to="/tenders" className='text-decoration-none txt_size fw-bold' >
                                 <img src={image5}  className='card-img-left  p-2 img_size' alt='new' />
                                 Suppliers List
                             </Link>
@@ -119,7 +119,7 @@ const Home = () => {
 
                         </div>
                     </div>
-                    <div className='col-lg-4 col-md-6 col-sm-12'>
+                    <div className='col-6'>
                         <div className='card card_it'>
                             <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
                                 <img src={image4}  className='card-img-left  p-2 img_size' alt='new' />
@@ -130,16 +130,16 @@ const Home = () => {
                                 <p className='card-text'>Access various electronic resources related public procurement legislation and standard bidding documents</p>    
                             </div>
                         </div>
-                    </div>
-                    <div className='col-lg-4 col-md-6 col-sm-12'>
+                    </div> */}
+                    <div className='col-6'>
                         <div className='card card_it'>
-                            <Link to="/adverts" className='text-decoration-none txt_size fw-bold' >
+                            <Link to="/tenders" className=' text-center text-decoration-none txt_size fw-bold' >
                                 <FcQuestions style={{width:'70px',height:'70px'}} />
                                 Complaints
                             </Link>
                             <hr />
                             <div className='card-body'>
-                                <p className='card-text'>Send your complaints in bidding processes </p>    
+                                <p className='card-text  text-center' >Send your complaints in bidding processes </p>    
                             </div>
                         </div>
                     </div>

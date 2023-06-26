@@ -85,7 +85,7 @@ const fetchTenderDetails=()=>{
     setErrorFetching(true)
   })
 }
- const {tid}=useParams()
+ const {tid,id}=useParams()
  const [isChecking,setIsChecking]=useState(false)
  const [errorChecking,setErrorChecking]=useState(false)
  const [status,setStatus]=useState("")
@@ -119,7 +119,7 @@ return (<>
              <div className="container mb-3">
                <a className="icon-link text-decoration-none text-black">
                 <BsArrowLeft className='me-2' />
-                <Link className="text-decoration-none" to={`/tenders`}>Back To Tenders List</Link>
+                <Link className="text-decoration-none" to={`/userpage/supplier/${id}/tenders`}>Back To Tenders List</Link>
                </a>
               </div>
     {isFetching?

@@ -48,7 +48,7 @@ import {AiOutlineSearch} from 'react-icons/ai'
     },
     {
       id: 'regdate',
-      label: 'Registration Date',
+      label: 'Request Time',
       align: 'center',
     },
   ];
@@ -171,7 +171,7 @@ import {AiOutlineSearch} from 'react-icons/ai'
             {row.status}
                         </TableCell>
                         <TableCell  style={{fontFamily:'Noto Sans Ethiopic,Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol',fontSize:'inherit'}} align={"center"}>
-            {row.status}
+            {row.regTime}
                         </TableCell>
                   </TableRow>
                 );

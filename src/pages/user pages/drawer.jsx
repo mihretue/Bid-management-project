@@ -136,15 +136,24 @@ export default function SidebarTabsExample() {
             :
             (tab=="Analytics"?
             <div className='w-100' style={{minHeight:'10rem',height:"auto"}}>
-               <h3 className='m-0 text-center fs-6 mt-1'>Analytics</h3>
-               <div className='mx-auto d-flex flex-column justify-content-center align-items-center' style={{minHeight:'10rem',height:'auto'}}>
-                 <ul className='list-unstyled mt-3 w-100'>
-                   <li>Active Users : <p className='m-0 fw-bold d-inline'>{AisFetching?"fetching":(AerrorFetching?"error fetching":Alength)}</p></li>
-                   <li>Users Waiting For Approval : <p className='m-0 fw-bold d-inline'>{ApisFetching?"fetching":(AperrorFetching?"error fetching":Aplength)}</p></li>
-                   <li>Banned Users : <p className='m-0 fw-bold d-inline'>{BisFetching?"fetching":(BerrorFetching?"error fetching":Blength)}</p></li>
-                 </ul>
-               </div>
-            </div>:
+            <h3 className='m-0 text-center fs-6 mt-1'>Analytics</h3>
+            <div className='container mx-auto d-flex flex-column justify-content-center align-items-center' style={{minHeight:'10rem',height:'auto'}}>
+              <ul className='list-unstyled mt-3 w-100 row gap-3'>
+                <div className='col col-md-6 shadow col-sm-12 border rounded border-success' style={{width:'12rem'}}>
+                <li className='card-body'><span style={{fontFamily:"'Adamina',serif"}}>All Users : </span> <br/><p className='m-0 fw-bold card-text d-inline'>{isFetching?"fetching":(errorFetching?"error fetching":length)}</p></li>
+                </div>
+                <div className='col col-md-6 col-sm-12  border rounded border-success shadow align-item-right justify-content-right' style={{width:'12rem',}}>
+                  <li className='card-body'><span style={{fontFamily:"'Adamina',serif"}}> Active Users : </span> <br/><p className='m-0 fw-bold d-inline'>{AisFetching?"fetching":(AerrorFetching?"error fetching":Alength)}</p></li>
+                </div>
+                <div className='col col-md-6 col-sm-12 border rounded border-danger shadow ' style={{width:'12rem',}}>
+                  <li className='card-body'><span style={{fontFamily:"'Adamina',serif"}}>Users Waiting For Approval : </span>  <br/><p className='m-0 fw-bold d-inline'>{ApisFetching?"fetching":(AperrorFetching?"error fetching":Aplength)}</p></li>
+                </div>
+                <div className='col col-md-6 col-sm-12  border rounded border-success shadow' style={{width:'12rem'}} >
+                  <li className='card-body' ><span style={{fontFamily:"'Adamina',serif"}}> Banned Users : </span><br/><p className='m-0 fw-bold d-inline'>{BisFetching?"fetching":(BerrorFetching?"error fetching":Blength)}</p></li>
+                </div>
+              </ul>
+            </div>
+          </div>:
             (tab=="Other"?
             <p>heh</p>:
             <p>hi</p>))}

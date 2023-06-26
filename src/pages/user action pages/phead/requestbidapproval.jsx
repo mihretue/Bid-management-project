@@ -14,7 +14,6 @@ const RequestBidApproval=()=>{
     const [errorUploading,setErrorUploading]=useState(false)
     const [uploaded,setUploaded]=useState(false)
     const [award , setAward] = useState({bidReqFile:''})
-    
 useEffect(()=>{fetchEndorsingCInfo()},[])
     const fetchEndorsingCInfo=()=>{
         setIsFetching(true)
@@ -23,7 +22,8 @@ useEffect(()=>{fetchEndorsingCInfo()},[])
         fetch(`http://localhost:3001/userbyprop?${q}`)
         .then((res)=>res.json())
         .then((res)=>{
-            setEndorser(res);console.log(res)
+            setEndorser(res);
+            console.log(res)
             fetchBid()
         })
         .catch((err)=>{console.log(err)
@@ -33,7 +33,8 @@ useEffect(()=>{fetchEndorsingCInfo()},[])
     const fetchBid=()=>{
         fetch(`http://localhost:3001/gettender?id=${bid}`)
         .then((res)=>res.json())
-        .then((res)=>{setTender(res)
+        .then((res)=>{
+            setTender(res)
             setIsFetching(false)
         })
         .catch((err)=>{console.log(err)
@@ -120,7 +121,7 @@ useEffect(()=>{fetchEndorsingCInfo()},[])
             </ul><hr className="w-100" />
             <h6>Upload a bid approval request file</h6>
               <form onSubmit={handleFileSubmit} className="d-flex flex-column justify-content-center align-items-center">
-              <input id="file_input" hidden type="file" onChange={handleFileChange} />
+              <input accept=".pdf" id="file_input" hidden type="file" onChange={handleFileChange} />
               <button type="button" className="btn d-inline btn-primary">
               <label className="text-white d-inline" htmlFor="file_input">
                  Attach 

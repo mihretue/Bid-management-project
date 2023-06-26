@@ -68,12 +68,9 @@ import ApprovalSuccess from "./pages/user action pages/pendch/approvalsuccess";
 import BidAwards from './pages/bidawards'
 import BidAward from './pages/bidaward'
 import Email from './pages/emailpractice'
-import SupSetting from './pages/user action pages/bidder/setting'
-
 
 
 function App() {
-
   return (
     <div>
       <div >
@@ -124,7 +121,6 @@ function App() {
           <Route path="/userpage/supplier/:id/tenders/:tid/apply/success" element={<ApplicationSuccess />} />
           <Route path="/userpage/supplier/:id/about" element={<About />} />
           <Route path="/userpage/supplier/:id/contact" element={<About />} />
-          <Route path="/userpage/supplier/:id/setting" element={<SupSetting/>}/>
           <Route path="/userpage/supplier/:id/all-bids" element={<BidderAllBids />} />
           <Route path="/userpage/supplier/:id/bid-awards" element={<BidAwards />} />
           <Route path="/userpage/supplier/:id/all-bids/:bid" element={<BidderAllBidsDetail />} />
@@ -137,6 +133,7 @@ function App() {
           
           <Route path="/userpage/supplier/:id/messages" element={<Messages />} />
           <Route path="/userpage/supplier/:id/messages/:mid" element={<Message />} />
+
         </Route>
         <Route path="/userpage/phead/:id" element={<PheadLayout />}>
           <Route index element={<PheadPage />} />
@@ -161,8 +158,13 @@ function App() {
           <Route path="/userpage/phead/:id/manage-bids/:bid/request-bid-approval" element={<RequestBidApproval/>}/>
           <Route path="/userpage/phead/:id/manage-bids/:bid/request-bid-approval/success" element={<BidRequestSuccess/>}/>
 
+          <Route path="/userpage/phead/:id/bid-awards/:bid" element={<BidAward />} />
+
+          <Route path="/userpage/phead/:id/bid-awards/:bid" element={<BidAward />} />
+
           <Route path="/userpage/phead/:id/messages" element={<Messages />} />
           <Route path="/userpage/phead/:id/messages/:mid" element={<Message />} />
+
 
         </Route>
         <Route path="/userpage/pendch/:id" element={<PendchLayout />}>
@@ -179,6 +181,7 @@ function App() {
        
           <Route path="/userpage/pendch/:id/messages" element={<Messages />} />
           <Route path="/userpage/pendch/:id/messages/:mid" element={<Message />} />
+
         </Route>
       </Routes>
        <div title="Go to the top of the page" className="bg-dark d-flex justify-content-center align-items-center" style={{width:'4rem',height:'4rem',position:'fixed',bottom:'1.5rem',right:'1rem',borderRadius:'0.5rem'}}>

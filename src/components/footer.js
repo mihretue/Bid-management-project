@@ -19,7 +19,7 @@ return(
                 </ul>
             </div>
             <div className="col-md-4 mb-md-0 mb-3">
-                <h4 id="contact">Contact us</h4>
+                <h4 id="contact_us">Contact us</h4>
                 <h6>FDRE Public Procurement and Property Authority</h6>
                 <h6>6 killo In front of Yekatit 12 Referral Hospital</h6>
                 <h6>P.O.Box 32387</h6>

@@ -8,6 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import {useState,useEffect} from 'react';
 import { useParams,useNavigate } from "react-router-dom";
+import { Pane, Dialog} from 'evergreen-ui'
 
 const AdminLayout=()=>{
   const {id,uid} =useParams();
@@ -15,6 +16,8 @@ const AdminLayout=()=>{
   const [isFetching,setIsFetching]=useState(false)
   const [errorFetching,setErrorFetching]=useState(false)
   const navigate = useNavigate();
+  const [isShown, setIsShown] = useState(false)
+
 
   useEffect(()=>{
     fetchUserData()
@@ -43,24 +46,38 @@ return(
             <Nav.Link as={Link} to={"./"} >Home</Nav.Link>
             <Nav.Link as={Link} to={"./messages"} >Messages</Nav.Link>
           </Nav>
-          <Nav >
-              <DropdownButton id="dropdown-basic-button "  title={JSON.parse(localStorage.getItem('user')).fName} >
-                <Dropdown.Item >
-                  <Nav.Link as={Link} to={"/setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
-                    <BsGear className='mx-1' />
-                      Settings
+          <Nav style={{ fontWeight: 'bold' }}>
+          <DropdownButton id="dropdown-basic-button  "  title={JSON.parse(localStorage.getItem('user')).fName} >
+                {/* <Dropdown.Item>
+                  <Nav.Link as={Link} to={"./setting"} className="icon-link  text-decoration-none text-black  justify-content-center align-items-center" href="/#">
+                    <button className="col-12 btn btn-secondary"  intent="danger">
+      <BsGear  className='mx-1 mt-0'/>
+                        Settings
+      </button>
                   </Nav.Link>
-                </Dropdown.Item>
-                <Dropdown.Item >
-                    <Nav.Link  onClick={()=>{localStorage.removeItem("user"); navigate("/")}}  className="justify-content-center text-black ">
-                      <IoIosLogOut  className='mx-1'/>
+                </Dropdown.Item> */}
+                <Dropdown.Item>
+                    <Nav.Link  className="justify-content-center text-black ">
+                      <Pane className="col-12 d-flex">
+      <Dialog
+        isShown={isShown}
+        title="Confirm Action"
+        onCloseComplete={() => setIsShown(false)}
+        confirmLabel="Yes"
+        onCancel={() => {setIsShown(false)}}
+        onConfirm={() => {setIsShown(false);localStorage.removeItem("user"); navigate("/")}}
+      >
+        <p>Are You Sure You Want To Log Out?</p>
+      </Dialog>
+      <button className="col-12 btn btn-danger"  intent="danger" onClick={() => {setIsShown(true)}}>
+      <IoIosLogOut  className='mx-1'/>
                         Log Out
-                      
+      </button>
+          </Pane>
                     </Nav.Link>
                 </Dropdown.Item>
-       
         </DropdownButton>
-        </Nav>
+          </Nav> 
         </Navbar.Collapse>
     </Navbar>
     <Outlet  />

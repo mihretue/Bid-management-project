@@ -258,7 +258,7 @@ return (<>
             Post Bid Award
           </Button>}
           {tender.status=="active"&&
-          <Pane className="mx-auto col-6 mt-2 d-flex justify-content-center">
+          <Pane className="mx-auto col-23 mt-2 d-flex justify-content-center">
       <Dialog
         isShown={isShown}
         title="Confirm Action"
@@ -272,25 +272,14 @@ return (<>
       </Dialog>
       <Button className="col-12"   iconBefore={TrashIcon} intent="danger" onClick={() => setIsShown(true)}>Cancel Tender</Button>
           </Pane>}
-          {tender.status=="closed"&&<Button style={{fontFamily:"'Adamina', serif'"}} className="col-6"  iconBefore={TickIcon} intent="success">
+          {tender.status=="closed"&&<Button onClick={()=>{navigate(`/userpage/phead/${id}/bid-awards/${bid}`)}} style={{fontFamily:"'Adamina', serif'"}} className="col-12"  iconBefore={TickIcon} intent="success">
             View Bid Award Information
           </Button>}
-          <Button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/bid-props`)}}  className="col-6 "  iconBefore={ManualIcon}>
+          <Button onClick={()=>{navigate(`/userpage/phead/${id}/manage-bids/${bid}/bid-props`)}}  className="col-12 "  iconBefore={ManualIcon}>
             View Bid Proposals 
           </Button>
         </div>
       </div>
-      <hr className="w-100 " style={{width:'10px'}} />
-    
-      <div className="container  mt-3 mb-3 d-flex justify-content-center align-items-center flex-column  rounded mt-3" style={{width:'80%',minHeight:'5rem',height:'auto',fontFamily:"'Adamina', serif'"}}>
-      <h6 className="text-center" >Actions Related to Applicants</h6>
-      <div className="w-100 hstack gap-2 container-fluid g-2 mb-2 justify-content-center align-items-center">
-                <Button  className="col-lg-6 d-flex justify-content-center align-items-center "  iconBefore={PersonIcon}>
-                View Applicants
-                </Button>
-                
-            </div>
-         </div>
       </div>}
       <Footer />
       </>)
