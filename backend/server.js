@@ -21,9 +21,9 @@ const port = 3001;
 const {v4:uuidv4}=require('uuid')
 const biddingModel=require('./models/bidding')
 const dotenv=require('dotenv')
-
-const mongoUrl="mongodb+srv://mihretu:mihretuendeshawrkr@methane.0fjzoxr.mongodb.net/Bid?retryWrites=true&w=majority";
 dotenv.config();
+
+const mongoUrl=process.env.MONGODB_URL
 mongoose.connect(mongoUrl,
   {
     useNewUrlParser: true,
