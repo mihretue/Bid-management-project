@@ -1,10 +1,7 @@
-import { useParams, Link } from "react-router-dom";
-import { BsArrowLeft } from "react-icons/bs";
-import StickyHeadTable from "../../../components/mui_table/index";
-import Footer from "../../../components/footer";
 import { useEffect, useState } from "react";
-const BidderAllBids = () => {
-  const { id } = useParams();
+import StickyHeadTable from "../../components/mui_table/index";
+import Footer from "../../components/footer";
+const Tenders = () => {
   const [rows, setRows] = useState([]);
   const [status, setStatus] = useState({ fetch: "" });
 
@@ -37,25 +34,15 @@ const BidderAllBids = () => {
     },
   ];
 
-  const fetchBidding = (bs) => {
-    let q = { id: id };
-    q = new URLSearchParams(q);
-    fetch(`http://localhost:3001/getbidding/?${q}`)
-      .then((res) => res.json())
-      .then((res) => {
-        setRows(
-          bs.filter((bid) => {
-            return res.some((biddingItem) => biddingItem.bidId == bid._id);
-          })
-        );
-        setStatus({ ...status, fetch: "success" });
-      })
-      .catch((err) => {
-        setStatus({ ...status, fetch: "error" });
-      });
-  };
+  useEffect(() => {
+    document.title = "Cheretanet | Tenders";
+  });
 
-  const fetchBids = () => {
+  useEffect(() => {
+    fetchTenders();
+  }, []);
+
+  const fetchTenders = () => {
     setStatus({ ...status, fetch: "fetching" });
     fetch("http://localhost:3001/gettenders", {
       method: "post",
@@ -66,35 +53,18 @@ const BidderAllBids = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        fetchBidding(res);
+        setRows(res);
+        setStatus({ ...status, fetch: "success" });
       })
       .catch((err) => {
         setStatus({ ...status, fetch: "error" });
       });
   };
 
-  useEffect(() => {
-    fetchBids();
-  }, []);
-
   return (
     <>
-      <div
-        className="mb-5 container border rounded"
-        style={{ minHeight: "20rem", height: "auto" }}
-      >
-        <div className="p-2 w-100 fluid" style={{ minHeight: "2rem" }}>
-          <a className="icon-link text-decoration-none text-black">
-            <BsArrowLeft className="me-2" />
-            <Link
-              className="text-decoration-none"
-              to={`/userpage/supplier/${id}`}
-            >
-              Back to Manage Bids
-            </Link>
-          </a>
-        </div>
-        <h2 className="text-center">All Tenders</h2>
+      <div id="advertss" className="mb-5">
+        <h1 className="text-center">Tenders</h1>
         <div
           className=" bg-body-tertiary rounded shadow mt-3 border border-info rounded"
           style={{
@@ -105,13 +75,13 @@ const BidderAllBids = () => {
           }}
         >
           <StickyHeadTable
-            title="All Tenders List"
+            title="Tenders List"
             searchParam="title"
             status={status}
             setStatus={setStatus}
             rows={rows}
             setRows={setRows}
-            fetcher={fetchBids}
+            fetcher={fetchTenders}
             itemNavigator={""}
             columns={columns}
           />
@@ -122,4 +92,4 @@ const BidderAllBids = () => {
   );
 };
 
-export default BidderAllBids;
+export default Tenders;
