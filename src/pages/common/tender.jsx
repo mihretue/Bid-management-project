@@ -23,7 +23,45 @@ const columns = [
     align: "start",
   },
 ];
+const handlePayment = async (pfee, bidSec) => {
+  console.log("inside the handle payment");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const amount = (parseFloat(pfee) + parseFloat(bidSec)).toFixed(2);
 
+  const payload = {
+    amount: amount,
+    email: user.email,
+    first_name: user.fName,
+    last_name: user.lName,
+    currency: "ETB",
+    customization: {
+      title: "Payment",
+      description: "Payment for the premium subscription",
+    },
+  };
+
+  try {
+    const response = await fetch(
+      "http://chapa.payment.api.codenilesolutions.com/api/initialize",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+    if (data.redirect_url) {
+      window.open(data.redirect_url, "_blank");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 const Tender = () => {
   useEffect(() => {
     document.title = "Cheretanet | Tender Information";
@@ -57,7 +95,7 @@ const Tender = () => {
           { title: "Bid Opening Schedule", Information: res.ent },
         ]);
         setRows2([
-          { title: "Participation Fee", Information: res.partFee },
+          { title: "Participation Fee", Information: res.pfee },
           { title: "Bid Security Amount", Information: res.bidSec },
         ]);
         setRows3([
@@ -75,13 +113,17 @@ const Tender = () => {
           { title: "Government Owned Entity", Information: res.gow },
         ]);
         setTc(res.tc);
+
         setIsFetching(false);
         if (res.status == "closed" || res.status == "cancelled") {
           if (res.status == "closed") setStatus("closed-bid");
           else setStatus("cancelled-bid");
         } else {
-          if (localStorage.getItem("user")) fetchBidderStatus();
-          else setStatus("not-user");
+          if (localStorage.getItem("user")) {
+            // handlePayment(res.pfee, res.bidSec);
+          } else {
+            setStatus("not-user");
+          }
         }
       })
       .catch((err) => {
@@ -116,6 +158,14 @@ const Tender = () => {
       .catch((err) => {
         setErrorChecking(true);
       });
+  };
+  const handleApplyButtonClick = () => {
+    event.preventDefault();
+    if (localStorage.getItem("user")) {
+      handlePayment(tender.pfee, tender.bidSec);
+    } else {
+      setStatus("not-user");
+    }
   };
   return (
     <>
@@ -478,6 +528,7 @@ const Tender = () => {
               target="about"
             >
               <Button
+                onClick={handleApplyButtonClick}
                 disabled={
                   isChecking
                     ? true
