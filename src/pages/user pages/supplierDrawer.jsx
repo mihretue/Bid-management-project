@@ -38,6 +38,7 @@ export default function SupplierDrawer() {
     fetchUserData();
     fetchAllBids();
   }, []);
+
   const fetchUserData = () => {
     setIsFetching(true);
     fetch(`http://localhost:3001/userbyid/${id}`)
@@ -51,15 +52,14 @@ export default function SupplierDrawer() {
         setErrorFetching(true);
       });
   };
-  //all
-  var bs = [];
+
+  //all tenders
   const fetchAllBidding = (bs) => {
     let q = { id: id };
     q = new URLSearchParams(q);
     fetch(`http://localhost:3001/getbidding/?${q}`)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setBids(
           bs.filter((bid) => {
             return res.some((biddingItem) => biddingItem.bidId == bid._id);
@@ -72,6 +72,7 @@ export default function SupplierDrawer() {
         setErrorFetching(true);
       });
   };
+
   const fetchAllBids = () => {
     setIsFetching(true);
     fetch("http://localhost:3001/gettenders", {
@@ -83,29 +84,27 @@ export default function SupplierDrawer() {
     })
       .then((res) => res.json())
       .then((res) => {
-        bs = res;
-        fetchAllBidding(bs);
+        fetchAllBidding(res);
       })
       .catch((err) => {
         setBids([]);
         setErrorFetching(true);
       });
   };
+
   //active
-  var as = [];
   const fetchActiveBidding = (as) => {
     let q = { id: id };
     q = new URLSearchParams(q);
     fetch(`http://localhost:3001/getbidding/?${q}`)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        res = res.filter((bIt) => {
+        let finalRes = res.filter((bIt) => {
           return bIt.bidderStatus == "bidding";
         });
         setactiveBids(
           as.filter((bid) => {
-            return res.some((biddingItem) => biddingItem.bidId == bid._id);
+            return finalRes.some((biddingItem) => biddingItem.bidId == bid._id);
           })
         );
         fetchCancelledBids();
@@ -115,6 +114,7 @@ export default function SupplierDrawer() {
         setErrorFetching(true);
       });
   };
+
   const fetchActiveBids = () => {
     fetch("http://localhost:3001/gettenders", {
       method: "post",
@@ -125,7 +125,7 @@ export default function SupplierDrawer() {
     })
       .then((res) => res.json())
       .then((res) => {
-        as = res.filter((rs) => {
+        let as = res.filter((rs) => {
           return rs.status == "active";
         });
         fetchActiveBidding(as);
@@ -135,20 +135,20 @@ export default function SupplierDrawer() {
         setErrorFetching(true);
       });
   };
+
   //cancelled
-  var cs = [];
   const fetchCancelledBidding = (cs) => {
     let q = { id: id };
     q = new URLSearchParams(q);
     fetch(`http://localhost:3001/getbidding/?${q}`)
       .then((res) => res.json())
       .then((res) => {
-        res = res.filter((bIt) => {
+        let finalRes = res.filter((bIt) => {
           return bIt.bidderStatus == "cancelled";
         });
         setcancelledBids(
           cs.filter((bid) => {
-            return res.some((biddingItem) => biddingItem.bidId == bid._id);
+            return finalRes.some((biddingItem) => biddingItem.bidId == bid._id);
           })
         );
         fetchClosedBids();
@@ -158,6 +158,7 @@ export default function SupplierDrawer() {
         setErrorFetching(true);
       });
   };
+
   const fetchCancelledBids = () => {
     fetch("http://localhost:3001/gettenders", {
       method: "post",
@@ -168,16 +169,15 @@ export default function SupplierDrawer() {
     })
       .then((res) => res.json())
       .then((res) => {
-        cs = res;
-        fetchCancelledBidding(cs);
+        fetchCancelledBidding(res);
       })
       .catch((err) => {
         setBids([]);
         setErrorFetching(true);
       });
   };
+
   //closed
-  var ds = [];
   const fetchClosedBidding = (ds) => {
     let q = { id: id };
     q = new URLSearchParams(q);
@@ -196,6 +196,7 @@ export default function SupplierDrawer() {
         setErrorFetching(true);
       });
   };
+
   const fetchClosedBids = () => {
     fetch("http://localhost:3001/gettenders", {
       method: "post",
@@ -206,7 +207,7 @@ export default function SupplierDrawer() {
     })
       .then((res) => res.json())
       .then((res) => {
-        ds = res.filter((rs) => {
+        let ds = res.filter((rs) => {
           return rs.status == "closed";
         });
         fetchClosedBidding(ds);
@@ -219,6 +220,7 @@ export default function SupplierDrawer() {
 
   const Email = JSON.parse(localStorage.getItem("user")).email;
   const Name = JSON.parse(localStorage.getItem("user")).fName;
+
   return (
     <>
       <Pane
@@ -240,6 +242,7 @@ export default function SupplierDrawer() {
               </Tab>
             );
           })}
+
           <div
             className="d-none d-md-flex flex-column justify-content-center align-items-center "
             style={{ marginTop: "10rem", height: "5rem" }}

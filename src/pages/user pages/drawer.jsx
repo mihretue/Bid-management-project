@@ -31,6 +31,21 @@ export default function SidebarTabsExample() {
   const [length, setLength] = useState(0);
   const [Alength, setALength] = useState(0);
   const navigate = useNavigate();
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const tabs = React.useMemo(() => ["Manage User Accounts", "Analytics"], []);
+  const [isFetching, setIsFetching] = useState(false);
+  const [errorFetching, setErrorFetching] = useState(false);
+  const [ApisFetching, setApIsFetching] = useState(false);
+  const [AperrorFetching, setApErrorFetching] = useState(false);
+  const [BisFetching, setBIsFetching] = useState(false);
+  const [BerrorFetching, setBErrorFetching] = useState(false);
+  const [AisFetching, setAIsFetching] = useState(false);
+  const [AerrorFetching, setAErrorFetching] = useState(false);
+  const [Aplength, setApLength] = useState(0);
+  const [Blength, setBLength] = useState(0);
+  const [length, setLength] = useState(0);
+  const [Alength, setALength] = useState(0);
+  const navigate = useNavigate();
 
   const fetchAccounts = () => {
     setIsFetching(true);
@@ -95,6 +110,11 @@ export default function SidebarTabsExample() {
       style={{ height: "auto" }}
     >
       <Tablist className="col-md-3 col-12" style={{ height: "auto" }}>
+    <Pane
+      className="row rounded border container mb-5 mx-auto shadow p-3 pb-5"
+      style={{ height: "auto" }}
+    >
+      <Tablist className="col-md-3 col-12" style={{ height: "auto" }}>
         {tabs.map((tab, index) => {
           return (
             <Tab
@@ -105,7 +125,9 @@ export default function SidebarTabsExample() {
               onSelect={() => setSelectedIndex(index)}
             >
               {tab}
+              {tab}
             </Tab>
+          );
           );
         })}
         <div
@@ -129,8 +151,10 @@ export default function SidebarTabsExample() {
             aria-labelledby={tab}
             aria-hidden={index !== selectedIndex}
             display={index === selectedIndex ? "inline-block" : "none"}
+            display={index === selectedIndex ? "inline-block" : "none"}
             key={tab}
             role="tabpanel"
+            className="container-fluid"
             className="container-fluid"
           >
             {tab == "Manage User Accounts" ? (
@@ -280,5 +304,6 @@ export default function SidebarTabsExample() {
         ))}
       </Pane>
     </Pane>
+  );
   );
 }

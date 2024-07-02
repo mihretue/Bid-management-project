@@ -16,6 +16,7 @@ import { GrRefresh } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import { AiOutlineSearch } from "react-icons/ai";
+import { renderStatus } from "../../services/renderStatus";
 
 export default function StickyHeadTable({
   title,
@@ -208,7 +209,7 @@ export default function StickyHeadTable({
                           }}
                           align={"center"}
                         >
-                          {data}
+                          {column.index == "status" ? renderStatus(data) : data}
                         </TableCell>
                       );
                     })}

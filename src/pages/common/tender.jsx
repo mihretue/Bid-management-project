@@ -66,9 +66,11 @@ const Tender = () => {
   useEffect(() => {
     document.title = "Cheretanet | Tender Information";
   }, []);
+
   useEffect(() => {
     fetchTenderDetails();
   }, []);
+
   const navigate = useNavigate();
   const [tender, setTender] = useState({});
   const [rows, setRows] = useState([]);
@@ -77,14 +79,20 @@ const Tender = () => {
   const [tc, setTc] = useState("");
   const [isFetching, setIsFetching] = useState(false);
   const [errorFetching, setErrorFetching] = useState(false);
+  const { tid } = useParams();
+  const [isChecking, setIsChecking] = useState(false);
+  const [errorChecking, setErrorChecking] = useState(false);
+  const [status, setStatus] = useState("");
+
   const fetchTenderDetails = () => {
     setIsFetching(true);
     fetch(`http://localhost:3001/gettender?id=${tid}`)
       .then((res) => res.json())
       .then((res) => {
         setTender(res);
+
         setRows([
-          { title: "Invitation Date", Information: res.inv },
+          { title: "Invitation Date", Information: res.invD },
           { title: "Procurement ID", Information: res.id },
           { title: "Procurement Title", Information: res.title },
           { title: "Procurement Category", Information: res.cat },
@@ -94,10 +102,12 @@ const Tender = () => {
           { title: "Bid Submission Deadline", Information: res.dead },
           { title: "Bid Opening Schedule", Information: res.ent },
         ]);
+
         setRows2([
           { title: "Participation Fee", Information: res.pfee },
           { title: "Bid Security Amount", Information: res.bidSec },
         ]);
+
         setRows3([
           { title: "Valid tax clearance certificate", Information: res.vTax },
           { title: "Conflict of Interest", Information: res.coi },
@@ -112,9 +122,11 @@ const Tender = () => {
           { title: "VAT registration certificate", Information: res.vat },
           { title: "Government Owned Entity", Information: res.gow },
         ]);
+
         setTc(res.tc);
 
         setIsFetching(false);
+
         if (res.status == "closed" || res.status == "cancelled") {
           if (res.status == "closed") setStatus("closed-bid");
           else setStatus("cancelled-bid");
@@ -130,10 +142,7 @@ const Tender = () => {
         setErrorFetching(true);
       });
   };
-  const { tid, id } = useParams();
-  const [isChecking, setIsChecking] = useState(false);
-  const [errorChecking, setErrorChecking] = useState(false);
-  const [status, setStatus] = useState("");
+
   const fetchBidderStatus = () => {
     setIsChecking(true);
     let q = { bid: tid, uid: JSON.parse(localStorage.getItem("user")).id };
@@ -142,6 +151,7 @@ const Tender = () => {
     fetch(`http://localhost:3001/checkbidder?${q}`)
       .then((res) => res.json())
       .then((res) => {
+        console.log("ress here", res);
         setIsChecking(false);
         if (res !== null) {
           if (Object.keys(res).length == 0) {
@@ -167,16 +177,26 @@ const Tender = () => {
       setStatus("not-user");
     }
   };
+
+  const userRole = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).role == "bidder"
+      ? "supplier"
+      : ""
+    : "";
+
+  const redirectTo = localStorage.getItem("user")
+    ? `/userpage/${userRole}/${
+        JSON.parse(localStorage.getItem("user")).id
+      }/tenders`
+    : "/tenders";
+
   return (
     <>
       <div className="container mb-3">
         <a className="icon-link text-decoration-none text-black">
           <BsArrowLeft className="me-2" />
-          <Link
-            className="text-decoration-none"
-            to={`/userpage/supplier/${id}/tenders`}
-          >
-            Back To Tenders List
+          <Link className="text-decoration-none" to={redirectTo}>
+            Back to All Tenders
           </Link>
         </a>
       </div>
@@ -319,6 +339,7 @@ const Tender = () => {
               </Table>
             </TableContainer>
           </Paper>
+
           <Paper
             className="mt-3"
             sx={{
@@ -387,6 +408,7 @@ const Tender = () => {
               </Table>
             </TableContainer>
           </Paper>
+
           <Paper
             className="mt-3"
             sx={{
@@ -454,6 +476,7 @@ const Tender = () => {
               </Table>
             </TableContainer>
           </Paper>
+
           <Paper
             className="mt-3"
             sx={{
@@ -516,58 +539,64 @@ const Tender = () => {
               </Table>
             </TableContainer>
           </Paper>
-          {
-            <Link
-              to={
-                status == "not-bidding" ||
-                status == "cancelled" ||
-                status == "not-user"
-                  ? `./apply/payment`
-                  : "#"
-              }
-              target="about"
-            >
-              <Button
+
+          <small className="mt-3 text-danger">
+            {status == "cancelled" && "YOU WITHDREW THIS BID"}
+          </small>
+
+          <Link
+            to={
+              status == "not-bidding" ||
+              status == "cancelled" ||
+              status == "not-user"
+                ? `./apply/payment`
+                : "#"
+            }
+            target="about"
+          >
+            <Button
                 onClick={handleApplyButtonClick}
-                disabled={
-                  isChecking
-                    ? true
-                    : errorChecking
-                    ? true
-                    : status == "bidding"
-                    ? true
-                    : status == "closed-bid" || status == "cancelled-bid"
-                    ? true
-                    : false
-                }
-                endIcon={
-                  (status == "not-bidding" || status == "cancelled") && (
-                    <BiLinkExternal />
-                  )
-                }
-                variant="contained"
-                color="primary"
-                style={{
-                  margin: "2rem auto",
-                  maxWidth: "20rem",
-                  textTransform: "none",
-                }}
-              >
-                {isChecking == true
-                  ? "Checking Status..."
-                  : errorChecking == true
-                  ? "Some Error Occurred"
+              disabled={
+                isChecking
+                  ? true
+                  : errorChecking
+                  ? true
                   : status == "bidding"
-                  ? "You have already applied for this bid"
-                  : status == "closed-bid"
-                  ? "This Tender Is Closed!"
-                  : status == "cancelled-bid"
-                  ? "This Tender Is Cancelled!"
-                  : "Apply For This Bid"}
-              </Button>
-            </Link>
-          }
-          {status == "closed-bid" && (
+                  ? true
+                  : tender.status == "closed"
+                  ? true
+                  : false
+              }
+              endIcon={
+                (status == "not-user" ||
+                  status == "not-bidding" ||
+                  status == "cancelled") && <BiLinkExternal />
+              }
+              variant="contained"
+              color="primary"
+              style={{
+                margin: "1rem auto",
+                maxWidth: "20rem",
+                textTransform: "none",
+              }}
+            >
+              {isChecking == true
+                ? "Checking Status..."
+                : errorChecking == true
+                ? "Some Error Occurred"
+                : status == "bidding"
+                ? "You have already applied for this bid"
+                : status == "cancelled"
+                ? "Apply For This Bid Again"
+                : tender.status == "closed"
+                ? "This Tender Is Closed!"
+                : tender.status == "cancelled"
+                ? "This Tender Is Cancelled!"
+                : "Apply For This Bid"}
+            </Button>
+          </Link>
+
+          {tender.status == "closed" && (
             <button
               onClick={() => {
                 navigate(`/bid-awards`);
