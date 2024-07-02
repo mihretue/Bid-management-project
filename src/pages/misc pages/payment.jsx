@@ -4,15 +4,10 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 const Payment = () => {
   const [paymentComplete, setPaymentComplete] = useState(false);
   const { tid, id } = useParams();
-  const { tid, id } = useParams();
 
   useEffect(() => {
     // Initialize the PayPal script
     const initializePayPalScript = () => {
-      const script = document.createElement("script");
-      script.src =
-        "https://www.paypal.com/sdk/js?client-id=ARbsOoxVAQUJH9tXj65Ty3VaAtdv_5wOWknAOLGboMhexc1GImhoUG1qMpfskJMhqY6iAIMcqCuyXsKN"; // Replace with your PayPal Client ID
-      script.addEventListener("load", () => handlePaymentButton());
       const script = document.createElement("script");
       script.src =
         "https://www.paypal.com/sdk/js?client-id=ARbsOoxVAQUJH9tXj65Ty3VaAtdv_5wOWknAOLGboMhexc1GImhoUG1qMpfskJMhqY6iAIMcqCuyXsKN"; // Replace with your PayPal Client ID
@@ -49,7 +44,6 @@ const Payment = () => {
           });
         },
       })
-      .render("#paypal-button-container"); // Replace with the container ID where you want to render the PayPal button
       .render("#paypal-button-container"); // Replace with the container ID where you want to render the PayPal button
   };
 
