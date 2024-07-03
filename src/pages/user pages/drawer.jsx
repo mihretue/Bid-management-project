@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { Card, Col, Row, Statistic } from "antd";
+import TenderStatisticCard from "../common/TenderStatisticCard";
+import { Col, Row } from "antd";
 import {
   UserOutlined,
   UserSwitchOutlined,
@@ -206,68 +207,60 @@ export default function SidebarTabsExample() {
                 <h3 className="m-0 text-center fs-6 mt-1">Analytics</h3>
                 <Row gutter={16}>
                   <Col span={12}>
-                    <Card bordered={false}>
-                      <Statistic
-                        title="All Users"
-                        value={
-                          isFetching
-                            ? "fetching"
-                            : errorFetching
-                            ? "error fetching"
-                            : length
-                        }
-                        valueStyle={{ color: "#3f8600" }}
-                        prefix={<UserOutlined />}
-                      />
-                    </Card>
+                    <TenderStatisticCard
+                      title="All Users"
+                      value={
+                        isFetching
+                          ? "fetching"
+                          : errorFetching
+                          ? "error fetching"
+                          : length
+                      }
+                      valueStyle={{ color: "#3f8600" }}
+                      prefix={<UserOutlined />}
+                    />
                   </Col>
                   <Col span={12}>
-                    <Card bordered={false}>
-                      <Statistic
-                        title="Active Users"
-                        value={
-                          AisFetching
-                            ? "fetching"
-                            : AerrorFetching
-                            ? "error fetching"
-                            : Alength
-                        }
-                        valueStyle={{ color: "#3f8600" }}
-                        prefix={<UserSwitchOutlined />}
-                      />
-                    </Card>
+                    <TenderStatisticCard
+                      title="Active Users"
+                      value={
+                        AisFetching
+                          ? "fetching"
+                          : AerrorFetching
+                          ? "error fetching"
+                          : Alength
+                      }
+                      valueStyle={{ color: "#3f8600" }}
+                      prefix={<UserSwitchOutlined />}
+                    />
                   </Col>
                   <Col span={12}>
-                    <Card bordered={false}>
-                      <Statistic
-                        title="Users Waiting For Approval"
-                        value={
-                          ApisFetching
-                            ? "fetching"
-                            : AperrorFetching
-                            ? "error fetching"
-                            : Aplength
-                        }
-                        valueStyle={{ color: "#3f8600" }}
-                        prefix={<UserAddOutlined />}
-                      />
-                    </Card>
+                    <TenderStatisticCard
+                      title="Users Waiting For Approval"
+                      value={
+                        ApisFetching
+                          ? "fetching"
+                          : AperrorFetching
+                          ? "error fetching"
+                          : Aplength
+                      }
+                      valueStyle={{ color: "#3f8600" }}
+                      prefix={<UserAddOutlined />}
+                    />
                   </Col>
                   <Col span={12}>
-                    <Card bordered={false}>
-                      <Statistic
-                        title="Banned Users"
-                        value={
-                          BisFetching
-                            ? "fetching"
-                            : BerrorFetching
-                            ? "error fetching"
-                            : Blength
-                        }
-                        valueStyle={{ color: "#cf1322" }}
-                        prefix={<UserDeleteOutlined />}
-                      />
-                    </Card>
+                    <TenderStatisticCard
+                      title="Banned Users"
+                      value={
+                        BisFetching
+                          ? "fetching"
+                          : BerrorFetching
+                          ? "error fetching"
+                          : Blength
+                      }
+                      valueStyle={{ color: "#cf1322" }}
+                      prefix={<UserDeleteOutlined />}
+                    />
                   </Col>
                 </Row>
               </div>

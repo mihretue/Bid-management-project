@@ -1,10 +1,11 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import TenderStatisticCard from "../common/TenderStatisticCard";
 import { Pane, Tablist, Tab } from "evergreen-ui";
 import { useState, useEffect } from "react";
 import { MdAssignmentAdd } from "react-icons/md";
 import { AiOutlineFileDone } from "react-icons/ai";
-import { Card, Col, Row, Statistic } from "antd";
+import { Col, Row } from "antd";
 import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
 export default function PendchDrawer() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -141,30 +142,26 @@ export default function PendchDrawer() {
                 <h3 className="m-0 text-center fs-6 mt-1">Me</h3>
                 <Row gutter={16}>
                   <Col span={12}>
-                    <Card bordered={false}>
-                      <Statistic
-                        title="Your Approved Tenders"
-                        value={
-                          isFetching
-                            ? "Fetching..."
-                            : errorFetching
-                            ? "Some Error Occurred"
-                            : bids.length
-                        }
-                        valueStyle={{ color: "#3f8600" }}
-                        prefix={<CheckCircleOutlined />}
-                      />
-                    </Card>
+                    <TenderStatisticCard
+                      title="Your Approved Tenders"
+                      value={
+                        isFetching
+                          ? "Fetching..."
+                          : errorFetching
+                          ? "Some Error Occurred"
+                          : bids.length
+                      }
+                      valueStyle={{ color: "#3f8600" }}
+                      prefix={<CheckCircleOutlined />}
+                    />
                   </Col>
                   <Col span={12}>
-                    <Card bordered={false}>
-                      <Statistic
-                        title="Account Status"
-                        value={JSON.parse(localStorage.getItem("user")).status}
-                        valueStyle={{ color: "#3f8600" }}
-                        prefix={<InfoCircleOutlined />}
-                      />
-                    </Card>
+                    <TenderStatisticCard
+                      title="Account Status"
+                      value={JSON.parse(localStorage.getItem("user")).status}
+                      valueStyle={{ color: "#3f8600" }}
+                      prefix={<InfoCircleOutlined />}
+                    />
                   </Col>
                 </Row>
               </div>

@@ -5,12 +5,13 @@ import { Pane, Tablist, Tab } from "evergreen-ui";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { GrInProgress } from "react-icons/gr";
+import TenderStatisticCard from "../common/TenderStatisticCard";
 import { MdOutlineCancelPresentation } from "react-icons/md";
 import img from "../../resources/backuser.jpg";
 import Footer from "../../components/footer";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
-import { Card, Col, Row, Statistic } from "antd";
+import { Col, Row } from "antd";
 import {
   UserSwitchOutlined,
   FileDoneOutlined,
@@ -385,59 +386,46 @@ export default function SupplierDrawer() {
                   <h3 className="m-0 text-center fs-6 mt-1">Me</h3>
                   <Row gutter={16}>
                     <Col span={12}>
-                      <Card bordered={false}>
-                        <Statistic
-                          title="Total Tenders"
-                          value={bids.length}
-                          valueStyle={{ color: "#3f8600" }}
-                          prefix={<FileDoneOutlined />}
-                        />
-                      </Card>
+                      <TenderStatisticCard
+                        title="Total Tenders"
+                        value={bids.length}
+                        valueStyle={{ color: "#3f8600" }}
+                        prefix={<FileDoneOutlined />}
+                      />
                     </Col>
                     <Col span={12}>
-                      <Card bordered={false}>
-                        <Statistic
-                          title="Your Active Tenders"
-                          value={activeBids.length}
-                          valueStyle={{ color: "#3f8600" }}
-                          prefix={<CheckCircleOutlined />}
-                        />
-                      </Card>
+                      <TenderStatisticCard
+                        title="Your Active Tenders"
+                        value={activeBids.length}
+                        valueStyle={{ color: "#3f8600" }}
+                        prefix={<CheckCircleOutlined />}
+                      />
                     </Col>
                     <Col span={12}>
-                      <Card bordered={false}>
-                        <Statistic
-                          title="Cancelled Tenders"
-                          value={cancelledBids.length}
-                          valueStyle={{ color: "#cf1322" }}
-                          prefix={<CloseCircleOutlined />}
-                        />
-                      </Card>
+                      <TenderStatisticCard
+                        title="Cancelled Tenders"
+                        value={cancelledBids.length}
+                        valueStyle={{ color: "#cf1322" }}
+                        prefix={<CloseCircleOutlined />}
+                      />
                     </Col>
                     <Col span={12}>
-                      <Card bordered={false}>
-                        <Statistic
-                          title="Closed Tenders"
-                          value={closedBids.length}
-                          valueStyle={{ color: "#3f8600" }}
-                          prefix={<FileExcelOutlined />}
-                        />
-                      </Card>
+                      <TenderStatisticCard
+                        title="Closed Tenders"
+                        value={closedBids.length}
+                        valueStyle={{ color: "#3f8600" }}
+                        prefix={<FileExcelOutlined />}
+                      />
                     </Col>
                   </Row>
                   <Row gutter={16}>
                     <Col span={24}>
-                      <Card
-                        bordered={false}
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Statistic
-                          title="Account Status"
-                          value={user.status}
-                          valueStyle={{ color: "#3f8600" }}
-                          prefix={<UserSwitchOutlined />}
-                        />
-                      </Card>
+                      <TenderStatisticCard
+                        title="Account Status"
+                        value={user.status}
+                        valueStyle={{ color: "#3f8600" }}
+                        prefix={<UserSwitchOutlined />}
+                      />
                     </Col>
                   </Row>
                 </div>
