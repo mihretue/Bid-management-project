@@ -29,10 +29,9 @@ function BidProps() {
   ];
 
   const fetchBidding = (bids) => {
-    fetch("http://localhost:3001/getbiddingall")
+    fetch(`http://localhost:3001/getbiddingo/${id}`)
       .then((res) => res.json())
       .then((res) => {
-        console.log('res',res);
         setRows(
           res.filter((r) => {
             return bids.some((bidItem) => bidItem._id == r.bidId);
@@ -94,7 +93,7 @@ function BidProps() {
           }}
         >
           <StickyHeadTable
-            title="Bir Proposals"
+            title="Bid Proposals"
             searchParam="title"
             status={status}
             setStatus={setStatus}

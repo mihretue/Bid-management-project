@@ -15,53 +15,9 @@ import { BiLinkExternal } from "react-icons/bi";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import Footer from "../../components/footer";
 import { BsArrowLeft } from "react-icons/bs";
-
-const columns = [
-  {
-    id: "id",
-    label: "Procurement Information",
-    align: "start",
-  },
-];
-const handlePayment = async (pfee, bidSec) => {
-  console.log("inside the handle payment");
-  const user = JSON.parse(localStorage.getItem("user"));
-  const amount = (parseFloat(pfee) + parseFloat(bidSec)).toFixed(2);
-
-  const payload = {
-    amount: amount,
-    email: user.email,
-    first_name: user.fName,
-    last_name: user.lName,
-    currency: "ETB",
-    customization: {
-      title: "Payment",
-      description: "Payment for the premium subscription",
-    },
-  };
-
-  try {
-    const response = await fetch(
-      "http://chapa.payment.api.codenilesolutions.com/api/initialize",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    );
-
-    const data = await response.json();
-
-    console.log(data);
-    if (data.redirect_url) {
-      window.open(data.redirect_url, "_blank");
-    }
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
+import { Alert, LoadingButton } from "@mui/lab";
+import { v4 as uuidv4 } from "uuid";
+import { Dialog } from "evergreen-ui";
 const Tender = () => {
   useEffect(() => {
     document.title = "Cheretanet | Tender Information";
@@ -83,6 +39,19 @@ const Tender = () => {
   const [isChecking, setIsChecking] = useState(false);
   const [errorChecking, setErrorChecking] = useState(false);
   const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState({
+    payment_loading: false,
+    verify_loading: false,
+  });
+  const [paymentRef, setPaymentRef] = useState("");
+  const [modal, setModal] = useState({
+    verify_modal: false,
+    must_login: false,
+  });
+  const [verif_result, setVerifResult] = useState("");
+  const generateId = () => {
+    return uuidv4();
+  };
 
   const fetchTenderDetails = () => {
     setIsFetching(true);
@@ -132,7 +101,7 @@ const Tender = () => {
           else setStatus("cancelled-bid");
         } else {
           if (localStorage.getItem("user")) {
-            // handlePayment(res.pfee, res.bidSec);
+            fetchBidderStatus();
           } else {
             setStatus("not-user");
           }
@@ -169,13 +138,108 @@ const Tender = () => {
         setErrorChecking(true);
       });
   };
-  const handleApplyButtonClick = () => {
+
+  const handleApplyButtonClick = (event) => {
     event.preventDefault();
     if (localStorage.getItem("user")) {
       handlePayment(tender.pfee, tender.bidSec);
     } else {
       setStatus("not-user");
+      setModal({ ...modal, must_login: true });
     }
+  };
+
+  const handlePayment = async (pfee, bidSec) => {
+    console.log("inside the handle payment");
+    setLoading({ ...loading, payment_loading: true });
+    const user = JSON.parse(localStorage.getItem("user"));
+    const amount = (parseFloat(pfee) + parseFloat(bidSec)).toFixed(2);
+    const tx_ref = generateId();
+    console.log(tx_ref);
+
+    setPaymentRef(tx_ref);
+
+    const payload = {
+      amount: amount,
+      email: user.email,
+      first_name: user.fName,
+      last_name: user.lName,
+      currency: "ETB",
+      tx_ref: tx_ref,
+      customization: {
+        title: "Payment",
+        description: "Payment for the premium subscription",
+      },
+    };
+
+    try {
+      const response = await fetch(
+        "http://chapa.payment.api.codenilesolutions.com/api/initialize",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.redirect_url) {
+        setLoading({ ...loading, payment_loading: false });
+        window.open(data.redirect_url, "_blank");
+        setModal({ ...modal, verify_modal: true });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const redirectToApplication = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const url = `/userpage/supplier/${user.id}/tenders/${tid}/apply/bid-document`;
+    setTimeout(() => {
+      setModal({ ...modal, verify_modal: false });
+      navigate(url);
+    }, 5000);
+  };
+
+  const verifyPayment = () => {
+    setLoading({ ...loading, verify_loading: true });
+    let myHeaders = new Headers();
+    myHeaders.append(
+      "Authorization",
+      "Bearer CHASECK_TEST-t4ayH0OpfLRj94eWeUcK6UikXXxkJaHL"
+    );
+
+    fetch(
+      `http://chapa.payment.api.codenilesolutions.com/api/chapa/callback/${paymentRef}`,
+      {
+        method: "POST",
+        headers: myHeaders,
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("ress", res);
+        if (res.details.status == "success") {
+          setVerifResult("success");
+          setPaymentRef("");
+          setLoading({ ...loading, verify_loading: false });
+          redirectToApplication();
+        }
+
+        if (res.details.status == "failed") {
+          setLoading({ ...loading, verify_loading: false });
+          setVerifResult("failed");
+        }
+      })
+      .catch((err) => {
+        setVerifResult("error-checking");
+        setLoading({ ...loading, verify_loading: false });
+        console.log("error", err);
+      });
   };
 
   const userRole = localStorage.getItem("user")
@@ -544,7 +608,7 @@ const Tender = () => {
             {status == "cancelled" && "YOU WITHDREW THIS BID"}
           </small>
 
-          <Link
+          {/* <Link
             to={
               status == "not-bidding" ||
               status == "cancelled" ||
@@ -553,9 +617,10 @@ const Tender = () => {
                 : "#"
             }
             target="about"
-          >
+          > */}
+          {!loading.payment_loading ? (
             <Button
-                onClick={handleApplyButtonClick}
+              onClick={handleApplyButtonClick}
               disabled={
                 isChecking
                   ? true
@@ -564,6 +629,8 @@ const Tender = () => {
                   : status == "bidding"
                   ? true
                   : tender.status == "closed"
+                  ? true
+                  : tender.status == "cancelled"
                   ? true
                   : false
               }
@@ -594,7 +661,22 @@ const Tender = () => {
                 ? "This Tender Is Cancelled!"
                 : "Apply For This Bid"}
             </Button>
-          </Link>
+          ) : (
+            <LoadingButton
+              loadingPosition="start"
+              loading
+              variant="contained"
+              color="primary"
+              style={{
+                margin: "1rem auto",
+                maxWidth: "20rem",
+                textTransform: "none",
+              }}
+            >
+              Loading...
+            </LoadingButton>
+          )}
+          {/* </Link> */}
 
           {tender.status == "closed" && (
             <button
@@ -608,6 +690,103 @@ const Tender = () => {
           )}
         </div>
       )}
+
+      <Dialog
+        isShown={modal.verify_modal}
+        title="Verify Payment"
+        onCloseComplete={() => {
+          () => {
+            setModal({ ...modal, verify_modal: false });
+          };
+        }}
+        confirmLabel="Yes"
+        onCancel={() => {
+          () => {
+            setModal({ ...modal, verify_modal: false });
+          };
+        }}
+        onConfirm={() => {
+          setIsShown(false);
+          localStorage.removeItem("user");
+          navigate("/");
+        }}
+        footer={[]}
+      >
+        <div className="w-100 d-flex flex-column justify-content-center align-items-center px-3">
+          <small className="text-center">
+            Paymnet Page is open in another tab. Once you complete the
+            transaction, click on verify payment below.
+          </small>
+          {loading.verify_loading ? (
+            <LoadingButton
+              loadingPosition="start"
+              loading
+              variant="contained"
+              color="primary"
+              className="mt-3"
+            >
+              Verifying Payment...
+            </LoadingButton>
+          ) : (
+            <Button
+              variant="contained"
+              className="mt-3"
+              onClick={verifyPayment}
+              disabled={verif_result == "success"}
+            >
+              Verify Payment
+            </Button>
+          )}
+
+          {!loading.verify_loading && verif_result && (
+            <div className="mt-3">
+              {verif_result == "success" ? (
+                <div className="d-flex flex-column">
+                  <Alert severity="success">Payment Verified!</Alert>
+                  <small className="text-center mt-2">Redirecting...</small>
+                </div>
+              ) : (
+                <div>
+                  <Alert severity="error">Payment has failed!</Alert>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </Dialog>
+
+      <Dialog
+        isShown={modal.must_login}
+        title="Must Login"
+        onCloseComplete={() => {
+          () => {
+            setModal({ ...modal, must_login: false });
+          };
+        }}
+        confirmLabel="Yes"
+        onCancel={() => {
+          () => {
+            setModal({ ...modal, must_login: false });
+          };
+        }}
+        footer={[]}
+      >
+        <div className="w-100 d-flex flex-column justify-content-center align-items-center px-3">
+          <small className="text-center">
+            To Participate in Bids, You must Login
+          </small>
+          <div className="d-flex mt-3">
+            <Link to={"/login"}>
+              <Button variant="contained">Sign In</Button>
+            </Link>
+            <Link to={"/signup"}>
+              <Button className="ms-2" variant="outlined">
+                Create New Account
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </Dialog>
       <Footer />
     </>
   );

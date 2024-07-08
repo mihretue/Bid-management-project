@@ -50,7 +50,7 @@ const ManageActiveUser = () => {
           })
             .then((res) => res.json())
             .then(() => {
-              navigate(`/userpage/admin/${id}/active-accounts`);
+              navigate(`/userpage/admin/${id}/manage-accounts`);
             })
             .catch((err) => {
               console.log(err);
@@ -82,7 +82,7 @@ const ManageActiveUser = () => {
           })
             .then((res) => res.json())
             .then((res) => {
-              navigate(`/userpage/admin/${id}/approval-requests`);
+              navigate(`/userpage/admin/${id}/manage-accounts`);
             })
             .catch((err) => {
               console.log(err);
@@ -114,7 +114,7 @@ const ManageActiveUser = () => {
           })
             .then((res) => res.json())
             .then((res) => {
-              navigate(`/userpage/admin/${id}/banned-accounts`);
+              navigate(`/userpage/admin/${id}/manage-accounts`);
             })
             .catch((err) => {
               console.log(err);
@@ -137,7 +137,7 @@ const ManageActiveUser = () => {
         style={{ minHeight: "20rem", height: "auto" }}
       >
         <div className="p-2 w-100 fluid" style={{ minHeight: "2rem" }}>
-          <a className="icon-link text-decoration-none text-black" href="/#">
+          <a className="icon-link text-decoration-none text-black">
             <BsArrowLeft className="me-2" />
             <Link
               className="text-decoration-none"

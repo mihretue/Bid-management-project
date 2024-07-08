@@ -13,6 +13,7 @@ const BidProposal = () => {
     appTime: Date.now(),
     bidderName: "",
   });
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -20,6 +21,7 @@ const BidProposal = () => {
   function handleFileSubmit(event) {
     event.preventDefault();
     let q = { tid: tid, uid: JSON.parse(localStorage.getItem("user")).id };
+    q = new URLSearchParams(q);
     const formData = new FormData();
     formData.append("file", file);
     setUploading(true);
@@ -34,11 +36,8 @@ const BidProposal = () => {
           setErrorUploading(true);
         } else {
           setUploaded(true);
-          const bidderName = `${
-            JSON.parse(localStorage.getItem("user")).fName
-          } ${JSON.parse(localStorage.getItem("user")).lName}`;
-          console.log(bidderName);
-          inp = {
+
+          let inp = {
             bidId: tid,
             bidderId: JSON.parse(localStorage.getItem("user")).id,
             bidderName: `${JSON.parse(localStorage.getItem("user")).fName} ${
@@ -49,6 +48,7 @@ const BidProposal = () => {
             bidPropFile: res.res,
             appTime: datefinder(),
           };
+
           registerBidder(inp);
         }
       })

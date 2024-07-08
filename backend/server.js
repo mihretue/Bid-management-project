@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const app = express();
+const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const userModel = require("./models/user");
@@ -16,6 +17,8 @@ const { google } = require("googleapis");
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 const multer = require("multer");
 const port = 3001;
 const { v4: uuidv4 } = require("uuid");
@@ -668,7 +671,7 @@ app.get("/getbiddingall", (req, res) => {
 app.get("/getbiddingo/:id", (req, res) => {
   const id = req.params.id;
   biddingModel
-    .findOne({ _id: id })
+    .find({ _id: id })
     .then((docs) => {
       res.json(docs);
     })
@@ -793,6 +796,7 @@ app.get("/deletemessage/:id", (request, response) => {
 //CHAPA//
 const router = require("express").Router();
 const request = require("request");
+const { log } = require("console");
 const tx_ref = uuidv4();
 const SECRET_KEY = "CHASECK_TEST-x53OdtP7UdSj9ybRLKZEdB4FTYIuH3VX";
 app.post("/api/payment/initialize/orders", async (req, res) => {

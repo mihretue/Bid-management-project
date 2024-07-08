@@ -1,9 +1,6 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import StickyHeadTable from "../../../components/mui_table/index";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import { AiOutlineSearch } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import Footer from "../../../components/footer";
 

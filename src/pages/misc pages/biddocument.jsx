@@ -7,10 +7,11 @@ const Biddocument = () => {
   const [bidDocument, setBidDocument] = useState("");
   const [isGetting, setIsGetting] = useState(false);
   const [errorGetting, setErrorGetting] = useState(false);
+
   useEffect(() => {
     fetchBidDocument();
   }, []);
-  
+
   const fetchBidDocument = () => {
     setIsGetting(true);
     fetch(`http://localhost:3001/gettender/?id=${tid}`)
@@ -46,7 +47,7 @@ const Biddocument = () => {
             href={
               isGetting || errorGetting
                 ? "/#"
-                : `/../../../backend/uploads/biddocs/${bidDocument}`
+                : `http://localhost:3001/uploads/biddocs/${bidDocument}`
             }
           >
             <button

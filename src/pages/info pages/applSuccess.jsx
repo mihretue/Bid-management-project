@@ -11,6 +11,7 @@ const ApplicationSuccess = () => {
   useEffect(() => {
     fetchTenderDetails();
   }, []);
+  
   const fetchTenderDetails = () => {
     setIsFetching(true);
     fetch(`http://localhost:3001/gettender/?id=${tid}`)

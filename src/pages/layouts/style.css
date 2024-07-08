@@ -1,21 +1,16 @@
 .navbar-nav {
-    font-family: 'Adamina', serif;
-    font-weight: bolder;
-    text-shadow: chartreuse;
-    color: indigo;
-/* font-family: 'Bitter', serif; */
-/* font-family: 'Josefin Sans', sans-serif; */
-/* font-family: 'Kanit', sans-serif; */
-/* font-family: 'Playfair Display', serif; */
-/* font-family: 'Titillium Web', sans-serif; */
+  font-family: "Adamina", serif;
+  font-weight: bolder;
+  text-shadow: chartreuse;
+  color: indigo;
 }
-.navbar-nav:hover{
-    font-weight: bold;
+.navbar-nav:hover {
+  font-weight: bold;
 }
-#dropdown-basic-button{
-    background-color:white;
-    border-radius: 5px;
-    border-color: darkgrey;
-    color: black;
-    
+
+#dropdown-basic-button {
+  background-color: white;
+  border-radius: 5px;
+  border-color: darkgrey;
+  color: black;
 }

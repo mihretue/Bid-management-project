@@ -36,6 +36,7 @@ export default function PheadDrawer() {
   const [Clbids, setClBids] = useState([]);
   const [ClBidsisFetching, setClBidsIsFetching] = useState(false);
   const [errorClBidsFetching, setErrorClBidsFetching] = useState(false);
+
   const fetchBids = () => {
     setBidsIsFetching(true);
     fetch("http://localhost:3001/getbids", {
@@ -126,7 +127,17 @@ export default function PheadDrawer() {
         setErrorClBidsFetching(true);
       });
   };
-
+  
+  const fetchUserData = () => {
+    setIsFetching(true);
+    fetch(`http://localhost:3001/userbyid/${id}`)
+      .then((res) => res.json())
+      .then((res) => {
+        setUser(res);
+        setIsFetching(false);
+      });
+  };
+  
   useEffect(() => {
     fetchUserData();
     fetchBids();
@@ -134,17 +145,7 @@ export default function PheadDrawer() {
     fetchActiveBids();
     fetchClosedBids();
   }, []);
-  const fetchUserData = () => {
-    setIsFetching(true);
-    fetch(`http://localhost:3001/userbyid/${id}`)
-      .then((res) => res.json())
-      .then((res) => {
-        setUser(res);
-        //    console.log(res)
-        setIsFetching(false);
-      });
-    //  .catch((err)=>{setIsFetching(false);setErrorFetching(true)})
-  };
+
 
   return (
     <Pane
